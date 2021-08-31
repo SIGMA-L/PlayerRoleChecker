@@ -40,6 +40,7 @@ public final class PlayerRoleChecker extends JavaPlugin {
             LiteCon = DriverManager.getConnection("jdbc:sqlite:" + SQLLocate);
             Statement LiteSt = LiteCon.createStatement();
             LiteSt.setQueryTimeout(30);
+            LiteSt.executeUpdate("drop table if exists waitverify");
             LiteSt.executeUpdate("create table if not exists waitverify (uuid string, Code string)");
             LiteSt.close();
         } catch (SQLException throwables) {
