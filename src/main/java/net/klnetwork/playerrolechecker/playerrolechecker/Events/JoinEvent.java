@@ -11,7 +11,7 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 public class JoinEvent implements Listener {
     @EventHandler
     public void CodeIssue(AsyncPlayerPreLoginEvent e) {
-        String[] result = SQLiteUtil.getCodeFromSQLite(e.getUniqueId());
+        String[] result = SQLiteUtil.getCodeFromSQLite(e.getUniqueId().toString());
         if(result != null){
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST, ChatColor.RED + "(発行済み) あなたのコードは \n「" + result[1] + "」 です (発行されてから) 5分以内に認証してください");
             return;

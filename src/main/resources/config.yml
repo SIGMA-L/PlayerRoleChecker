@@ -1,5 +1,5 @@
 SQLite:
-  SQLiteLocate:
+  SQLiteLocate: data.db
 MySQL:
   Server: 'localhost'
   Port: 3306
@@ -8,3 +8,8 @@ MySQL:
   Password: 'playerrolecheckerpass'
   Option: '?allowPublicKeyRetrieval=true&useSSL=false'
   UseSQLDebug: false
+## DiscordToken: DiscordBotのトークン
+## ChannelID: チャンネルID(必要ないがほぼ必須)
+Discord:
+  DiscordToken: TokenHere
+  ChannelID:

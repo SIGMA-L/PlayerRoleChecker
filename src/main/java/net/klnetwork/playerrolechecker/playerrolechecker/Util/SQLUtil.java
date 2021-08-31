@@ -11,10 +11,10 @@ public class SQLUtil {
 
     private static Connection connection;
 
-    public static String[] getDiscordFromSQL(UUID uuid) {
+    public static String[] getDiscordFromSQL(String uuid) {
         try {
-            PreparedStatement preparedStatement = getSQLConnection().prepareStatement("select * from verifyplayer where discord = ?");
-            preparedStatement.setString(1, uuid.toString());
+            PreparedStatement preparedStatement = getSQLConnection().prepareStatement("select * from verifyplayer where uuid = ?");
+            preparedStatement.setString(1, uuid);
             preparedStatement.execute();
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -26,10 +26,10 @@ public class SQLUtil {
         return null;
     }
 
-    public static String[] getUUIDFromSQL(Integer discord) {
+    public static String[] getUUIDFromSQL(String discord) {
         try {
             PreparedStatement preparedStatement = getSQLConnection().prepareStatement("select * from verifyplayer where discord = ?");
-            preparedStatement.setString(1, discord.toString());
+            preparedStatement.setString(1, discord);
             preparedStatement.execute();
 
             ResultSet resultSet = preparedStatement.executeQuery();

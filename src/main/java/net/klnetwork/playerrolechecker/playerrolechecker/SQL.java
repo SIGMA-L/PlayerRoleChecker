@@ -45,7 +45,7 @@ public class SQL {
         try {
             Statement SQLSt = SQLUtil.getSQLConnection().createStatement();
             SQLSt.setQueryTimeout(30);
-            SQLSt.executeUpdate("create table if not exists verifyplayer (uuid char,discord char)");
+            SQLSt.executeUpdate("create table if not exists verifyplayer (uuid VARCHAR(50),discord VARCHAR(50))");
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

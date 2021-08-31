@@ -1,13 +1,9 @@
 package net.klnetwork.playerrolechecker.playerrolechecker.Util;
 
-import net.klnetwork.playerrolechecker.playerrolechecker.SQL;
-import org.sqlite.SQLiteConnection;
-
 import java.sql.*;
+import java.util.UUID;
 
 import static net.klnetwork.playerrolechecker.playerrolechecker.SQL.SQLLocate;
-
-import java.util.UUID;
 
 public class SQLiteUtil {
 
@@ -25,10 +21,10 @@ public class SQLiteUtil {
         return false;
     }
 
-    public static String[] getCodeFromSQLite(UUID uuid) {
+    public static String[] getCodeFromSQLite(String uuid) {
         try {
             PreparedStatement preparedStatement = getSQLiteConnection().prepareStatement("select * from waitverify where uuid = ?");
-            preparedStatement.setString(1, uuid.toString());
+            preparedStatement.setString(1, uuid);
             preparedStatement.execute();
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -40,10 +36,10 @@ public class SQLiteUtil {
     return null;
     }
 
-    public static String[] getUUIDFromSQLite(Integer code) {
+    public static String[] getUUIDFromSQLite(String code) {
         try {
             PreparedStatement preparedStatement = getSQLiteConnection().prepareStatement("select * from waitverify where code = ?");
-            preparedStatement.setString(1, code.toString());
+            preparedStatement.setString(1, code);
             preparedStatement.execute();
 
             ResultSet resultSet = preparedStatement.executeQuery();

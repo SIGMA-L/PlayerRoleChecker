@@ -9,7 +9,7 @@ public class Timer {
             try {
                 TimeUnit.SECONDS.sleep(300);
 
-                String[] result = SQLiteUtil.getCodeFromSQLite(uuid);
+                String[] result = SQLiteUtil.getCodeFromSQLite(uuid.toString());
                 if (result != null) {
                     SQLiteUtil.removeSQLite(result[0], result[1]);
 
