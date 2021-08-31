@@ -36,7 +36,7 @@ public class SQLiteInit {
             Statement LiteSt = LiteCon.createStatement();
             LiteSt.setQueryTimeout(30);
             LiteSt.executeUpdate("drop table if exists waitverify");
-            LiteSt.executeUpdate("create table if not exists waitverify (uuid string, Code string)");
+            LiteSt.executeUpdate("create table if not exists waitverify (uuid string, code string)");
             LiteSt.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

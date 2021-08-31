@@ -73,7 +73,7 @@ public class SQLite {
     public static void removeSQLLite(String uuid, String code) {
         try {
             Connection connection = DriverManager.getConnection("jdbc:sqlite:" + SQLLocate);
-            PreparedStatement preparedStatement = connection.prepareStatement("delete from waitverify where uuid = ? code = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("delete from waitverify where uuid = ? and code = ?");
             preparedStatement.setString(1, uuid);
             preparedStatement.setString(2, code);
             preparedStatement.execute();
