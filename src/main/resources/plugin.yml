@@ -1,0 +1,5 @@
+name: PlayerRoleChecker
+version: ${project.version}
+main: net.klnetwork.playerrolechecker.playerrolechecker.PlayerRoleChecker
+prefix: PRC
+authors: [ SIGMA, Kouta1212 ]

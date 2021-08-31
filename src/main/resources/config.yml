@@ -1,0 +1,11 @@
+PlayerRoleChecker
+SQLite:
+  SQLiteLocate:
+MySQL:
+  Server: ''
+  Port: 3306
+  Database: ''
+  Username: ''
+  Password: ''
+  Option: '?allowPublicKeyRetrieval=true&useSSL=false'
+UseSQLDebug: false
