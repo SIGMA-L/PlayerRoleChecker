@@ -12,7 +12,7 @@ public final class PlayerRoleChecker extends JavaPlugin {
     public void onEnable() {
         saveDefaultConfig();
         plugin = this;
-        SQLiteInit.init();
+        SQL.init();
 
         if (getConfig().getBoolean("UseSQLDebug")) {
             getCommand("sqldebug").setExecutor(new SQLDebug());

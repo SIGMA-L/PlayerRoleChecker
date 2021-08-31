@@ -1,10 +1,10 @@
 SQLite:
   SQLiteLocate:
 MySQL:
-  Server: ''
+  Server: 'localhost'
   Port: 3306
-  Database: ''
-  Username: ''
-  Password: ''
+  Database: 'playerrolechecker'
+  Username: 'playerrolecheckeruser'
+  Password: 'playerrolecheckerpass'
   Option: '?allowPublicKeyRetrieval=true&useSSL=false'
   UseSQLDebug: false

@@ -1,18 +1,21 @@
 package net.klnetwork.playerrolechecker.playerrolechecker.MySQL;
 
+import net.klnetwork.playerrolechecker.playerrolechecker.SQL;
+import org.sqlite.SQLiteConnection;
+
 import java.sql.*;
 
-import static net.klnetwork.playerrolechecker.playerrolechecker.SQLiteInit.SQLLocate;
+import static net.klnetwork.playerrolechecker.playerrolechecker.SQL.SQLLocate;
 
 import java.util.UUID;
 
 public class SQLite {
+
+    private static Connection connection;
+
     public static boolean CheckCode(Integer code) {
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:" + SQLLocate);
-            Statement statement = connection.createStatement();
-            statement.setQueryTimeout(30);
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from waitverify where code = ?");
+            PreparedStatement preparedStatement = getSQLiteConnection().prepareStatement("select * from waitverify where code = ?");
             preparedStatement.setString(1, code.toString());
             ResultSet resultSet = preparedStatement.executeQuery();
             return resultSet.next();
@@ -22,10 +25,9 @@ public class SQLite {
         return false;
     }
 
-    public static String[] getCodeFromSQLLite(UUID uuid) {
+    public static String[] getCodeFromSQLite(UUID uuid) {
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:" + SQLLocate);
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from waitverify where uuid = ?");
+            PreparedStatement preparedStatement = getSQLiteConnection().prepareStatement("select * from waitverify where uuid = ?");
             preparedStatement.setString(1, uuid.toString());
             preparedStatement.execute();
 
@@ -38,10 +40,9 @@ public class SQLite {
     return null;
     }
 
-    public static String[] getUUIDFromSQLLite(Integer code) {
+    public static String[] getUUIDFromSQLite(Integer code) {
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:" + SQLLocate);
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from waitverify where code = ?");
+            PreparedStatement preparedStatement = getSQLiteConnection().prepareStatement("select * from waitverify where code = ?");
             preparedStatement.setString(1, code.toString());
             preparedStatement.execute();
 
@@ -54,35 +55,38 @@ public class SQLite {
         return null;
     }
 
-    public static void putSQLLite(String uuid, String code) {
+    public static void putSQLite(String uuid, String code) {
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:" + SQLLocate);
-            PreparedStatement preparedStatement = connection.prepareStatement("insert into waitverify values (?,?)");
+            PreparedStatement preparedStatement = getSQLiteConnection().prepareStatement("insert into waitverify values (?,?)");
             preparedStatement.setString(1, uuid);
             preparedStatement.setString(2, code);
             preparedStatement.execute();
 
             preparedStatement.close();
-            connection.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
-    public static void removeSQLLite(String uuid, String code) {
+    public static void removeSQLite(String uuid, String code) {
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:" + SQLLocate);
-            PreparedStatement preparedStatement = connection.prepareStatement("delete from waitverify where uuid = ? and code = ?");
+            PreparedStatement preparedStatement = getSQLiteConnection().prepareStatement("delete from waitverify where uuid = ? and code = ?");
             preparedStatement.setString(1, uuid);
             preparedStatement.setString(2, code);
             preparedStatement.execute();
 
             preparedStatement.close();
-            connection.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public static Connection getSQLiteConnection() throws SQLException {
+        if(connection == null){
+            connection = DriverManager.getConnection("jdbc:sqlite:" + SQLLocate);
+        }
+    return connection;
     }
 }

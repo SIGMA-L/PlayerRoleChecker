@@ -2,7 +2,6 @@ package net.klnetwork.playerrolechecker.playerrolechecker.API;
 
 
 import net.klnetwork.playerrolechecker.playerrolechecker.MySQL.SQLite;
-import net.klnetwork.playerrolechecker.playerrolechecker.Util.Timer;
 
 import static net.klnetwork.playerrolechecker.playerrolechecker.MySQL.SQLite.CheckCode;
 
@@ -19,7 +18,7 @@ public class CodeUtil {
         while (CheckCode(result)) {
             result = getRandom(1000,9999);
         }
-        SQLite.putSQLLite(uuid.toString(), Integer.toString(result));
+        SQLite.putSQLite(uuid.toString(), Integer.toString(result));
         return result;
     }
 }

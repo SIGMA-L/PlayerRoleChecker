@@ -8,7 +8,7 @@ import java.sql.Statement;
 import static net.klnetwork.playerrolechecker.playerrolechecker.PlayerRoleChecker.plugin;
 import static org.bukkit.Bukkit.getServer;
 
-public class SQLiteInit {
+public class SQL {
 
     public static String SQLLocate;
     public static String Server;
@@ -55,7 +55,7 @@ public class SQLiteInit {
             SQL = DriverManager.getConnection("jdbc:mysql://" + Server + ":" + Port + "/" + DB + Option, UserName, PassWord);
             Statement SQLSt = SQL.createStatement();
             SQLSt.setQueryTimeout(30);
-            SQLSt.executeUpdate("create table if not exists  verifyplayer (uuid string,discord string)");
+            SQLSt.executeUpdate("create table if not exists verifyplayer (uuid char,discord char)");
             SQLSt.close();
 
         } catch (SQLException throwables) {
