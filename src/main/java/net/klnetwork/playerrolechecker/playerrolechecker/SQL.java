@@ -1,5 +1,8 @@
 package net.klnetwork.playerrolechecker.playerrolechecker;
 
+import net.klnetwork.playerrolechecker.playerrolechecker.Util.SQLUtil;
+import net.klnetwork.playerrolechecker.playerrolechecker.Util.SQLiteUtil;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -30,45 +33,22 @@ public class SQL {
         } catch (Exception e) {
             getServer().getLogger().info("getConfigError");
         }
-        Connection LiteCon = null;
         try {
-            LiteCon = DriverManager.getConnection("jdbc:sqlite:" + SQLLocate);
-            Statement LiteSt = LiteCon.createStatement();
+            Statement LiteSt = SQLiteUtil.getSQLiteConnection().createStatement();
             LiteSt.setQueryTimeout(30);
             LiteSt.executeUpdate("drop table if exists waitverify");
             LiteSt.executeUpdate("create table if not exists waitverify (uuid string, code string)");
-            LiteSt.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } finally {
-            try {
-                if (LiteCon != null) {
-                    LiteCon.close();
-                }
-            } catch (SQLException throwables) {
-                System.err.println(throwables.getMessage());
-            }
         }
 
-        Connection SQL = null;
         try {
-            SQL = DriverManager.getConnection("jdbc:mysql://" + Server + ":" + Port + "/" + DB + Option, UserName, PassWord);
-            Statement SQLSt = SQL.createStatement();
+            Statement SQLSt = SQLUtil.getSQLConnection().createStatement();
             SQLSt.setQueryTimeout(30);
             SQLSt.executeUpdate("create table if not exists verifyplayer (uuid char,discord char)");
-            SQLSt.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } finally {
-            try {
-                if (SQL != null) {
-                    SQL.close();
-                }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-                System.err.println(throwables.getMessage());
-            }
         }
     }
 }

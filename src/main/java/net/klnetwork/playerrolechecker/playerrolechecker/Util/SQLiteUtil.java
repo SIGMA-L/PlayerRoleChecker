@@ -1,4 +1,4 @@
-package net.klnetwork.playerrolechecker.playerrolechecker.MySQL;
+package net.klnetwork.playerrolechecker.playerrolechecker.Util;
 
 import net.klnetwork.playerrolechecker.playerrolechecker.SQL;
 import org.sqlite.SQLiteConnection;
@@ -9,7 +9,7 @@ import static net.klnetwork.playerrolechecker.playerrolechecker.SQL.SQLLocate;
 
 import java.util.UUID;
 
-public class SQLite {
+public class SQLiteUtil {
 
     private static Connection connection;
 

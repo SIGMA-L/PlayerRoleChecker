@@ -1,7 +1,5 @@
 package net.klnetwork.playerrolechecker.playerrolechecker.Util;
 
-import net.klnetwork.playerrolechecker.playerrolechecker.MySQL.SQLite;
-
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -11,9 +9,9 @@ public class Timer {
             try {
                 TimeUnit.SECONDS.sleep(300);
 
-                String[] result = SQLite.getCodeFromSQLite(uuid);
+                String[] result = SQLiteUtil.getCodeFromSQLite(uuid);
                 if (result != null) {
-                    SQLite.removeSQLite(result[0], result[1]);
+                    SQLiteUtil.removeSQLite(result[0], result[1]);
 
                 }
             } catch (InterruptedException e) {
