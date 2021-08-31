@@ -2,7 +2,7 @@ package net.klnetwork.playerrolechecker.playerrolechecker.MySQL;
 
 import java.sql.*;
 
-import static net.klnetwork.playerrolechecker.playerrolechecker.PlayerRoleChecker.SQLLocate;
+import static net.klnetwork.playerrolechecker.playerrolechecker.SQLiteInit.SQLLocate;
 
 import java.util.UUID;
 
@@ -73,7 +73,7 @@ public class SQLite {
     public static void removeSQLLite(String uuid, String code) {
         try {
             Connection connection = DriverManager.getConnection("jdbc:sqlite:" + SQLLocate);
-            PreparedStatement preparedStatement = connection.prepareStatement("delete into waitverify values (?,?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("delete from waitverify where uuid = ? code = ?");
             preparedStatement.setString(1, uuid);
             preparedStatement.setString(2, code);
             preparedStatement.execute();

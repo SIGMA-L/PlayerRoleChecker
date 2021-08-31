@@ -8,8 +8,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
-import java.util.UUID;
-
 public class JoinEvent implements Listener {
     @EventHandler
     public void CodeIssue(AsyncPlayerPreLoginEvent e) {
