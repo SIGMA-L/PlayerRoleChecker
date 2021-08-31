@@ -10,14 +10,9 @@ import java.util.UUID;
 public class Timer{
     public void waitTimer(UUID uuid){
         Bukkit.getScheduler().runTaskLater(PlayerRoleChecker.plugin, () -> {
-            try {
-                Thread.sleep(300000);
-                String[] result = SQLite.getCodeFromSQLLite(uuid);
-                if (result != null) {
-                    SQLite.removeSQLLite(result[0], result[1]);
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            String[] result = SQLite.getCodeFromSQLLite(uuid);
+            if (result != null) {
+                SQLite.removeSQLLite(result[0], result[1]);
             }
         },6000);
     }
