@@ -23,16 +23,17 @@ public final class PlayerRoleChecker extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
+        plugin = this;
         try {
-            SQLLocate = plugin.getConfig().getString("SQLite.SQLiteLocate");
-            Server = plugin.getConfig().getString("MySQL.Server");
-            Port = plugin.getConfig().getInt("MySQL.Port");
-            DB = plugin.getConfig().getString("MySQL.Database");
-            UserName = plugin.getConfig().getString("MySQL.Username");
-            PassWord = plugin.getConfig().getString("MySQL.Password");
-            Option = plugin.getConfig().getString("MySQL.Option");
+            SQLLocate = getConfig().getString("SQLite.SQLiteLocate");
+            Server = getConfig().getString("MySQL.Server");
+            Port = getConfig().getInt("MySQL.Port");
+            DB = getConfig().getString("MySQL.Database");
+            UserName = getConfig().getString("MySQL.Username");
+            PassWord = getConfig().getString("MySQL.Password");
+            Option = getConfig().getString("MySQL.Option");
         } catch (Exception e) {
-            plugin.getServer().getLogger().info("getConfigError");
+            getServer().getLogger().info("getConfigError");
         }
         Connection LiteCon = null;
         try {

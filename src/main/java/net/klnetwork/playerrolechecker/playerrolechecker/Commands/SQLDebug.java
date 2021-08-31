@@ -13,7 +13,7 @@ public class SQLDebug implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player player = (Player) sender;
         if (player.hasPermission("debug")) {
-            Connection connection = "jdbc"
+            //Connection connection = "jdbc"
         }
         return false;
     }

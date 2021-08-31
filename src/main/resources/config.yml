@@ -1,4 +1,3 @@
-PlayerRoleChecker
 SQLite:
   SQLiteLocate:
 MySQL:
@@ -8,4 +7,4 @@ MySQL:
   Username: ''
   Password: ''
   Option: '?allowPublicKeyRetrieval=true&useSSL=false'
-UseSQLDebug: false
+  UseSQLDebug: false
