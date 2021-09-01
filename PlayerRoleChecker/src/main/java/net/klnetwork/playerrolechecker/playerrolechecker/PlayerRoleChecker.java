@@ -1,6 +1,5 @@
 package net.klnetwork.playerrolechecker.playerrolechecker;
 
-import net.klnetwork.playerrolechecker.playerrolechecker.Commands.SQLDebug;
 import net.klnetwork.playerrolechecker.playerrolechecker.Events.JoinEvent;
 import net.klnetwork.playerrolechecker.playerrolechecker.JDA.JDA;
 import org.bukkit.plugin.Plugin;
@@ -17,9 +16,6 @@ public final class PlayerRoleChecker extends JavaPlugin {
         plugin = this;
         SQL.init();
         JDA.init();
-        if (getConfig().getBoolean("UseSQLDebug")) {
-            getCommand("sqldebug").setExecutor(new SQLDebug());
-        }
         getServer().getPluginManager().registerEvents(new JoinEvent(),this);
 
     }

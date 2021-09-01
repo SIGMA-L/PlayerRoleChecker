@@ -6,3 +6,11 @@ authors: [ SIGMA, Kouta1212 ]
 commands:
   joinmode:
     permission: playerrolechecker.op
+    aliases:
+      - jm
+    description: JoinModeCommand!
+  sqldebug:
+    permission: : playerrolechecker.sqldebug
+    aliases:
+      - sqld
+    description: SQLDebugCommand!

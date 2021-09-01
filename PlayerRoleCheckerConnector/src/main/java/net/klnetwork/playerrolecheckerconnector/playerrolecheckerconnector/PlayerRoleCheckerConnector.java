@@ -1,6 +1,7 @@
 package net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector;
 
 import net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector.Command.JoinMode;
+import net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector.Command.SQLDebug;
 import net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector.Events.JoinEvent;
 import net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector.JDA.JDA;
 import org.bukkit.Bukkit;
@@ -9,6 +10,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector.JDA.JDA.jda;
 
 public final class PlayerRoleCheckerConnector extends JavaPlugin {
 
@@ -25,6 +28,9 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin {
         list.addAll(plugin.getConfig().getStringList("Discord.RoleID"));
         Bukkit.getPluginManager().registerEvents(new JoinEvent(),this);
         getCommand("joinmode").setExecutor(new JoinMode());
+        if (getConfig().getBoolean("UseSQLDebug")) {
+            getCommand("sqldebug").setExecutor(new SQLDebug());
+        }
         // Plugin startup logic
 
     }
@@ -32,5 +38,6 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        jda.shutdown();
     }
 }
