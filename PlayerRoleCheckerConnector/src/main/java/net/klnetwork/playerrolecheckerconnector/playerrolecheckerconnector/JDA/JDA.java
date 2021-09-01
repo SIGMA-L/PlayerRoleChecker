@@ -13,8 +13,7 @@ public class JDA {
         try {
             jda = JDABuilder.createDefault(plugin.getConfig().getString("Discord.DiscordToken"))
                     .build();
-        } catch (
-                LoginException e) {
+        } catch (LoginException e) {
             e.printStackTrace();
         }
     }
