@@ -20,7 +20,9 @@ public class JoinEvent implements Listener {
             player.kickPlayer(ChatColor.GOLD + "あなたには参加権限がありません。\n" + ChatColor.AQUA + "Discordを確認してみてください。");
             return;
         }
-
+        e.setJoinMessage(player.getName() + "がログインしました。");
+        player.sendMessage(ChatColor.GOLD + "ご苦労さまです。" + ChatColor.AQUA + player.getName() + ChatColor.WHITE + "さん。");
+        player.sendMessage(ChatColor.GREEN + "-----------------情報------------------");
         player.sendMessage("MinecraftName: " + e.getPlayer().getName());
         String[] result = SQLUtil.getDiscordFromSQL(e.getPlayer().getUniqueId().toString());
         player.sendMessage("DiscordID: " + result[1]);
@@ -32,5 +34,6 @@ public class JoinEvent implements Listener {
             stringBuilder.append(role.getName()).append(" ");
         }
         player.sendMessage("DiscordRole: " + stringBuilder);
+        player.sendMessage(ChatColor.GREEN + "-------------------------------------");
     }
 }
