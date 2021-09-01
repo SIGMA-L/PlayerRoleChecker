@@ -25,7 +25,6 @@ public class SQLiteUtil {
         try {
             PreparedStatement preparedStatement = getSQLiteConnection().prepareStatement("select * from waitverify where uuid = ?");
             preparedStatement.setString(1, uuid);
-            preparedStatement.execute();
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()) return new String[] {resultSet.getString(1),resultSet.getString(2)};
@@ -40,7 +39,6 @@ public class SQLiteUtil {
         try {
             PreparedStatement preparedStatement = getSQLiteConnection().prepareStatement("select * from waitverify where code = ?");
             preparedStatement.setString(1, code);
-            preparedStatement.execute();
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()) return new String[] {resultSet.getString(1),resultSet.getString(2)};

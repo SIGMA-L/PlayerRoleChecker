@@ -14,7 +14,6 @@ public class SQLUtil {
         try {
             PreparedStatement preparedStatement = getSQLConnection().prepareStatement("select * from verifyplayer where uuid = ?");
             preparedStatement.setString(1, uuid);
-            preparedStatement.execute();
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) return new String[]{resultSet.getString(1), resultSet.getString(2)};
@@ -29,7 +28,6 @@ public class SQLUtil {
         try {
             PreparedStatement preparedStatement = getSQLConnection().prepareStatement("select * from verifyplayer where discord = ?");
             preparedStatement.setString(1, discord);
-            preparedStatement.execute();
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) return new String[]{resultSet.getString(1), resultSet.getString(2)};
