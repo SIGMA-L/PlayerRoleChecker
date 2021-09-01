@@ -41,31 +41,35 @@ public class SQLUtil {
     }
 
     public static void putSQL(String uuid, String discord) {
-        try {
-            PreparedStatement preparedStatement = getSQLConnection().prepareStatement("insert into verifyplayer values (?,?)");
-            preparedStatement.setString(1, uuid);
-            preparedStatement.setString(2, discord);
-            preparedStatement.execute();
+        new Thread(() -> {
+            try {
+                PreparedStatement preparedStatement = getSQLConnection().prepareStatement("insert into verifyplayer values (?,?)");
+                preparedStatement.setString(1, uuid);
+                preparedStatement.setString(2, discord);
+                preparedStatement.execute();
 
-            preparedStatement.close();
+                preparedStatement.close();
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }).start();
     }
 
     public static void removeSQL(String uuid, String discord) {
-        try {
-            PreparedStatement preparedStatement = getSQLConnection().prepareStatement("delete from verifyplayer where uuid = ? and discord = ?");
-            preparedStatement.setString(1, uuid);
-            preparedStatement.setString(2, discord);
-            preparedStatement.execute();
+        new Thread(()-> {
+            try {
+                PreparedStatement preparedStatement = getSQLConnection().prepareStatement("delete from verifyplayer where uuid = ? and discord = ?");
+                preparedStatement.setString(1, uuid);
+                preparedStatement.setString(2, discord);
+                preparedStatement.execute();
 
-            preparedStatement.close();
+                preparedStatement.close();
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }).start();
     }
 
     public static Connection getSQLConnection() throws SQLException {
