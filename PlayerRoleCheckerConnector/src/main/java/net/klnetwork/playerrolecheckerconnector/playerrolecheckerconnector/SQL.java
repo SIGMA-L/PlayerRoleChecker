@@ -3,13 +3,10 @@ package net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector;
 
 import net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector.Util.SQLUtil;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
-import static net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector.PlayerRoleCheckerConnector.*;
+import static net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector.PlayerRoleCheckerConnector.plugin;
 import static org.bukkit.Bukkit.getServer;
 
 public class SQL {

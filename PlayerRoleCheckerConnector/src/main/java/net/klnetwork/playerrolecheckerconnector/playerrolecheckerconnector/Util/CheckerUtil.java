@@ -13,18 +13,13 @@ public class CheckerUtil {
 
     public static boolean CheckPlayer(UUID uuid) {
         String[] DiscordID = getDiscordFromSQL(uuid.toString());
-        if (DiscordID == null) {
-            return false;
-        }
+        if (DiscordID == null) return false;
+
         List<Role> role = getRolesById(DiscordID[1]);
-        for (Role role1 : role) {
-            if (list.contains(role1.getId())) {
-                return true;
-            }
-
-        }
+        if (role == null) return false;
+        for (Role role1 : role) if (list.contains(role1.getId())) return true;
 
 
-      return false;
+        return false;
     }
 }

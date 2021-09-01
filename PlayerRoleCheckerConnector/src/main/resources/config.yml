@@ -1,5 +1,3 @@
-SQLite:
-  SQLiteLocate: data.db
 MySQL:
   Server: 'localhost'
   Port: 3306
