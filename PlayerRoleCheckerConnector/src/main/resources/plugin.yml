@@ -1,0 +1,3 @@
+name: PlayerRoleCheckerConnector
+version: ${project.version}
+main: net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector.PlayerRoleCheckerConnector
