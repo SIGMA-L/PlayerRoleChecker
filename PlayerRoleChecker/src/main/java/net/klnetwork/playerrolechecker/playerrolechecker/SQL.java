@@ -35,7 +35,6 @@ public class SQL {
         }
         try {
             Statement LiteSt = SQLiteUtil.getSQLiteConnection().createStatement();
-            LiteSt.setQueryTimeout(30);
             LiteSt.executeUpdate("drop table if exists waitverify");
             LiteSt.executeUpdate("create table if not exists waitverify (uuid string, code string)");
         } catch (SQLException throwables) {
@@ -44,7 +43,6 @@ public class SQL {
 
         try {
             Statement SQLSt = SQLUtil.getSQLConnection().createStatement();
-            SQLSt.setQueryTimeout(30);
             SQLSt.executeUpdate("create table if not exists verifyplayer (uuid VARCHAR(50),discord VARCHAR(50))");
 
         } catch (SQLException throwables) {

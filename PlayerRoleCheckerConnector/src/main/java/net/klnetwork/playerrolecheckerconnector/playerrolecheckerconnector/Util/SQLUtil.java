@@ -71,7 +71,7 @@ public class SQLUtil {
     }
 
     public static Connection getSQLConnection() throws SQLException {
-        if (connection == null) {
+        if (connection == null || connection.isClosed()) {
             connection = DriverManager.getConnection("jdbc:mysql://" + Server + ":" + Port + "/" + DB + Option, UserName, PassWord);
         }
         return connection;

@@ -1,5 +1,6 @@
 package net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector;
 
+import net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector.Command.JoinMode;
 import net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector.Events.JoinEvent;
 import net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector.JDA.JDA;
 import org.bukkit.Bukkit;
@@ -23,6 +24,7 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin {
         JDA.init();
         list.addAll(plugin.getConfig().getStringList("Discord.RoleID"));
         Bukkit.getPluginManager().registerEvents(new JoinEvent(),this);
+        getCommand("joinmode").setExecutor(new JoinMode());
         // Plugin startup logic
 
     }

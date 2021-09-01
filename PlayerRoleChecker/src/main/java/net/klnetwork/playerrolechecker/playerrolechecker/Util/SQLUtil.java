@@ -1,9 +1,7 @@
 package net.klnetwork.playerrolechecker.playerrolechecker.Util;
 
 
-
 import java.sql.*;
-import java.util.UUID;
 
 import static net.klnetwork.playerrolechecker.playerrolechecker.SQL.*;
 
@@ -72,7 +70,7 @@ public class SQLUtil {
     }
 
     public static Connection getSQLConnection() throws SQLException {
-        if (connection == null) {
+        if (connection == null || connection.isClosed()) {
             connection = DriverManager.getConnection("jdbc:mysql://" + Server + ":" + Port + "/" + DB + Option, UserName, PassWord);
         }
         return connection;

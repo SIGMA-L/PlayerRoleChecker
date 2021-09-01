@@ -1,6 +1,7 @@
 package net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector.Events;
 
 import net.dv8tion.jda.api.entities.Role;
+import net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector.Command.JoinMode;
 import net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector.Util.CheckerUtil;
 import net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector.Util.JDAUtil;
 import net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector.Util.SQLUtil;
@@ -16,6 +17,7 @@ public class JoinEvent implements Listener {
     @EventHandler
     public void JoinEvents(PlayerJoinEvent e) {
         Player player = e.getPlayer();
+        if(!JoinMode.joinMode) return;
         if (!CheckerUtil.CheckPlayer(player.getUniqueId())) {
             player.kickPlayer(ChatColor.GOLD + "あなたには参加権限がありません。\n" + ChatColor.AQUA + "Discordを確認してみてください。");
             return;

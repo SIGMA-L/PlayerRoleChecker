@@ -1,7 +1,6 @@
 package net.klnetwork.playerrolechecker.playerrolechecker.Util;
 
 import java.sql.*;
-import java.util.UUID;
 
 import static net.klnetwork.playerrolechecker.playerrolechecker.SQL.SQLLocate;
 
@@ -78,7 +77,7 @@ public class SQLiteUtil {
     }
 
     public static Connection getSQLiteConnection() throws SQLException {
-        if(connection == null){
+        if(connection == null || connection.isClosed()){
             connection = DriverManager.getConnection("jdbc:sqlite:" + SQLLocate);
         }
     return connection;

@@ -1,3 +1,8 @@
 name: PlayerRoleCheckerConnector
 version: ${project.version}
 main: net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector.PlayerRoleCheckerConnector
+prefix: PRCConnector
+authors: [ SIGMA, Kouta1212 ]
+commands:
+  joinmode:
+    permission: playerrolechecker.op

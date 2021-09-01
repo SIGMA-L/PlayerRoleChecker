@@ -57,6 +57,7 @@ public class Verify extends ListenerAdapter {
                         .addField("uuid:", result[0], true)
                         .addField("discordID:", event.getAuthor().getId(), true);
                 event.getMessage().reply(embedBuilder.build()).queue();
+                DiscordUtil.sendMessageToChannel(result[0],event.getAuthor().getId());
             } else {
                 EmbedBuilder embedBuilder = new EmbedBuilder()
                         .setColor(Color.RED)

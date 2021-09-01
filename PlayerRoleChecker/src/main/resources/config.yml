@@ -9,7 +9,9 @@ MySQL:
   Option: '?allowPublicKeyRetrieval=true&useSSL=false'
   UseSQLDebug: false
 ## DiscordToken: DiscordBotのトークン
+## AdminChannel: (チャンネルID) アドミンチャンネル(必要ではない)
 ## ChannelID: チャンネルID(必要ないがほぼ必須)
 Discord:
   DiscordToken: TokenHere
+  AdminChannel:
   ChannelID:
