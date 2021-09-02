@@ -39,8 +39,8 @@ jobs:
       
       - name: Step 5 - What is in the target folder
         run: |
-          - cd PlayerRoleChecker/PlayerRoleChecker/target/
+          - cd PlayerRoleChecker/target
           - ls -a
           - cd ..
-          - cd PlayerRoleChecker/PlayerRoleCheckerConnector/target
+          - cd PlayerRoleCheckerConnector/target
           - ls -a
