@@ -36,11 +36,3 @@ jobs:
         
       - name: Step 4 - List the current directory
         run: ls -a
-      
-      - name: Step 5 - What is in the target folder
-        run: |
-          - cd PlayerRoleChecker/target
-          - ls -a
-          - cd ..
-          - cd PlayerRoleCheckerConnector/target
-          - ls -a
