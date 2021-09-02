@@ -10,7 +10,11 @@ commands:
       - jm
     description: JoinModeCommand!
   sqldebug:
-    permission: : playerrolechecker.sqldebug
+    permission: playerrolechecker.sqldebug
     aliases:
       - sqld
     description: SQLDebugCommand!
+  addbypass:
+    permission: playerrolechecker.addbypass
+  removebypass:
+    permission: playerrolechecker.removebypass

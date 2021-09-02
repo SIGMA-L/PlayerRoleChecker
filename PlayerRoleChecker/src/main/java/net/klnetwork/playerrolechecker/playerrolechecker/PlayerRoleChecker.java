@@ -22,7 +22,7 @@ public final class PlayerRoleChecker extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        jda.shutdown();
+        if(jda != null) jda.shutdown();
         // Plugin shutdown logic
     }
 }

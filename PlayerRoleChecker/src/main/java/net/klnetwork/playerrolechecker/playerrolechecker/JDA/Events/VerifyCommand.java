@@ -48,7 +48,8 @@ public class VerifyCommand extends ListenerAdapter {
                             .setTitle("リクエストに失敗しました")
                             .addField("理由:", "すでに登録されているようです ", false)
                             .addField("uuid:", alreadyUUID[0], false)
-                            .addField("discordID:", alreadyUUID[1], false);
+                            .addField("discordID:", alreadyUUID[1], false)
+                            .setThumbnail("https://crafatar.com/avatars/" + alreadyUUID[0]);
                     event.getMessage().reply(embedBuilder.build()).queue();
                     return;
                 }
@@ -63,7 +64,7 @@ public class VerifyCommand extends ListenerAdapter {
                 event.getMessage().reply(embedBuilder.build()).queue();
                 DiscordUtil.sendMessageToChannel(result[0], event.getAuthor().getId());
 
-                String roleID = PlayerRoleChecker.plugin.getConfig().getString("addToRole");
+                String roleID = PlayerRoleChecker.plugin.getConfig().getString("Discord.addToRole");
                 if (roleID == null) return;
                 Role role = event.getGuild().getRoleById(roleID);
                 if (role == null || event.getMember() == null) return;

@@ -36,7 +36,8 @@ public class RemoveCommand extends ListenerAdapter {
                                 .setTitle("削除完了！")
                                 .setColor(Color.GREEN)
                                 .addField("UUID", result[0], false)
-                                .addField("Discord:", result[1], false);
+                                .addField("Discord:", result[1], false)
+                                .setThumbnail("https://crafatar.com/avatars/" + result[0]);
                         event.getMessage().reply(embedBuilder.build()).queue();
 
                     } catch (Exception exception) {

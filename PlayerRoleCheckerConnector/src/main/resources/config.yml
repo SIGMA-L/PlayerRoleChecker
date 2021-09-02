@@ -1,3 +1,5 @@
+SQLite:
+  SQLiteLocate: bypass.db
 MySQL:
   Server: 'localhost'
   Port: 3306

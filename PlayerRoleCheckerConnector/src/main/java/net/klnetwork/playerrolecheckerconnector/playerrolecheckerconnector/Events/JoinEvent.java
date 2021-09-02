@@ -5,6 +5,7 @@ import net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector.Comma
 import net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector.Util.CheckerUtil;
 import net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector.Util.JDAUtil;
 import net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector.Util.SQLUtil;
+import net.klnetwork.playerrolecheckerconnector.playerrolecheckerconnector.Util.SQLiteUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,8 +16,13 @@ import java.util.List;
 
 public class JoinEvent implements Listener {
     @EventHandler
-    public void JoinEvents(PlayerJoinEvent e) {
+    public void onPlayerJoinEvent(PlayerJoinEvent e) {
         new Thread(() -> {
+            if(SQLiteUtil.getUUIDFromSQLite(e.getPlayer().getUniqueId().toString()) != null){
+                e.getPlayer().sendMessage(ChatColor.RED + "処理はスキップされました 理由: あなたがバイパスリストに入っているため");
+                return;
+            }
+
             Player player = e.getPlayer();
             if (!JoinMode.joinMode) return;
             if (!CheckerUtil.CheckPlayer(player.getUniqueId())) {
