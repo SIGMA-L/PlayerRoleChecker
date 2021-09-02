@@ -6,7 +6,7 @@ MySQL:
   Database: 'playerrolechecker'
   Username: 'playerrolecheckeruser'
   Password: 'playerrolecheckerpass'
-  Option: '?allowPublicKeyRetrieval=true&useSSL=false'
+  Option: '?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=latin1'
 ## DiscordToken: DiscordBotのトークン
 ## AdminChannel: (チャンネルID) アドミンチャンネル(必要ではない)
 ## ChannelID: チャンネルID(必要ないがほぼ必須)
