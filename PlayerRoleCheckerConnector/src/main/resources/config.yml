@@ -7,7 +7,11 @@ MySQL:
   Option: '?allowPublicKeyRetrieval=true&useSSL=false'
   UseSQLDebug: false
 ## DiscordToken: DiscordBotのトークン
-## GuildID: GuildID(必須ではない)
+## RoleID: RoleID(必須)
+## GuildID: GuildID(後で書くので今は必須ではない)
 Discord:
   DiscordToken: TokenHere
+  GuildID:
   RoleID:
+    - null1
+    - null2
