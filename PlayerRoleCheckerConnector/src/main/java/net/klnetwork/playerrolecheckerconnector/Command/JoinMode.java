@@ -13,6 +13,6 @@ public class JoinMode implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         joinMode = !joinMode;
         sender.sendMessage(ChatColor.GREEN + "[PlayerRoleCheckerConnector]" + joinMode + "に変更しました");
-    return false;
+    return true;
     }
 }

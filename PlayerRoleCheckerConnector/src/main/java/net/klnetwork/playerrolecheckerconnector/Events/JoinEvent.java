@@ -1,4 +1,4 @@
-package net.klnetwork.playerrolecheckerconnector.Command.Events;
+package net.klnetwork.playerrolecheckerconnector.Events;
 
 import net.dv8tion.jda.api.entities.Role;
 import net.klnetwork.playerrolecheckerconnector.Command.JoinMode;
@@ -18,13 +18,14 @@ public class JoinEvent implements Listener {
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent e) {
         new Thread(() -> {
+            Player player = e.getPlayer();
+            if (!JoinMode.joinMode) return;
+
             if(SQLiteUtil.getUUIDFromSQLite(e.getPlayer().getUniqueId().toString()) != null){
-                e.getPlayer().sendMessage(ChatColor.RED + "処理はスキップされました 理由: あなたがバイパスリストに入っているため");
+                player.sendMessage(ChatColor.GREEN + "処理はスキップされました 理由: あなたがバイパスリストに入っているため");
                 return;
             }
 
-            Player player = e.getPlayer();
-            if (!JoinMode.joinMode) return;
             if (!CheckerUtil.CheckPlayer(player.getUniqueId())) {
                 player.kickPlayer(ChatColor.GOLD + "あなたには参加権限がありません。\n" + ChatColor.AQUA + "Discordを確認してみてください。");
                 return;
