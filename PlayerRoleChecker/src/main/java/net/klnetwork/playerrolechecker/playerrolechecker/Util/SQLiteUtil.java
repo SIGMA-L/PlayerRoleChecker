@@ -78,6 +78,11 @@ public class SQLiteUtil {
 
     public static Connection getSQLiteConnection() throws SQLException {
         if(connection == null || connection.isClosed()){
+            try {
+                Class.forName("org.sqlite.JDBC");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
             connection = DriverManager.getConnection("jdbc:sqlite:" + SQLLocate);
         }
     return connection;
