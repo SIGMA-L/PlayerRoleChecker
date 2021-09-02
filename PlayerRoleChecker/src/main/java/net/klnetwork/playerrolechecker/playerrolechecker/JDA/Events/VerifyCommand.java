@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import java.awt.*;
 
 @SuppressWarnings("deprecation")
-public class Verify extends ListenerAdapter {
+public class VerifyCommand extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (!event.getAuthor().isBot() && event.isFromType(ChannelType.TEXT) && DiscordUtil.ChannelChecker(event.getTextChannel().getId())) {

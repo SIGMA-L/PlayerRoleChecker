@@ -2,7 +2,8 @@ package net.klnetwork.playerrolechecker.playerrolechecker.JDA;
 
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
-import net.klnetwork.playerrolechecker.playerrolechecker.JDA.Events.Verify;
+import net.klnetwork.playerrolechecker.playerrolechecker.JDA.Events.RemoveCommand;
+import net.klnetwork.playerrolechecker.playerrolechecker.JDA.Events.VerifyCommand;
 
 import javax.security.auth.login.LoginException;
 
@@ -16,7 +17,7 @@ public class JDA {
         try {
             jda = JDABuilder.createDefault(plugin.getConfig().getString("Discord.DiscordToken"))
                     .setStatus(OnlineStatus.ONLINE)
-                    .addEventListeners(new Verify())
+                    .addEventListeners(new VerifyCommand(),new RemoveCommand())
                     .build();
         } catch (LoginException e) {
             e.printStackTrace();
