@@ -2,6 +2,7 @@ package net.klnetwork.playerrolecheckerconnector.Events;
 
 import net.dv8tion.jda.api.entities.Role;
 import net.klnetwork.playerrolecheckerconnector.Command.JoinMode;
+import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
 import net.klnetwork.playerrolecheckerconnector.Util.CheckerUtil;
 import net.klnetwork.playerrolecheckerconnector.Util.JDAUtil;
 import net.klnetwork.playerrolecheckerconnector.Util.SQLUtil;
@@ -19,33 +20,39 @@ import java.util.List;
 public class JoinEvent implements Listener {
 
     @EventHandler
+    public void onAsyncPreLoginEvent(AsyncPlayerPreLoginEvent e) {
+        if (!JoinMode.joinMode) return;
+
+        //SQLiteUtilはファイル管理であるため、非同期である必要はありません(位置的にここに必要)
+        if (SQLiteUtil.getUUIDFromSQLite(e.getUniqueId().toString()) != null) {
+            return;
+        }
+
+        if (!CheckerUtil.CheckPlayer(e.getUniqueId())) {
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, ChatColor.GOLD + "あなたには参加権限がありません。\n" + ChatColor.AQUA + "Discordを確認してみてください。");
+        }
+    }
+
+    @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent e) {
         Player player = e.getPlayer();
+        Bukkit.getScheduler().runTaskAsynchronously(PlayerRoleCheckerConnector.plugin, () -> {
 
-        if (SQLiteUtil.getUUIDFromSQLite(player.getUniqueId().toString()) != null) {
-            player.sendMessage(ChatColor.GREEN + "処理はスキップされました 理由: あなたがバイパスリストに入っているため");
-            return;
-        }
+            e.setJoinMessage(player.getName() + "がログインしました。");
+            player.sendMessage(ChatColor.GOLD + "ご苦労さまです。" + ChatColor.AQUA + player.getName() + ChatColor.WHITE + "さん。");
+            player.sendMessage(ChatColor.GREEN + "-----------------情報------------------");
+            player.sendMessage("MinecraftName: " + e.getPlayer().getName());
+            String[] result = SQLUtil.getDiscordFromSQL(e.getPlayer().getUniqueId().toString());
+            player.sendMessage("DiscordID: " + result[1]);
 
-        if (!CheckerUtil.CheckPlayer(player.getUniqueId())) {
-            player.kickPlayer(ChatColor.GOLD + "あなたには参加権限がありません。\n" + ChatColor.AQUA + "Discordを確認してみてください。");
-            return;
-        }
-
-        e.setJoinMessage(player.getName() + "がログインしました。");
-        player.sendMessage(ChatColor.GOLD + "ご苦労さまです。" + ChatColor.AQUA + player.getName() + ChatColor.WHITE + "さん。");
-        player.sendMessage(ChatColor.GREEN + "-----------------情報------------------");
-        player.sendMessage("MinecraftName: " + e.getPlayer().getName());
-        String[] result = SQLUtil.getDiscordFromSQL(e.getPlayer().getUniqueId().toString());
-        player.sendMessage("DiscordID: " + result[1]);
-
-        StringBuilder stringBuilder = new StringBuilder();
-        List<Role> roleList = JDAUtil.getRolesById(result[1]);
-        if (roleList == null) return;
-        for (Role role : roleList) {
-            stringBuilder.append(role.getName()).append(" ");
-        }
-        player.sendMessage("DiscordRole: " + stringBuilder);
-        player.sendMessage(ChatColor.GREEN + "-------------------------------------");
+            StringBuilder stringBuilder = new StringBuilder();
+            List<Role> roleList = JDAUtil.getRolesById(result[1]);
+            if (roleList == null) return;
+            for (Role role : roleList) {
+                stringBuilder.append(role.getName()).append(" ");
+            }
+            player.sendMessage("DiscordRole: " + stringBuilder);
+            player.sendMessage(ChatColor.GREEN + "-------------------------------------");
+        });
     }
 }

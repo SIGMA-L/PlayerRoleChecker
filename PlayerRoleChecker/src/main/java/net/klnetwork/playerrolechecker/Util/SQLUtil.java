@@ -38,7 +38,7 @@ public class SQLUtil {
 
 
     public static void putSQL(String uuid, String discord) {
-        new Thread(()-> {
+        new Thread(() -> {
             try {
                 PreparedStatement preparedStatement = getSQLConnection().prepareStatement("insert into verifyplayer values (?,?)");
                 preparedStatement.setString(1, uuid);
@@ -54,7 +54,7 @@ public class SQLUtil {
     }
 
     public static void removeSQL(String uuid, String discord) {
-        new Thread(()-> {
+        new Thread(() -> {
             try {
                 PreparedStatement preparedStatement = getSQLConnection().prepareStatement("delete from verifyplayer where uuid = ? and discord = ?");
                 preparedStatement.setString(1, uuid);
@@ -72,10 +72,11 @@ public class SQLUtil {
     public static Connection getSQLConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
             try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
+                Class.forName("com.mysql.jdbc.Driver");
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
+
             connection = DriverManager.getConnection("jdbc:mysql://" + Server + ":" + Port + "/" + DB + Option, UserName, PassWord);
         }
         return connection;
