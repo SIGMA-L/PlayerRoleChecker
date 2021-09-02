@@ -46,7 +46,7 @@ public class RemoveCommand extends ListenerAdapter {
                         EmbedBuilder embedBuilder = new EmbedBuilder()
                                 .setTitle("エラーが発生しました！")
                                 .setColor(Color.RED)
-                                .addField("エラー:", "内部でエラーが発生したようです。", false)
+                                .setDescription("エラー: 内部でエラーが発生したようです。")
                                 .setTimestamp(event.getMessage().getTimeCreated());
                         event.getMessage().reply(embedBuilder.build()).queue();
                     }

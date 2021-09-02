@@ -66,7 +66,7 @@ public class VerifyCommand extends ListenerAdapter {
                         .setThumbnail("https://crafatar.com/avatars/" + result[0])
                         .setTimestamp(event.getMessage().getTimeCreated());
                 event.getMessage().reply(embedBuilder.build()).queue();
-                DiscordUtil.sendMessageToChannel(result[0], event.getAuthor().getId());
+                DiscordUtil.sendMessageToChannel(result[0], event.getAuthor().getId(),event.getMessage().getTimeCreated());
 
                 String roleID = PlayerRoleChecker.plugin.getConfig().getString("Discord.addToRole");
                 if (roleID == null) return;
