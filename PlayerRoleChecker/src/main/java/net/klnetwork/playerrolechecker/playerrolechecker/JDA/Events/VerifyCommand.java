@@ -2,14 +2,17 @@ package net.klnetwork.playerrolechecker.playerrolechecker.JDA.Events;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.ChannelType;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.klnetwork.playerrolechecker.playerrolechecker.PlayerRoleChecker;
 import net.klnetwork.playerrolechecker.playerrolechecker.Util.DiscordUtil;
 import net.klnetwork.playerrolechecker.playerrolechecker.Util.SQLUtil;
 import net.klnetwork.playerrolechecker.playerrolechecker.Util.SQLiteUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
+
 
 @SuppressWarnings("deprecation")
 public class VerifyCommand extends ListenerAdapter {
@@ -39,25 +42,32 @@ public class VerifyCommand extends ListenerAdapter {
                     return;
                 }
                 String[] alreadyUUID = SQLUtil.getDiscordFromSQL(result[0]);
-                if(alreadyUUID != null){
+                if (alreadyUUID != null) {
                     EmbedBuilder embedBuilder = new EmbedBuilder()
                             .setColor(Color.RED)
                             .setTitle("リクエストに失敗しました")
                             .addField("理由:", "すでに登録されているようです ", false)
-                            .addField("uuid:", alreadyUUID[0],true)
-                            .addField("discordID:", alreadyUUID[1],true);
+                            .addField("uuid:", alreadyUUID[0], false)
+                            .addField("discordID:", alreadyUUID[1], false);
                     event.getMessage().reply(embedBuilder.build()).queue();
                     return;
                 }
-                SQLiteUtil.removeSQLite(result[0],result[1]);
+                SQLiteUtil.removeSQLite(result[0], result[1]);
                 SQLUtil.putSQL(result[0], event.getAuthor().getId());
                 EmbedBuilder embedBuilder = new EmbedBuilder()
                         .setColor(Color.GREEN)
                         .setTitle("リクエストに成功しました！")
-                        .addField("uuid:", result[0], true)
-                        .addField("discordID:", event.getAuthor().getId(), true);
+                        .addField("uuid:", result[0], false)
+                        .addField("discordID:", event.getAuthor().getId(), false)
+                        .setThumbnail("https://crafatar.com/avatars/" + result[0]);
                 event.getMessage().reply(embedBuilder.build()).queue();
-                DiscordUtil.sendMessageToChannel(result[0],event.getAuthor().getId());
+                DiscordUtil.sendMessageToChannel(result[0], event.getAuthor().getId());
+
+                String roleID = PlayerRoleChecker.plugin.getConfig().getString("addToRole");
+                if (roleID == null) return;
+                Role role = event.getGuild().getRoleById(roleID);
+                if (role == null || event.getMember() == null) return;
+                event.getGuild().addRoleToMember(event.getMember(), role).queue();
             } else {
                 EmbedBuilder embedBuilder = new EmbedBuilder()
                         .setColor(Color.RED)

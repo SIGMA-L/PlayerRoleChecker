@@ -18,7 +18,8 @@ public class DiscordUtil {
             EmbedBuilder embedBuilder = new EmbedBuilder()
                     .setTitle("登録が完了したようです！")
                     .addField("UUID:", uuid, false)
-                    .addField("DiscordID:", discordID, false);
+                    .addField("DiscordID:", discordID, false)
+                    .setThumbnail("https://crafatar.com/avatars/" + uuid);
             JDA.jda.getTextChannelById(getTextChannelById).sendMessage(embedBuilder.build()).queue();
         }catch (Exception exception){
             System.out.println("[エラーが発生しました] sendMessageToChannel メソッドを確認してください (PlayerRoleChecker)");

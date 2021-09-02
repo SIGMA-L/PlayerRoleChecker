@@ -10,7 +10,9 @@ MySQL:
 ## DiscordToken: DiscordBotのトークン
 ## AdminChannel: (チャンネルID) アドミンチャンネル(必要ではない)
 ## ChannelID: チャンネルID(必要ないがほぼ必須)
+## addToRole: 登録が完了したらつけるロール (1個のみ）
 Discord:
   DiscordToken: TokenHere
   AdminChannel:
   ChannelID:
+  addToRole:
