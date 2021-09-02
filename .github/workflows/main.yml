@@ -38,7 +38,7 @@ jobs:
         run: ls -a
         
       - name: Step 5 - List the target directory
-      - run: |
+        run: |
           - cd /
           - cd /home/runner/work/PlayerRoleChecker/PlayerRoleChecker/PlayerRoleChecker/target
           - ls -a
