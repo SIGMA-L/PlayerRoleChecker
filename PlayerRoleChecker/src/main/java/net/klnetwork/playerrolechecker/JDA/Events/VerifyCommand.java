@@ -28,7 +28,8 @@ public class VerifyCommand extends ListenerAdapter {
                     EmbedBuilder embedBuilder = new EmbedBuilder()
                             .setColor(Color.RED)
                             .setTitle("リクエストに失敗しました")
-                            .addField("理由:", "数字ではありません", false);
+                            .setDescription("理由: 数字ではありません")
+                            .setTimestamp(event.getMessage().getTimeCreated());
                     event.getMessage().reply(embedBuilder.build()).queue();
                     return;
                 }
@@ -37,7 +38,8 @@ public class VerifyCommand extends ListenerAdapter {
                     EmbedBuilder embedBuilder = new EmbedBuilder()
                             .setColor(Color.RED)
                             .setTitle("リクエストに失敗しました")
-                            .addField("理由:", "不明な数字です", false);
+                            .setDescription("理由: 不明な数字です")
+                            .setTimestamp(event.getMessage().getTimeCreated());
                     event.getMessage().reply(embedBuilder.build()).queue();
                     return;
                 }
@@ -46,10 +48,11 @@ public class VerifyCommand extends ListenerAdapter {
                     EmbedBuilder embedBuilder = new EmbedBuilder()
                             .setColor(Color.RED)
                             .setTitle("リクエストに失敗しました")
-                            .addField("理由:", "すでに登録されているようです ", false)
+                            .setDescription("理由: すでに登録されているようです")
                             .addField("uuid:", alreadyUUID[0], false)
                             .addField("discordID:", alreadyUUID[1], false)
-                            .setThumbnail("https://crafatar.com/avatars/" + alreadyUUID[0]);
+                            .setThumbnail("https://crafatar.com/avatars/" + alreadyUUID[0])
+                            .setTimestamp(event.getMessage().getTimeCreated());
                     event.getMessage().reply(embedBuilder.build()).queue();
                     return;
                 }
@@ -60,7 +63,8 @@ public class VerifyCommand extends ListenerAdapter {
                         .setTitle("リクエストに成功しました！")
                         .addField("uuid:", result[0], false)
                         .addField("discordID:", event.getAuthor().getId(), false)
-                        .setThumbnail("https://crafatar.com/avatars/" + result[0]);
+                        .setThumbnail("https://crafatar.com/avatars/" + result[0])
+                        .setTimestamp(event.getMessage().getTimeCreated());
                 event.getMessage().reply(embedBuilder.build()).queue();
                 DiscordUtil.sendMessageToChannel(result[0], event.getAuthor().getId());
 
@@ -73,7 +77,8 @@ public class VerifyCommand extends ListenerAdapter {
                 EmbedBuilder embedBuilder = new EmbedBuilder()
                         .setColor(Color.RED)
                         .setTitle("リクエストに失敗しました")
-                        .addField("理由:", "length <= 2", false);
+                        .setDescription("理由: length <= 2")
+                        .setTimestamp(event.getMessage().getTimeCreated());
                 event.getMessage().reply(embedBuilder.build()).queue();
             }
         }

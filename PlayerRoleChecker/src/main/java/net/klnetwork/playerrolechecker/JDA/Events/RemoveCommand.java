@@ -26,8 +26,9 @@ public class RemoveCommand extends ListenerAdapter {
                             EmbedBuilder embedBuilder = new EmbedBuilder()
                                     .setTitle("エラーが発生しました！")
                                     .setColor(Color.RED)
-                                    .addField("エラー:", "このUUIDはSQL内に登録されてないようです", false)
-                                    .addField("追加情報(UUID):", uuid, false);
+                                    .setDescription("エラー: このUUIDはSQL内に登録されてないようです")
+                                    .addField("追加情報(UUID):", uuid, false)
+                                    .setTimestamp(event.getMessage().getTimeCreated());
                             event.getMessage().reply(embedBuilder.build()).queue();
                             return;
                         }
@@ -37,14 +38,16 @@ public class RemoveCommand extends ListenerAdapter {
                                 .setColor(Color.GREEN)
                                 .addField("UUID", result[0], false)
                                 .addField("Discord:", result[1], false)
-                                .setThumbnail("https://crafatar.com/avatars/" + result[0]);
+                                .setThumbnail("https://crafatar.com/avatars/" + result[0])
+                                .setTimestamp(event.getMessage().getTimeCreated());
                         event.getMessage().reply(embedBuilder.build()).queue();
 
                     } catch (Exception exception) {
                         EmbedBuilder embedBuilder = new EmbedBuilder()
                                 .setTitle("エラーが発生しました！")
                                 .setColor(Color.RED)
-                                .addField("エラー:", "内部でエラーが発生したようです。", false);
+                                .addField("エラー:", "内部でエラーが発生したようです。", false)
+                                .setTimestamp(event.getMessage().getTimeCreated());
                         event.getMessage().reply(embedBuilder.build()).queue();
                     }
                 }
