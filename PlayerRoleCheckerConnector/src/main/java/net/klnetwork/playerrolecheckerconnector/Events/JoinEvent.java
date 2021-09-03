@@ -36,13 +36,12 @@ public class JoinEvent implements Listener {
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent e) {
         Player player = e.getPlayer();
+        e.setJoinMessage(e.getPlayer().getName() + "がログインしました。");
         Bukkit.getScheduler().runTaskAsynchronously(PlayerRoleCheckerConnector.plugin, () -> {
-
-            e.setJoinMessage(player.getName() + "がログインしました。");
             player.sendMessage(ChatColor.GOLD + "ご苦労さまです。" + ChatColor.AQUA + player.getName() + ChatColor.WHITE + "さん。");
             player.sendMessage(ChatColor.GREEN + "-----------------情報------------------");
-            player.sendMessage("MinecraftName: " + e.getPlayer().getName());
-            String[] result = SQLUtil.getDiscordFromSQL(e.getPlayer().getUniqueId().toString());
+            player.sendMessage("MinecraftName: " + player.getName());
+            String[] result = SQLUtil.getDiscordFromSQL(player.getUniqueId().toString());
             player.sendMessage("DiscordID: " + result[1]);
 
             StringBuilder stringBuilder = new StringBuilder();

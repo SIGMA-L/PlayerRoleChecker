@@ -3,8 +3,10 @@ package net.klnetwork.playerrolechecker.JDA.Events;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.ChannelType;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.klnetwork.playerrolechecker.PlayerRoleChecker;
 import net.klnetwork.playerrolechecker.Util.SQLUtil;
 import net.klnetwork.playerrolechecker.Util.UUIDUtil;
 import org.jetbrains.annotations.NotNull;
@@ -42,6 +44,12 @@ public class RemoveCommand extends ListenerAdapter {
                                 .setTimestamp(event.getMessage().getTimeCreated());
                         event.getMessage().reply(embedBuilder.build()).queue();
 
+
+                        String roleID = PlayerRoleChecker.plugin.getConfig().getString("Discord.addToRole");
+                        if (roleID == null) return;
+                        Role role = event.getGuild().getRoleById(roleID);
+                        if (role == null || event.getMember() == null) return;
+                        event.getGuild().removeRoleFromMember(event.getMember(), role).queue();
                     } catch (Exception exception) {
                         EmbedBuilder embedBuilder = new EmbedBuilder()
                                 .setTitle("エラーが発生しました！")
