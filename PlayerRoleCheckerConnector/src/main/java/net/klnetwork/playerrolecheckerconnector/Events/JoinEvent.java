@@ -36,7 +36,7 @@ public class JoinEvent implements Listener {
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent e) {
         Player player = e.getPlayer();
-        e.setJoinMessage(e.getPlayer().getName() + "がログインしました。");
+        e.setJoinMessage(ChatColor.GREEN + e.getPlayer().getName() + ChatColor.WHITE + "が入室しました");
         Bukkit.getScheduler().runTaskAsynchronously(PlayerRoleCheckerConnector.plugin, () -> {
             player.sendMessage(ChatColor.GOLD + "ご苦労さまです。" + ChatColor.AQUA + player.getName() + ChatColor.WHITE + "さん。");
             player.sendMessage(ChatColor.GREEN + "-----------------情報------------------");

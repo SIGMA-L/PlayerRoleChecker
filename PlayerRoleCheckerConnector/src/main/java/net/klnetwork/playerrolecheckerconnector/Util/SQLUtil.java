@@ -1,9 +1,6 @@
 package net.klnetwork.playerrolecheckerconnector.Util;
 
 
-import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
-import org.bukkit.Bukkit;
-
 import java.sql.*;
 
 import static net.klnetwork.playerrolecheckerconnector.SQL.*;
