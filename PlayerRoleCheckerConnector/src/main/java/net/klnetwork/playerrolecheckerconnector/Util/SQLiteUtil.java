@@ -10,17 +10,21 @@ public class SQLiteUtil {
     private static Connection connection;
 
     public static String getUUIDFromSQLite(String uuid) {
+        String result = null;
         try {
             PreparedStatement preparedStatement = getSQLiteConnection().prepareStatement("select * from bypass where uuid = ?");
             preparedStatement.setString(1, uuid);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()) return resultSet.getString(1);
+            if(resultSet.next()) result = resultSet.getString(1);
+
+            preparedStatement.close();
+            //PreparedStatementが閉じたらResultSetは閉じるはず
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return null;
+        return result;
     }
 
     public static void putSQLite(String uuid) {

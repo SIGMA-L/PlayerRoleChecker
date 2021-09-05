@@ -11,31 +11,39 @@ public class SQLUtil {
     private static Connection connection;
 
     public static String[] getDiscordFromSQL(String uuid) {
+        String[] result = null;
         try {
             PreparedStatement preparedStatement = getSQLConnection().prepareStatement("select * from verifyplayer where uuid = ?");
             preparedStatement.setString(1, uuid);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) return new String[]{resultSet.getString(1), resultSet.getString(2)};
+            if (resultSet.next()) result = new String[]{resultSet.getString(1), resultSet.getString(2)};
+
+            preparedStatement.close();
+            //PreparedStatementが閉じたらResultSetは閉じるはず
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return null;
+        return result;
     }
 
     public static String[] getUUIDFromSQL(String discord) {
+        String[] result = null;
         try {
             PreparedStatement preparedStatement = getSQLConnection().prepareStatement("select * from verifyplayer where discord = ?");
             preparedStatement.setString(1, discord);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) return new String[]{resultSet.getString(1), resultSet.getString(2)};
+            if (resultSet.next()) result = new String[]{resultSet.getString(1), resultSet.getString(2)};
+
+            preparedStatement.close();
+            //PreparedStatementが閉じたらResultSetは閉じるはず
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return null;
+        return result;
     }
 
     public static void putSQL(String uuid, String discord) {
