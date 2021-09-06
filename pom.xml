@@ -15,6 +15,7 @@
     <modules>
         <module>PlayerRoleChecker</module>
         <module>PlayerRoleCheckerConnector</module>
+        <module>CodeAPI</module>
     </modules>
 
     <properties>

@@ -1,0 +1,5 @@
+name: CodeAPI
+version: ${project.version}
+main: net.klnetwork.codeapi
+prefix: PRC
+authors: [ SIGMA, Kouta1212 ]
