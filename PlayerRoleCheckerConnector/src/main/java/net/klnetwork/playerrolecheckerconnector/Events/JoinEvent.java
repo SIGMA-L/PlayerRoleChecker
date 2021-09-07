@@ -42,6 +42,7 @@ public class JoinEvent implements Listener {
             player.sendMessage(ChatColor.GREEN + "-----------------情報------------------");
             player.sendMessage("MinecraftName: " + player.getName());
             String[] result = SQLUtil.getDiscordFromSQL(player.getUniqueId().toString());
+            if(result == null) return;
             player.sendMessage("DiscordID: " + result[1]);
 
             StringBuilder stringBuilder = new StringBuilder();
