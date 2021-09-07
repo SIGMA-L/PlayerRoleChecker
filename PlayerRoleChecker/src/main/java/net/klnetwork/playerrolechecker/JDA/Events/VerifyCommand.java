@@ -58,7 +58,7 @@ public class VerifyCommand extends ListenerAdapter {
                 }
                 SQLiteUtil.removeSQLite(result[0], result[1]);
                 SQLUtil.putSQL(result[0], event.getAuthor().getId());
-                
+
                 EmbedBuilder embedBuilder = new EmbedBuilder()
                         .setColor(Color.GREEN)
                         .setTitle("リクエストに成功しました！")
@@ -71,7 +71,7 @@ public class VerifyCommand extends ListenerAdapter {
                 EmbedBuilder sendMessage = new EmbedBuilder()
                         .setTitle("登録が完了したようです！")
                         .addField("UUID:", result[0], false)
-                        .addField("DiscordID:", result[1], false)
+                        .addField("DiscordID:", event.getAuthor().getId(), false)
                         .setThumbnail("https://crafatar.com/avatars/" + result[0])
                         .setTimestamp(event.getMessage().getTimeCreated());
 
