@@ -3,6 +3,7 @@ package net.klnetwork.playerrolechecker.Util;
 
 import java.sql.*;
 
+import static net.klnetwork.playerrolechecker.PlayerRoleChecker.plugin;
 import static net.klnetwork.playerrolechecker.SQL.*;
 
 public class SQLUtil {
@@ -87,8 +88,7 @@ public class SQLUtil {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-
-            connection = DriverManager.getConnection("jdbc:mysql://" + Server + ":" + Port + "/" + DB + Option, UserName, PassWord);
+            connection = DriverManager.getConnection("jdbc:mysql://" + plugin.getConfig().getString("MySQL.Server") + ":" + plugin.getConfig().getInt("MySQL.Port") + "/" + plugin.getConfig().getString("MySQL.Database") + plugin.getConfig().getString("MySQL.Option"), plugin.getConfig().getString("MySQL.Username"), plugin.getConfig().getString("MySQL.Password"));
         }
         return connection;
     }

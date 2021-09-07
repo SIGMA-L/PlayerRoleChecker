@@ -1,8 +1,8 @@
 package net.klnetwork.playerrolecheckerconnector.Util;
 
-import net.klnetwork.playerrolecheckerconnector.SQL;
-
 import java.sql.*;
+
+import static net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector.plugin;
 
 
 public class SQLiteUtil {
@@ -60,7 +60,7 @@ public class SQLiteUtil {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            connection = DriverManager.getConnection("jdbc:sqlite:" + SQL.SQLiteLocate);
+            connection = DriverManager.getConnection("jdbc:sqlite:" + plugin.getConfig().getString("SQLite.SQLiteLocate"));
         }
     return connection;
     }

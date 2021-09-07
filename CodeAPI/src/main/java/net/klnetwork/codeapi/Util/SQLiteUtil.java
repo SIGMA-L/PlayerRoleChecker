@@ -1,6 +1,6 @@
 package net.klnetwork.codeapi.Util;
 
-import net.klnetwork.codeapi.PlayerRoleChecker;
+import net.klnetwork.codeapi.CodeAPI;
 
 import java.sql.*;
 
@@ -97,7 +97,7 @@ public class SQLiteUtil {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            connection = DriverManager.getConnection("jdbc:sqlite:" + PlayerRoleChecker.plugin.getConfig().getString("SQLite.SQLiteLocate"));
+            connection = DriverManager.getConnection("jdbc:sqlite:" + CodeAPI.plugin.getConfig().getString("SQLite.SQLiteLocate"));
         }
     return connection;
     }
