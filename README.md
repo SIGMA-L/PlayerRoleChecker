@@ -52,3 +52,17 @@
 ## LICENSE
 
 [Apache License 2.0](https://github.com/SIGMA-L/PlayerRoleChecker/blob/main/LICENSE)
+
+
+## CodeAPI
+
+**開発者だけの特別なプラグイン**
+
+- WebAPIを使ってプレイヤーの情報を取得します
+
+```
+値 UUID が返ってきます
+
+http://localhost:8080/api/get/?code=codehere
+http://localhost:8080/api/post/?code=codehere
+```
