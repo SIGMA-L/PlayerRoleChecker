@@ -60,6 +60,8 @@
 
 - WebAPIを使ってプレイヤーの情報を取得します
 
+- MySQL DiscordBotTokenは必要ありません
+
 ```
 値 UUID が返ってきます
 
