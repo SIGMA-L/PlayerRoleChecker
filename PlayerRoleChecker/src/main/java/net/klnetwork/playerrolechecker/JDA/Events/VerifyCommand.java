@@ -58,18 +58,7 @@ public class VerifyCommand extends ListenerAdapter {
                 }
                 SQLiteUtil.removeSQLite(result[0], result[1]);
                 SQLUtil.putSQL(result[0], event.getAuthor().getId());
-
-                String[] putResult = SQLUtil.getUUIDFromSQL(event.getAuthor().getId());
-                if(putResult == null){
-                    EmbedBuilder embedBuilder = new EmbedBuilder()
-                            .setColor(Color.RED)
-                            .setTitle("SQL内でエラーが発生したようです・・・")
-                            .setDescription("理由: 管理者に連絡してください")
-                            .setTimestamp(event.getMessage().getTimeCreated());
-                    event.getMessage().reply(embedBuilder.build()).queue();
-                    return;
-                }
-
+                
                 EmbedBuilder embedBuilder = new EmbedBuilder()
                         .setColor(Color.GREEN)
                         .setTitle("リクエストに成功しました！")
