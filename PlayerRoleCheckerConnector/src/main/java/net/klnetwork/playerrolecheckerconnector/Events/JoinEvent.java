@@ -45,6 +45,8 @@ public class JoinEvent implements Listener {
             if(result == null) return;
             player.sendMessage("DiscordID: " + result[1]);
 
+
+            //ロールを取る機構がasync含めて2回になっている、ラグの原因になるから改善してもいいかも
             StringBuilder stringBuilder = new StringBuilder();
             List<Role> roleList = JDAUtil.getRolesById(result[1]);
             if (roleList == null) return;
