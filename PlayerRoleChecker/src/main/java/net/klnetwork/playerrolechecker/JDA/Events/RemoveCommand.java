@@ -7,8 +7,8 @@ import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
+import net.klnetwork.playerrolechecker.Util.OtherUtil;
 import net.klnetwork.playerrolechecker.Util.SQLUtil;
-import net.klnetwork.playerrolechecker.Util.UUIDUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
@@ -22,7 +22,7 @@ public class RemoveCommand extends ListenerAdapter {
                 String[] args = event.getMessage().getContentRaw().split("\\s+");
                 if (args.length == 2 && args[0].equals("!remove")) {
                     try {
-                        String uuid = UUIDUtil.getUUID(args[1]).toString();
+                        String uuid = OtherUtil.getUUID(args[1]).toString();
                         String[] result = SQLUtil.getDiscordFromSQL(uuid);
                         if (result == null) {
                             EmbedBuilder embedBuilder = new EmbedBuilder()

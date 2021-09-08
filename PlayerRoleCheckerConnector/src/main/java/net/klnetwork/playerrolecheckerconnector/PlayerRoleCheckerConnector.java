@@ -20,6 +20,8 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin {
 
     public static Plugin plugin;
     public static List<String> list = new ArrayList<>();
+    public static List<String> commandlist = new ArrayList<>();
+
 
     @Override
     public void onEnable() {
@@ -29,6 +31,7 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin {
         SQL.init();
         JDA.init();
         list.addAll(plugin.getConfig().getStringList("Discord.RoleID"));
+        commandlist.addAll(plugin.getConfig().getStringList("JoinCommand"));
         Bukkit.getPluginManager().registerEvents(new JoinEvent(),this);
         getCommand("joinmode").setExecutor(new JoinMode());
         getCommand("addbypass").setExecutor(new AddBypass());

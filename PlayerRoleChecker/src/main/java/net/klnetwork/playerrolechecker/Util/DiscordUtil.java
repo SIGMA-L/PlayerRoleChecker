@@ -21,6 +21,4 @@ public class DiscordUtil {
             System.out.println("[エラーが発生しました] sendMessageToChannel メソッドを確認してください (PlayerRoleChecker)");
         }
     }
-
-
 }

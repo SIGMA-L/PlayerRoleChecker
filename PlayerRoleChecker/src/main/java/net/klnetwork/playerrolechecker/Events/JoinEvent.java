@@ -1,8 +1,8 @@
 package net.klnetwork.playerrolechecker.Events;
 
 import net.klnetwork.playerrolechecker.API.CodeUtil;
+import net.klnetwork.playerrolechecker.Util.OtherUtil;
 import net.klnetwork.playerrolechecker.Util.SQLiteUtil;
-import net.klnetwork.playerrolechecker.Util.Timer;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,6 +17,6 @@ public class JoinEvent implements Listener {
             return;
         }
         e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST, ChatColor.RED + "あなたのコードは \n「" + CodeUtil.CodeIssue(e.getUniqueId()) + "」 です 5分以内に認証してください");
-        new Timer().waitTimer(e.getUniqueId());
+        new OtherUtil().waitTimer(e.getUniqueId());
     }
 }

@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.entities.Role;
 import net.klnetwork.playerrolecheckerconnector.Command.JoinMode;
 import net.klnetwork.playerrolecheckerconnector.JDA.JDA;
 import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
-import net.klnetwork.playerrolecheckerconnector.Util.CheckerUtil;
+import net.klnetwork.playerrolecheckerconnector.Util.OtherUtil;
 import net.klnetwork.playerrolecheckerconnector.Util.SQLUtil;
 import net.klnetwork.playerrolecheckerconnector.Util.SQLiteUtil;
 import org.bukkit.Bukkit;
@@ -29,7 +29,7 @@ public class JoinEvent implements Listener {
             return;
         }
 
-        if (!CheckerUtil.CheckPlayer(e.getUniqueId())) {
+        if (!OtherUtil.CheckPlayer(e.getUniqueId())) {
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, ChatColor.GOLD + "あなたには参加権限がありません。\n" + ChatColor.AQUA + "Discordを確認してみてください。");
         }
     }
@@ -59,5 +59,6 @@ public class JoinEvent implements Listener {
             player.sendMessage("DiscordRole: " + stringBuilder);
             player.sendMessage(ChatColor.GREEN + "-------------------------------------");
         });
+        PlayerRoleCheckerConnector.commandlist.forEach(i -> Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(),OtherUtil.ReplaceString(i,player)));
     }
 }

@@ -8,6 +8,11 @@ MySQL:
   Password: 'playerrolecheckerpass'
   Option: '?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=latin1&autoReconnect=true'
   UseSQLDebug: false
+## JoinCommand:
+## %name% - プレイヤー名
+## %uuid% - UUID
+JoinCommand:
+  - ''
 ## DiscordToken: DiscordBotのトークン
 ## RoleID: RoleID(必須)
 ## GuildID: GuildID(後で書くので今は必須ではない)
