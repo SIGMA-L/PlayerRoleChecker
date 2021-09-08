@@ -9,13 +9,11 @@ import java.util.List;
 
 
 public class JDAUtil {
+
     public static List<Role> getRolesById(String id){
         String GuildID = PlayerRoleCheckerConnector.plugin.getConfig().getString("GuildID");
-        if (GuildID != null) {
-            return JDA.jda.getGuildById(GuildID).retrieveMemberById(id).complete().getRoles();
-        }else {
-            for (Guild guild : JDA.jda.getGuilds()) return guild.retrieveMemberById(id).complete().getRoles();
-        }
+        if (GuildID != null) return JDA.jda.getGuildById(GuildID).retrieveMemberById(id).complete().getRoles();
+        else for (Guild guild : JDA.jda.getGuilds()) return guild.retrieveMemberById(id).complete().getRoles();
         return null;
     }
 }

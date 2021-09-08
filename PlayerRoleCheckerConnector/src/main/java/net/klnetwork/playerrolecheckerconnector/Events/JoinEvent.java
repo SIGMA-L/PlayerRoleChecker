@@ -1,10 +1,11 @@
 package net.klnetwork.playerrolecheckerconnector.Events;
 
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Role;
 import net.klnetwork.playerrolecheckerconnector.Command.JoinMode;
+import net.klnetwork.playerrolecheckerconnector.JDA.JDA;
 import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
 import net.klnetwork.playerrolecheckerconnector.Util.CheckerUtil;
-import net.klnetwork.playerrolecheckerconnector.Util.JDAUtil;
 import net.klnetwork.playerrolecheckerconnector.Util.SQLUtil;
 import net.klnetwork.playerrolecheckerconnector.Util.SQLiteUtil;
 import org.bukkit.Bukkit;
@@ -45,11 +46,13 @@ public class JoinEvent implements Listener {
             if(result == null) return;
             player.sendMessage("DiscordID: " + result[1]);
 
+            List<Role> roleList = null;
+            String GuildID = PlayerRoleCheckerConnector.plugin.getConfig().getString("GuildID");
+            if (GuildID != null) roleList = JDA.jda.getGuildById(GuildID).getMemberById(result[1]).getRoles();
+            else for (Guild guild : JDA.jda.getGuilds()) roleList = guild.getMemberById(result[1]).getRoles();
 
-            //ロールを取る機構がasync含めて2回になっている、ラグの原因になるから改善してもいいかも
-            StringBuilder stringBuilder = new StringBuilder();
-            List<Role> roleList = JDAUtil.getRolesById(result[1]);
             if (roleList == null) return;
+            StringBuilder stringBuilder = new StringBuilder();
             for (Role role : roleList) {
                 stringBuilder.append(role.getName()).append(" ");
             }
