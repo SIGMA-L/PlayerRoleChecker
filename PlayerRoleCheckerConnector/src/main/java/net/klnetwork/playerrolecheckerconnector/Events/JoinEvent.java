@@ -43,15 +43,21 @@ public class JoinEvent implements Listener {
             player.sendMessage(ChatColor.GREEN + "-----------------情報------------------");
             player.sendMessage("MinecraftName: " + player.getName());
             String[] result = SQLUtil.getDiscordFromSQL(player.getUniqueId().toString());
-            if(result == null) return;
+            if(result == null) {
+                player.sendMessage(ChatColor.GREEN + "-------------------------------------");
+                return;
+            }
             player.sendMessage("DiscordID: " + result[1]);
 
             List<Role> roleList = null;
             String GuildID = PlayerRoleCheckerConnector.plugin.getConfig().getString("GuildID");
-            if (GuildID != null) roleList = JDA.jda.getGuildById(GuildID).getMemberById(result[1]).getRoles();
-            else for (Guild guild : JDA.jda.getGuilds()) roleList = guild.getMemberById(result[1]).getRoles();
+            if (GuildID != null) roleList = JDA.jda.getGuildById(GuildID).retrieveMemberById(result[1]).complete().getRoles();
+            else for (Guild guild : JDA.jda.getGuilds()) roleList = guild.retrieveMemberById(result[1]).complete().getRoles();
 
-            if (roleList == null) return;
+            if (roleList == null) {
+                player.sendMessage(ChatColor.GREEN + "-------------------------------------");
+                return;
+            }
             StringBuilder stringBuilder = new StringBuilder();
             for (Role role : roleList) {
                 stringBuilder.append(role.getName()).append(" ");
