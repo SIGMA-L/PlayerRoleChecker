@@ -16,3 +16,127 @@ Discord:
   AdminChannel:
   ChannelID:
   addToRole:
+## Message: 色々なメッセージをカスタマイズできます
+## JoinEvent: マインクラフトユーザーがコードを発行したときのメッセージ
+## - already-code: すでに発行されている場合のkickメッセージ
+## - code: 発行された場合のkickメッセージ
+JoinEvent:
+  already-code:
+    line1: '&c(発行済み) あなたのコードは'
+    line2: '「%code%」 です (発行されてから) 5分以内に認証してください'
+  code:
+    line1: '&cあなたのコードは'
+    line2: '「%code%」 です 5分以内に認証してください'
+## JoinCommand: !join コマンド
+## - not-number: 数字ではないエラーメッセージ (%uuid% %discordid% をサポートしていません)
+## - invalid-number: 不明な数字のエラーメッセージ (%uuid% %discordid% をサポートしていません)
+## - already-registered: すでに登録されていますのエラーメッセージ (%uuid% %discordid% をサポートしています)
+## - success-register: 登録が完了されたメッセージ (%uuid %discordid% をサポートしています)
+## - length-big: length <= 2 の時に出るエラーメッセージ (%uuid% %discordid% をサポートしていません)
+VerifyCommand:
+  not-number:
+    color: 'RED'
+    title: 'リクエストに失敗しました'
+    description: '理由: 数字ではありません'
+    image:
+    timestamp: true
+    message:
+  invalid-number:
+    color: 'RED'
+    title: 'リクエストに失敗しました'
+    description: '理由: 不明な数字です'
+    image:
+    timestamp: true
+    message:
+  already-registered:
+    color: 'RED'
+    title: 'リクエストに失敗しました'
+    description: '理由: すでに登録されているようです'
+    image: 'https://crafatar.com/avatars/%uuid%'
+    timestamp: true
+    message:
+      - 'UUID: | %uuid% | false'
+      - 'DiscordID: | %discordid% | false'
+  success-register:
+    color: 'GREEN'
+    title: 'リクエストに成功しました！'
+    description: '以下のプレイヤーの登録が完了しました'
+    image: 'https://crafatar.com/avatars/%uuid%'
+    timestamp: true
+    message:
+      - 'UUID: | %uuid% | false'
+      - 'DiscordID: | %discordid% | false'
+  sendmessage:
+    color: 'BLACK'
+    title: '登録が完了したようです！'
+    description: ''
+    image: 'https://crafatar.com/avatars/%uuid%'
+    timestamp: true
+    message:
+      - 'UUID: | %uuid% | false'
+      - 'DiscordID: | %discordid% | false'
+  length-big:
+    color: 'RED'
+    title: 'リクエストに失敗しました'
+    description: '理由: length <= 2'
+    image:
+    timestamp: true
+    message:
+## RemoveCommand: !remove コマンド
+## - invalid-name: 不明な数字のエラーメッセージ (%uuid% %discordid% をサポートしていません)
+## - not-registered: 登録されていないエラーメッセージ (%uuid% %discordid% をサポートしていません)
+## - success-remove: 削除に完了したメッセージ (%uuid %discordid% をサポートしています)
+RemoveCommand:
+  invalid-name:
+    color: 'RED'
+    title: 'リクエストに失敗しました'
+    description: '不明なユーザー名です'
+    image:
+    timestamp: true
+    message:
+  not-registered:
+    color: 'RED'
+    title: 'リクエストに失敗しました'
+    description: '登録されていません'
+    image:
+    timestamp: true
+    message:
+  success-remove:
+    color: 'GREEN'
+    title: '削除完了！'
+    description:
+    image: 'https://crafatar.com/avatars/%uuid%'
+    timestamp: true
+    message:
+      - 'UUID: | %uuid% | false'
+      - 'DiscordID: | %discordid% | false'
+## ForceJoinCommand: !forcejoin コマンド
+## - invalid-name: 不明な名前のエラーメッセージ (%uuid% %discordid% をサポートしていません)
+## - already-registered すでに登録されているエラーメッセージ (%uuid% %discordid% をサポートしています)
+## - success-register: 登録が完了したメッセージ (%uuid %discordid% をサポートしています)
+ForceVerify:
+  invalid-name:
+    color: 'RED'
+    title: 'リクエストに失敗しました'
+    description: '不明なユーザー名です'
+    image:
+    timestamp: true
+    message:
+  already-registered:
+    color: 'RED'
+    title: 'リクエストに失敗しました'
+    description: '理由: すでに登録されているようです'
+    image: 'https://crafatar.com/avatars/%uuid%'
+    timestamp: true
+    message:
+      - 'UUID: | %uuid% | false'
+      - 'DiscordID: | %discordid% | false'
+  success-register:
+    color: 'GREEN'
+    title: 'リクエストに成功しました！'
+    description: '以下のプレイヤーの登録が完了しました'
+    image: 'https://crafatar.com/avatars/%uuid%'
+    timestamp: true
+    message:
+      - 'UUID: | %uuid% | false'
+      - 'DiscordID: | %discordid% | false'

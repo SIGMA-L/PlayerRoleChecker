@@ -8,15 +8,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
+import static net.klnetwork.playerrolechecker.PlayerRoleChecker.plugin;
+
 public class JoinEvent implements Listener {
     @EventHandler
     public void CodeIssue(AsyncPlayerPreLoginEvent e) {
         String[] result = SQLiteUtil.getCodeFromSQLite(e.getUniqueId().toString());
         if (result != null) {
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST, ChatColor.RED + "(発行済み) あなたのコードは \n「" + result[1] + "」 です (発行されてから) 5分以内に認証してください");
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("JoinEvent.already-code.line1").replaceAll("%code%", result[1]) + "\n" + plugin.getConfig().getString("JoinEvent.already-code.line2").replaceAll("%code%", result[1])));
             return;
         }
-        e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST, ChatColor.RED + "あなたのコードは \n「" + CodeUtil.CodeIssue(e.getUniqueId()) + "」 です 5分以内に認証してください");
+        int code = CodeUtil.CodeIssue(e.getUniqueId());
+        e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("JoinEvent.code.line1").replaceAll("%code%", Integer.toString(code)) + "\n" + plugin.getConfig().getString("JoinEvent.code.line2").replaceAll("%code%", Integer.toString(code))));
         new OtherUtil().waitTimer(e.getUniqueId());
     }
 }

@@ -16,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import static net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector.plugin;
 import java.util.List;
 
 public class JoinEvent implements Listener {
@@ -30,41 +31,34 @@ public class JoinEvent implements Listener {
         }
 
         if (!OtherUtil.CheckPlayer(e.getUniqueId())) {
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, ChatColor.GOLD + "あなたには参加権限がありません。\n" + ChatColor.AQUA + "Discordを確認してみてください。");
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, ChatColor.translateAlternateColorCodes('&',plugin.getConfig().getString("Minecraft.kickMessage.line1") + "\n" + plugin.getConfig().getString("Minecraft.kickMessage.line2")));
         }
     }
 
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent e) {
         Player player = e.getPlayer();
-        e.setJoinMessage(ChatColor.GREEN + e.getPlayer().getName() + ChatColor.WHITE + "が入室しました");
+        PlayerRoleCheckerConnector.commandlist.forEach(i -> Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(),OtherUtil.ReplaceString(i,player)));
+
+        e.setJoinMessage(ChatColor.translateAlternateColorCodes('&',OtherUtil.ReplaceString(plugin.getConfig().getString("Minecraft.joinMessage"),player)));
         Bukkit.getScheduler().runTaskAsynchronously(PlayerRoleCheckerConnector.plugin, () -> {
-            player.sendMessage(ChatColor.GOLD + "ご苦労さまです。" + ChatColor.AQUA + player.getName() + ChatColor.WHITE + "さん。");
-            player.sendMessage(ChatColor.GREEN + "-----------------情報------------------");
-            player.sendMessage("MinecraftName: " + player.getName());
             String[] result = SQLUtil.getDiscordFromSQL(player.getUniqueId().toString());
-            if(result == null) {
-                player.sendMessage(ChatColor.GREEN + "-------------------------------------");
-                return;
-            }
-            player.sendMessage("DiscordID: " + result[1]);
+            if(result == null) return;
 
             List<Role> roleList = null;
             String GuildID = PlayerRoleCheckerConnector.plugin.getConfig().getString("GuildID");
             if (GuildID != null) roleList = JDA.jda.getGuildById(GuildID).retrieveMemberById(result[1]).complete().getRoles();
             else for (Guild guild : JDA.jda.getGuilds()) roleList = guild.retrieveMemberById(result[1]).complete().getRoles();
 
-            if (roleList == null) {
-                player.sendMessage(ChatColor.GREEN + "-------------------------------------");
-                return;
-            }
+            if (roleList == null) return;
+
             StringBuilder stringBuilder = new StringBuilder();
             for (Role role : roleList) {
                 stringBuilder.append(role.getName()).append(" ");
             }
-            player.sendMessage("DiscordRole: " + stringBuilder);
-            player.sendMessage(ChatColor.GREEN + "-------------------------------------");
+
+            plugin.getConfig().getStringList("Minecraft.message").forEach(i -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', i.replaceAll("%name%", player.getName()).replaceAll("%uuid%", String.valueOf(player.getUniqueId())).replaceAll("%discordid%",result[1]).replaceAll("%role%", String.valueOf(stringBuilder)))));
         });
-        PlayerRoleCheckerConnector.commandlist.forEach(i -> Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(),OtherUtil.ReplaceString(i,player)));
+
     }
 }

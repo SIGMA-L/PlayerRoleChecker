@@ -11,13 +11,31 @@ MySQL:
 ## JoinCommand: プレイヤーが参加したときにコマンドを打ちます
 ## %name% - プレイヤー名
 ## %uuid% - UUID
+## JoinCommand:
+## - 'COMMAND HERE'
 JoinCommand:
 ## DiscordToken: DiscordBotのトークン
 ## RoleID: RoleID(必須)
-## GuildID: GuildID(後で書くので今は必須ではない)
+## GuildID: GuildID(必須ではない)
 Discord:
   DiscordToken: TokenHere
   GuildID:
   RoleID:
-    - null1
-    - null2
+    - roleid1
+    - roleid2
+## Minecraft: 参加メッセージ
+## %name% - プレイヤー名
+## %uuid% - UUID
+## %discordid% - discordID
+## %role% - role
+Minecraft:
+  kickMessage:
+    line1: '&6あなたには参加権限がありません。'
+    line2: '&bDiscordを確認してみてください。'
+  joinMessage: '&a%name%&fが入室しました'
+  message:
+    - '&a-----------------情報------------------'
+    - 'MinecraftName: %name%'
+    - 'DiscordID: %discordid%'
+    - 'DiscordRole: %role%'
+    - '&a-------------------------------------'

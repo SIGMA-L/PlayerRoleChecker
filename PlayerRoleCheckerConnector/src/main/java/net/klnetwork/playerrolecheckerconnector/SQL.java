@@ -7,9 +7,6 @@ import net.klnetwork.playerrolecheckerconnector.Util.SQLiteUtil;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import static net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector.plugin;
-import static org.bukkit.Bukkit.getServer;
-
 public class SQL {
 
     public static void init() {
