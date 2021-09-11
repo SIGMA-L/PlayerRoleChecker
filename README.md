@@ -47,7 +47,7 @@
 | --- | --- | --- |
 | !join {生成された数字} | データベースに登録します |  |
 | !remove {マインクラフトID} | データベースから強制削除 | Permission.ADMINISTRATOR |
-
+| !forceverify {マインクラフトID} {DiscordID} | データベースに強制登録 | Permission.ADMINISTRATOR |
 
 ## LICENSE
 
