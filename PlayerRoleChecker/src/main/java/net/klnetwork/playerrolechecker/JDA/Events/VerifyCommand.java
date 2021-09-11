@@ -2,10 +2,8 @@ package net.klnetwork.playerrolechecker.JDA.Events;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.ChannelType;
-import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.klnetwork.playerrolechecker.PlayerRoleChecker;
 import net.klnetwork.playerrolechecker.Util.DiscordUtil;
 import net.klnetwork.playerrolechecker.Util.SQLUtil;
 import net.klnetwork.playerrolechecker.Util.SQLiteUtil;
@@ -24,7 +22,7 @@ public class VerifyCommand extends ListenerAdapter {
                 int integer;
                 try {
                     integer = Integer.parseInt(args[0]);
-                } catch (Exception ignored) {
+                } catch (Exception e) {
                     EmbedBuilder embedBuilder = new EmbedBuilder()
                             .setColor(Color.RED)
                             .setTitle("リクエストに失敗しました")
@@ -77,11 +75,7 @@ public class VerifyCommand extends ListenerAdapter {
 
                 DiscordUtil.sendMessageToChannel(sendMessage);
 
-                String roleID = PlayerRoleChecker.plugin.getConfig().getString("Discord.addToRole");
-                if (roleID == null) return;
-                Role role = event.getGuild().getRoleById(roleID);
-                if (role == null || event.getMember() == null) return;
-                event.getGuild().addRoleToMember(event.getMember(), role).queue();
+                DiscordUtil.AddRole(event.getGuild(), event.getMember());
             } else {
                 EmbedBuilder embedBuilder = new EmbedBuilder()
                         .setColor(Color.RED)

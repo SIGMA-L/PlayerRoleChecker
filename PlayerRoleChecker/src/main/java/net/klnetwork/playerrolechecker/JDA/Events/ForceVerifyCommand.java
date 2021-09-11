@@ -12,14 +12,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
-@SuppressWarnings("deprecation")
-public class RemoveCommand extends ListenerAdapter {
+public class ForceVerifyCommand extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        if (!event.getAuthor().isBot() && event.isFromType(ChannelType.TEXT)) {
+        if (!event.getAuthor().isBot() && event.isFromType(ChannelType.TEXT) && DiscordUtil.ChannelChecker(event.getTextChannel().getId())) {
             if (event.getMember().hasPermission(Permission.ADMINISTRATOR)) {
                 String[] args = event.getMessage().getContentRaw().split("\\s+");
-                if (args.length == 2 && args[0].equals("!remove")) {
+                if (args.length == 3 && args[0].equals("!forceverify")) {
                     String uuid = null;
                     try {
                         uuid = OtherUtil.getUUID(args[1]).toString();
@@ -32,27 +31,28 @@ public class RemoveCommand extends ListenerAdapter {
                         event.getMessage().reply(embedBuilder.build()).queue();
                     }
                     String[] result = SQLUtil.getDiscordFromSQL(uuid);
-                    if (result == null) {
+                    if (result != null) {
                         EmbedBuilder embedBuilder = new EmbedBuilder()
                                 .setTitle("エラーが発生しました！")
                                 .setColor(Color.RED)
-                                .setDescription("エラー: このUUIDはSQL内に登録されてないようです")
+                                .setDescription("エラー: このUUIDはSQL内に登録されています！")
                                 .addField("追加情報(UUID):", uuid, false)
+                                .addField("追加情報(DiscordID)",result[1],false)
                                 .setTimestamp(event.getMessage().getTimeCreated());
                         event.getMessage().reply(embedBuilder.build()).queue();
                         return;
                     }
-                    SQLUtil.removeSQL(result[0], result[1]);
+                    SQLUtil.removeSQL(uuid,args[2]);
                     EmbedBuilder embedBuilder = new EmbedBuilder()
                             .setTitle("削除完了！")
                             .setColor(Color.GREEN)
-                            .addField("UUID", result[0], false)
-                            .addField("Discord:", result[1], false)
+                            .addField("UUID", uuid, false)
+                            .addField("Discord:", args[2], false)
                             .setThumbnail("https://crafatar.com/avatars/" + result[0])
                             .setTimestamp(event.getMessage().getTimeCreated());
                     event.getMessage().reply(embedBuilder.build()).queue();
 
-                    DiscordUtil.RemoveRole(event.getGuild(), event.getMember());
+                    DiscordUtil.AddRole(event.getGuild(), event.getMember());
                 }
             }
         }
