@@ -20,15 +20,15 @@ public class ForceJoinCommand extends ListenerAdapter {
                     try {
                         uuid = OtherUtil.getUUID(args[1]).toString();
                     } catch (Exception exception) {
-                        event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("ForceVerify.invalid-name", event.getMessage().getTimeCreated(), null, null).build()).queue();
+                        event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("ForceJoinCommand.invalid-name", event.getMessage().getTimeCreated(), null, null).build()).queue();
                     }
                     String[] result = SQLUtil.getDiscordFromSQL(uuid);
                     if (result != null) {
-                        event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("ForceVerify.already-registered", event.getMessage().getTimeCreated(), result[0], result[1]).build()).queue();
+                        event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("ForceJoinCommand.already-registered", event.getMessage().getTimeCreated(), result[0], result[1]).build()).queue();
                         return;
                     }
                     SQLUtil.putSQL(uuid,args[2]);
-                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("ForceVerify.success-register", event.getMessage().getTimeCreated(), uuid, args[2]).build()).queue();
+                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("ForceJoinCommand.success-register", event.getMessage().getTimeCreated(), uuid, args[2]).build()).queue();
 
                     DiscordUtil.AddRole(event.getGuild(), event.getMember());
                 }

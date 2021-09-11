@@ -20,17 +20,17 @@ public class JoinCommand extends ListenerAdapter {
                 try {
                     integer = Integer.parseInt(args[0]);
                 } catch (Exception e) {
-                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("RemoveCommand.invalid-name", event.getMessage().getTimeCreated(), null, null).build()).queue();
+                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.invalid-name", event.getMessage().getTimeCreated(), null, null).build()).queue();
                     return;
                 }
                 String[] result = SQLiteUtil.getUUIDFromSQLite(Integer.toString(integer));
                 if (result == null) {
-                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("VerifyCommand.invalid-number", event.getMessage().getTimeCreated(), null, null).build()).queue();
+                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.invalid-number", event.getMessage().getTimeCreated(), null, null).build()).queue();
                     return;
                 }
                 String[] alreadyUUID = SQLUtil.getDiscordFromSQL(result[0]);
                 if (alreadyUUID != null) {
-                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("VerifyCommand.already-registered", event.getMessage().getTimeCreated(), alreadyUUID[0], alreadyUUID[1]).build()).queue();
+                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.already-registered", event.getMessage().getTimeCreated(), alreadyUUID[0], alreadyUUID[1]).build()).queue();
                     return;
                 }
                 SQLiteUtil.removeSQLite(result[0], result[1]);
@@ -38,13 +38,13 @@ public class JoinCommand extends ListenerAdapter {
 
                 String discordID = event.getAuthor().getId();
 
-                EmbedBuilder embedBuilder = DiscordUtil.embedBuilder("VerifyCommand.success-register", event.getMessage().getTimeCreated(), result[0], discordID);
+                EmbedBuilder embedBuilder = DiscordUtil.embedBuilder("JoinCommand.success-register", event.getMessage().getTimeCreated(), result[0], discordID);
                 event.getMessage().replyEmbeds(embedBuilder.build()).queue();
 
-                DiscordUtil.sendMessageToChannel(DiscordUtil.embedBuilder("VerifyCommand.sendmessage", event.getMessage().getTimeCreated(), result[0], discordID));
+                DiscordUtil.sendMessageToChannel(DiscordUtil.embedBuilder("JoinCommand.sendmessage", event.getMessage().getTimeCreated(), result[0], discordID));
                 DiscordUtil.AddRole(event.getGuild(), event.getMember());
             } else {
-                event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("VerifyCommand.length-big", event.getMessage().getTimeCreated(), null, null).build()).queue();
+                event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.length-big", event.getMessage().getTimeCreated(), null, null).build()).queue();
             }
         }
     }

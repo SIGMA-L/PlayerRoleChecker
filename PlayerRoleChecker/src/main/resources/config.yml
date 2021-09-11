@@ -33,7 +33,7 @@ JoinEvent:
 ## - already-registered: すでに登録されていますのエラーメッセージ (%uuid% %discordid% をサポートしています)
 ## - success-register: 登録が完了されたメッセージ (%uuid %discordid% をサポートしています)
 ## - length-big: length <= 2 の時に出るエラーメッセージ (%uuid% %discordid% をサポートしていません)
-VerifyCommand:
+JoinCommand:
   not-number:
     color: 'RED'
     title: 'リクエストに失敗しました'
@@ -114,7 +114,7 @@ RemoveCommand:
 ## - invalid-name: 不明な名前のエラーメッセージ (%uuid% %discordid% をサポートしていません)
 ## - already-registered すでに登録されているエラーメッセージ (%uuid% %discordid% をサポートしています)
 ## - success-register: 登録が完了したメッセージ (%uuid %discordid% をサポートしています)
-ForceVerify:
+ForceJoinCommand:
   invalid-name:
     color: 'RED'
     title: 'リクエストに失敗しました'
