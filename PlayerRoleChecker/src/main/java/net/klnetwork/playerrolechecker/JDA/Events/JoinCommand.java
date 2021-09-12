@@ -1,6 +1,5 @@
 package net.klnetwork.playerrolechecker.JDA.Events;
 
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -38,8 +37,7 @@ public class JoinCommand extends ListenerAdapter {
 
                 String discordID = event.getAuthor().getId();
 
-                EmbedBuilder embedBuilder = DiscordUtil.embedBuilder("JoinCommand.success-register", event.getMessage().getTimeCreated(), result[0], discordID);
-                event.getMessage().replyEmbeds(embedBuilder.build()).queue();
+                event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.success-register", event.getMessage().getTimeCreated(), result[0], discordID).build()).queue();
 
                 DiscordUtil.sendMessageToChannel(DiscordUtil.embedBuilder("JoinCommand.sendmessage", event.getMessage().getTimeCreated(), result[0], discordID));
                 DiscordUtil.AddRole(event.getGuild(), event.getMember());

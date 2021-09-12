@@ -33,7 +33,7 @@ public class DiscordUtil {
         if (roleID == null) return;
         Role role = guild.getRoleById(roleID);
         if (role == null || member == null) return;
-        guild.removeRoleFromMember(member, role).queue();
+        guild.addRoleToMember(member, role).queue();
     }
 
     public static void RemoveRole(Guild guild, Member member) {

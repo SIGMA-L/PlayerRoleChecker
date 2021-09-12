@@ -33,6 +33,7 @@ Minecraft:
     line1: '&6あなたには参加権限がありません。'
     line2: '&bDiscordを確認してみてください。'
   joinMessage: '&a%name%&fが入室しました'
+  joinMessageBoolean: true
   message:
     - '&a-----------------情報------------------'
     - 'MinecraftName: %name%'

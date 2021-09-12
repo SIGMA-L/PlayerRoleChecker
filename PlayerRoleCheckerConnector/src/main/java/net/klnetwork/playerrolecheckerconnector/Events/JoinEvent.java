@@ -31,19 +31,19 @@ public class JoinEvent implements Listener {
         }
 
         if (!OtherUtil.CheckPlayer(e.getUniqueId())) {
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, ChatColor.translateAlternateColorCodes('&',plugin.getConfig().getString("Minecraft.kickMessage.line1") + "\n" + plugin.getConfig().getString("Minecraft.kickMessage.line2")));
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Minecraft.kickMessage.line1") + "\n" + plugin.getConfig().getString("Minecraft.kickMessage.line2")));
         }
     }
 
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent e) {
         Player player = e.getPlayer();
-        PlayerRoleCheckerConnector.commandlist.forEach(i -> Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(),OtherUtil.ReplaceString(i,player)));
+        PlayerRoleCheckerConnector.commandlist.forEach(i -> Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), OtherUtil.ReplaceString(i, player)));
 
-        e.setJoinMessage(ChatColor.translateAlternateColorCodes('&',OtherUtil.ReplaceString(plugin.getConfig().getString("Minecraft.joinMessage"),player)));
+        if (plugin.getConfig().getBoolean("Minecraft.joinMessageBoolean")) e.setJoinMessage(ChatColor.translateAlternateColorCodes('&', OtherUtil.ReplaceString(plugin.getConfig().getString("Minecraft.joinMessage"), player)));
         Bukkit.getScheduler().runTaskAsynchronously(PlayerRoleCheckerConnector.plugin, () -> {
             String[] result = SQLUtil.getDiscordFromSQL(player.getUniqueId().toString());
-            if(result == null) return;
+            if (result == null) return;
 
             List<Role> roleList = null;
             String GuildID = PlayerRoleCheckerConnector.plugin.getConfig().getString("GuildID");
@@ -57,8 +57,7 @@ public class JoinEvent implements Listener {
                 stringBuilder.append(role.getName()).append(" ");
             }
 
-            plugin.getConfig().getStringList("Minecraft.message").forEach(i -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', i.replaceAll("%name%", player.getName()).replaceAll("%uuid%", String.valueOf(player.getUniqueId())).replaceAll("%discordid%",result[1]).replaceAll("%role%", String.valueOf(stringBuilder)))));
+            plugin.getConfig().getStringList("Minecraft.message").forEach(i -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', i.replaceAll("%name%", player.getName()).replaceAll("%uuid%", String.valueOf(player.getUniqueId())).replaceAll("%discordid%", result[1]).replaceAll("%role%", String.valueOf(stringBuilder)))));
         });
-
     }
 }

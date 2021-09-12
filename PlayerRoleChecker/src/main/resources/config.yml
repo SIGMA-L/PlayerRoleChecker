@@ -16,6 +16,9 @@ Discord:
   AdminChannel:
   ChannelID:
   addToRole:
+CodeLimit:
+  min: 1000
+  max: 9999
 ## Message: 色々なメッセージをカスタマイズできます
 ## JoinEvent: マインクラフトユーザーがコードを発行したときのメッセージ
 ## - already-code: すでに発行されている場合のkickメッセージ

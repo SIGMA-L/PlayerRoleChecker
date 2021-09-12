@@ -1,8 +1,10 @@
 package net.klnetwork.playerrolechecker.API;
 
 
+import net.klnetwork.playerrolechecker.PlayerRoleChecker;
 import net.klnetwork.playerrolechecker.Util.SQLiteUtil;
 
+import static net.klnetwork.playerrolechecker.PlayerRoleChecker.plugin;
 import static net.klnetwork.playerrolechecker.Util.SQLiteUtil.CheckCode;
 
 import java.util.UUID;
@@ -14,9 +16,9 @@ public class CodeUtil {
     }
 
     public static int CodeIssue(UUID uuid) {
-        int result = getRandom(1000,9999);
+        int result = getRandom(plugin.getConfig().getInt("CodeLimit.min"),plugin.getConfig().getInt("CodeLimit.max"));
         while (CheckCode(result)) {
-            result = getRandom(1000,9999);
+            result = getRandom(plugin.getConfig().getInt("CodeLimit.min"),plugin.getConfig().getInt("CodeLimit.max"));
         }
         SQLiteUtil.putSQLite(uuid.toString(), Integer.toString(result));
         return result;
