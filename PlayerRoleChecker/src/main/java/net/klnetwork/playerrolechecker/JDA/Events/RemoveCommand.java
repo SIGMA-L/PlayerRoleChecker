@@ -13,7 +13,7 @@ public class RemoveCommand extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (!event.getAuthor().isBot() && event.isFromType(ChannelType.TEXT)) {
-            if (event.getMember().hasPermission(Permission.ADMINISTRATOR)) {
+            if (event.getMember() != null && event.getMember().hasPermission(Permission.ADMINISTRATOR)) {
                 String[] args = event.getMessage().getContentRaw().split("\\s+");
                 if (args.length == 2 && args[0].equals("!remove")) {
                     String uuid = null;

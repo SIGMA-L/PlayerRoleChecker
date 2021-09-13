@@ -86,7 +86,7 @@ JoinCommand:
     timestamp: true
     message:
 ## RemoveCommand: !remove コマンド
-## - invalid-name: 不明な数字のエラーメッセージ (%uuid% %discordid% をサポートしていません)
+## - invalid-name: 不明な名前のエラーメッセージ (%uuid% %discordid% をサポートしていません)
 ## - not-registered: 登録されていないエラーメッセージ (%uuid% %discordid% をサポートしていません)
 ## - success-remove: 削除に完了したメッセージ (%uuid %discordid% をサポートしています)
 RemoveCommand:

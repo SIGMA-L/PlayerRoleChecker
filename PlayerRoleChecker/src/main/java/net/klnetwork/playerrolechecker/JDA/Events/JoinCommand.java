@@ -19,7 +19,7 @@ public class JoinCommand extends ListenerAdapter {
                 try {
                     integer = Integer.parseInt(args[0]);
                 } catch (Exception e) {
-                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.invalid-name", event.getMessage().getTimeCreated(), null, null).build()).queue();
+                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.not-number", event.getMessage().getTimeCreated(), null, null).build()).queue();
                     return;
                 }
                 String[] result = SQLiteUtil.getUUIDFromSQLite(Integer.toString(integer));

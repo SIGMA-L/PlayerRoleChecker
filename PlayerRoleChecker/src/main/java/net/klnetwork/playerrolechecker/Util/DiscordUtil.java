@@ -22,7 +22,7 @@ public class DiscordUtil {
             String getTextChannelById = plugin.getConfig().getString("Discord.AdminChannel");
             if (getTextChannelById == null) return;
 
-            JDA.jda.getTextChannelById(getTextChannelById).sendMessage(embedBuilder.build()).queue();
+            JDA.jda.getTextChannelById(getTextChannelById).sendMessageEmbeds(embedBuilder.build()).queue();
         } catch (Exception exception) {
             System.out.println("[エラーが発生しました] sendMessageToChannel メソッドを確認してください (PlayerRoleChecker)");
         }

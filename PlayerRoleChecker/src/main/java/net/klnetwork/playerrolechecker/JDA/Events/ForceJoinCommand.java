@@ -13,7 +13,7 @@ public class ForceJoinCommand extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (!event.getAuthor().isBot() && event.isFromType(ChannelType.TEXT) && DiscordUtil.ChannelChecker(event.getTextChannel().getId())) {
-            if (event.getMember().hasPermission(Permission.ADMINISTRATOR)) {
+            if (event.getMember() != null && event.getMember().hasPermission(Permission.ADMINISTRATOR)) {
                 String[] args = event.getMessage().getContentRaw().split("\\s+");
                 if (args.length == 3 && args[0].equals("!forcejoin")) {
                     String uuid = null;
