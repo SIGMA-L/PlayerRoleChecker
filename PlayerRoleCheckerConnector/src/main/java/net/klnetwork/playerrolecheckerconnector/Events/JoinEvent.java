@@ -26,7 +26,7 @@ public class JoinEvent implements Listener {
         if (!JoinMode.joinMode) return;
 
         //SQLiteUtilはファイル管理であるため、非同期である必要はありません(位置的にここに必要)
-        if (SQLiteUtil.getUUIDFromSQLite(e.getUniqueId().toString()) != null) {
+        if (SQLiteUtil.getUUIDFromSQLite(e.getUniqueId().toString()) != null || SQLiteUtil.getUUIDFromSQLite(e.getName().toLowerCase()) != null) {
             return;
         }
 

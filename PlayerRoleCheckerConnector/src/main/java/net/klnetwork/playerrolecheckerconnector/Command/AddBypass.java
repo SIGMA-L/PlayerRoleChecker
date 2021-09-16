@@ -7,6 +7,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import java.util.Locale;
+
 public class AddBypass implements CommandExecutor {
 
     @Override
@@ -24,6 +26,17 @@ public class AddBypass implements CommandExecutor {
                 sender.sendMessage(ChatColor.RED + "エラーが発生しました プレイヤー名を入力してください");
             }
 
+        }
+        if (args.length == 2){
+            if(args[0].equalsIgnoreCase("force")){
+                String uuid = args[1];
+                if(SQLiteUtil.getUUIDFromSQLite(uuid) != null){
+                    sender.sendMessage(ChatColor.RED + "処理に失敗しました！ data=すでに登録されています");
+                    return true;
+                }
+                SQLiteUtil.putSQLite(uuid.toLowerCase());
+                sender.sendMessage(ChatColor.GREEN + "成功しました！ data=" + uuid);
+            }
         }
         return true;
     }

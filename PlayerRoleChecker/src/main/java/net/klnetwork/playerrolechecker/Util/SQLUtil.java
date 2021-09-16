@@ -1,6 +1,8 @@
 package net.klnetwork.playerrolechecker.Util;
 
 
+import net.klnetwork.playerrolechecker.PlayerRoleChecker;
+
 import java.sql.*;
 
 import static net.klnetwork.playerrolechecker.PlayerRoleChecker.plugin;

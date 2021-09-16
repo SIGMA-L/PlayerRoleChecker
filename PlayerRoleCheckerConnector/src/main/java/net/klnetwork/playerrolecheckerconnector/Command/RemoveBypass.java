@@ -15,7 +15,7 @@ public class RemoveBypass implements CommandExecutor {
             try {
                 String uuid = OtherUtil.getUUID(args[0]).toString();
                 String result = SQLiteUtil.getUUIDFromSQLite(uuid);
-                if(result == null) {
+                if (result == null) {
                     sender.sendMessage(ChatColor.RED + "処理に失敗しました！ data=登録されていないようです (" + uuid + ")");
                     return true;
                 }
@@ -24,7 +24,17 @@ public class RemoveBypass implements CommandExecutor {
             } catch (Exception e) {
                 sender.sendMessage(ChatColor.RED + "エラーが発生しました プレイヤー名を入力してください");
             }
-
+        }
+        if (args.length == 2) {
+            if (args[0].equalsIgnoreCase("force")) {
+                String uuid = args[1];
+                if (SQLiteUtil.getUUIDFromSQLite(uuid) == null) {
+                    sender.sendMessage(ChatColor.RED + "処理に失敗しました！ data=登録されていないようです (" + uuid + ")");
+                    return true;
+                }
+                SQLiteUtil.removeSQLite(uuid);
+                sender.sendMessage(ChatColor.GREEN + "成功しました！ data=" + uuid);
+            }
         }
         return true;
     }
