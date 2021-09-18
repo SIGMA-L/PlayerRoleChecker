@@ -64,8 +64,10 @@ public class DiscordUtil {
     }
 
     public static String replaceString(String string, String uuid, String discordID) {
-        if (uuid != null && string != null) string = string.replaceAll("%uuid%", uuid);
-        if (discordID != null && string != null) string = string.replaceAll("%discordid%", discordID);
+        if(string != null) {
+            if (uuid != null) string = string.replaceAll("%uuid%", uuid);
+            if (discordID != null) string = string.replaceAll("%discordid%", discordID);
+        }
         return string;
     }
 }

@@ -1,13 +1,11 @@
 package net.klnetwork.playerrolecheckerconnector.Command;
 
-import net.klnetwork.playerrolecheckerconnector.Util.SQLiteUtil;
 import net.klnetwork.playerrolecheckerconnector.Util.OtherUtil;
+import net.klnetwork.playerrolecheckerconnector.Util.SQLiteUtil;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-
-import java.util.Locale;
 
 public class AddBypass implements CommandExecutor {
 

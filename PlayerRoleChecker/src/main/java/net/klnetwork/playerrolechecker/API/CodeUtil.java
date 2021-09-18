@@ -1,13 +1,12 @@
 package net.klnetwork.playerrolechecker.API;
 
 
-import net.klnetwork.playerrolechecker.PlayerRoleChecker;
 import net.klnetwork.playerrolechecker.Util.SQLiteUtil;
+
+import java.util.UUID;
 
 import static net.klnetwork.playerrolechecker.PlayerRoleChecker.plugin;
 import static net.klnetwork.playerrolechecker.Util.SQLiteUtil.CheckCode;
-
-import java.util.UUID;
 
 public class CodeUtil {
 

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 
-import static net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector.list;
+import static net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector.rolelist;
 import static net.klnetwork.playerrolecheckerconnector.Util.SQLUtil.getDiscordFromSQL;
 
 
@@ -41,7 +41,7 @@ public class OtherUtil {
 
         List<Role> role = getRolesById(DiscordID[1]);
         if (role == null) return false;
-        for (Role role1 : role) if (list.contains(role1.getId())) return true;
+        for (Role role1 : role) if (rolelist.contains(role1.getId())) return true;
 
 
         return false;
