@@ -1,4 +1,4 @@
-package net.klnetwork.playerrolechecker.JDA.Events;
+package net.klnetwork.playerrolechecker.JDA.Event;
 
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;

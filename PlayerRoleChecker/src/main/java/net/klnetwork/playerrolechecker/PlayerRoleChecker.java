@@ -1,8 +1,7 @@
 package net.klnetwork.playerrolechecker;
 
-import net.klnetwork.playerrolechecker.Events.JoinEvent;
+import net.klnetwork.playerrolechecker.Event.JoinEvent;
 import net.klnetwork.playerrolechecker.JDA.JDA;
-import net.klnetwork.playerrolechecker.SQL;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 

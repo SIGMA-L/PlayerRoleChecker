@@ -38,7 +38,7 @@ public class SQLUtil {
     }
 
     /**
-     * @param discord - プレイヤーのUUID
+     * @param discord - discordID
      * @return - UUIDとdiscordIDを非同期で返します
      */
     public static void getUUIDFromSQL(String discord, Consumer<String[]> consumer) {
@@ -49,7 +49,7 @@ public class SQLUtil {
     }
 
     /**
-     * @param discord - プレイヤーのUUID
+     * @param discord - discordID
      * @return - UUIDとdiscordIDを非同期で返します
      */
     public static void getUUIDFromSQL_NoAsyncReturn(String discord, Consumer<String[]> consumer) {
@@ -61,7 +61,7 @@ public class SQLUtil {
 
 
     /**
-     * @param uuid - - discordID
+     * @param uuid - プレイヤーのUUID
      * @return - discordIDとUUIDを返します
      * @deprecated - 2.2
      */

@@ -1,4 +1,4 @@
-package net.klnetwork.playerrolechecker.Events;
+package net.klnetwork.playerrolechecker.Event;
 
 import net.klnetwork.playerrolechecker.API.CodeUtil;
 import net.klnetwork.playerrolechecker.Util.OtherUtil;

@@ -2,9 +2,9 @@ package net.klnetwork.playerrolechecker.JDA;
 
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
-import net.klnetwork.playerrolechecker.JDA.Events.ForceJoinCommand;
-import net.klnetwork.playerrolechecker.JDA.Events.RemoveCommand;
-import net.klnetwork.playerrolechecker.JDA.Events.JoinCommand;
+import net.klnetwork.playerrolechecker.JDA.Event.ForceJoinCommand;
+import net.klnetwork.playerrolechecker.JDA.Event.RemoveCommand;
+import net.klnetwork.playerrolechecker.JDA.Event.JoinCommand;
 
 import javax.security.auth.login.LoginException;
 

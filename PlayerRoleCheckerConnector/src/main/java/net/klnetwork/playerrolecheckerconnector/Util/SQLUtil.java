@@ -62,7 +62,7 @@ public class SQLUtil {
 
     /**
      * @param uuid - discordID
-     * @return - discordIDとUUIDを非同期で返します
+     * @return - discordIDとUUIDを返します
      * @deprecated - 2.2
      */
     public static String[] getDiscordFromSQL(String uuid) {
