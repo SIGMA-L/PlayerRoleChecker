@@ -14,9 +14,10 @@ public class SQLUtil {
     private static Connection connection;
     private static long connectionAlive = 0;
 
+
     /**
      * @param uuid - プレイヤーのUUID
-     * @return - DiscordIDとUUIDを非同期で返します
+     * @return - discordIDとUUIDを非同期で返します
      */
     public static void getDiscordFromSQL(String uuid, Consumer<String[]> consumer) {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
@@ -26,8 +27,19 @@ public class SQLUtil {
     }
 
     /**
+     * @param uuid - プレイヤーのUUID
+     * @return - discordIDとUUIDを非同期で返します
+     */
+    public static void getDiscordFromSQL_NoAsyncReturn(String uuid, Consumer<String[]> consumer) {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            String[] result = SQLUtil.getDiscordFromSQL(uuid);
+            Bukkit.getScheduler().runTask(plugin,() -> consumer.accept(result));
+        });
+    }
+
+    /**
      * @param discord - プレイヤーのUUID
-     * @return - UUIDとDiscordIDを非同期で返します
+     * @return - UUIDとdiscordIDを非同期で返します
      */
     public static void getUUIDFromSQL(String discord, Consumer<String[]> consumer) {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
@@ -35,6 +47,18 @@ public class SQLUtil {
             consumer.accept(result);
         });
     }
+
+    /**
+     * @param discord - プレイヤーのUUID
+     * @return - UUIDとdiscordIDを非同期で返します
+     */
+    public static void getUUIDFromSQL_NoAsyncReturn(String discord, Consumer<String[]> consumer) {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            String[] result = SQLUtil.getUUIDFromSQL(discord);
+            Bukkit.getScheduler().runTask(plugin,() -> consumer.accept(result));
+        });
+    }
+
 
     /**
      * @param uuid - - discordID

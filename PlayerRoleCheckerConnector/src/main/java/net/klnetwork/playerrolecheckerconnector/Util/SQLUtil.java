@@ -27,6 +27,17 @@ public class SQLUtil {
     }
 
     /**
+     * @param uuid - プレイヤーのUUID
+     * @return - discordIDとUUIDを非同期で返します
+     */
+    public static void getDiscordFromSQL_NoAsyncReturn(String uuid, Consumer<String[]> consumer) {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            String[] result = SQLUtil.getDiscordFromSQL(uuid);
+            Bukkit.getScheduler().runTask(plugin,() -> consumer.accept(result));
+        });
+    }
+
+    /**
      * @param discord - プレイヤーのUUID
      * @return - UUIDとdiscordIDを非同期で返します
      */
@@ -36,6 +47,18 @@ public class SQLUtil {
             consumer.accept(result);
         });
     }
+
+    /**
+     * @param discord - プレイヤーのUUID
+     * @return - UUIDとdiscordIDを非同期で返します
+     */
+    public static void getUUIDFromSQL_NoAsyncReturn(String discord, Consumer<String[]> consumer) {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            String[] result = SQLUtil.getUUIDFromSQL(discord);
+            Bukkit.getScheduler().runTask(plugin,() -> consumer.accept(result));
+        });
+    }
+
 
     /**
      * @param uuid - discordID

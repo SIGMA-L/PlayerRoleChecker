@@ -1,4 +1,4 @@
-package net.klnetwork.playerrolecheckerconnector.Events;
+package net.klnetwork.playerrolecheckerconnector.Event;
 
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Role;

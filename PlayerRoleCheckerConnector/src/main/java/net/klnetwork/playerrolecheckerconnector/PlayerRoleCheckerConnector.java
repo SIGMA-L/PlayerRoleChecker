@@ -4,7 +4,7 @@ import net.klnetwork.playerrolecheckerconnector.Command.AddBypass;
 import net.klnetwork.playerrolecheckerconnector.Command.JoinMode;
 import net.klnetwork.playerrolecheckerconnector.Command.RemoveBypass;
 import net.klnetwork.playerrolecheckerconnector.Command.SQLDebug;
-import net.klnetwork.playerrolecheckerconnector.Events.JoinEvent;
+import net.klnetwork.playerrolecheckerconnector.Event.JoinEvent;
 import net.klnetwork.playerrolecheckerconnector.JDA.JDA;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
