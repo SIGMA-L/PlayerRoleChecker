@@ -16,8 +16,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import static net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector.plugin;
 import java.util.List;
+
+import static net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector.plugin;
 
 public class JoinEvent implements Listener {
 
@@ -41,8 +42,7 @@ public class JoinEvent implements Listener {
         PlayerRoleCheckerConnector.commandlist.forEach(i -> Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), OtherUtil.ReplaceString(i, player)));
 
         if (plugin.getConfig().getBoolean("Minecraft.joinMessageBoolean")) e.setJoinMessage(ChatColor.translateAlternateColorCodes('&', OtherUtil.ReplaceString(plugin.getConfig().getString("Minecraft.joinMessage"), player)));
-        Bukkit.getScheduler().runTaskAsynchronously(PlayerRoleCheckerConnector.plugin, () -> {
-            String[] result = SQLUtil.getDiscordFromSQL(player.getUniqueId().toString());
+        SQLUtil.getDiscordFromSQL(player.getUniqueId().toString(), result -> {
             if (result == null) return;
 
             List<Role> roleList = null;

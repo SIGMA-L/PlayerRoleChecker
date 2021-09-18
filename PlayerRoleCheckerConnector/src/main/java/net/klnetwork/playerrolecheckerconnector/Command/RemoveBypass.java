@@ -27,13 +27,13 @@ public class RemoveBypass implements CommandExecutor {
         }
         if (args.length == 2) {
             if (args[0].equalsIgnoreCase("force")) {
-                String uuid = args[1];
-                if (SQLiteUtil.getUUIDFromSQLite(uuid) == null) {
-                    sender.sendMessage(ChatColor.RED + "処理に失敗しました！ data=登録されていないようです (" + uuid + ")");
+                String force = args[1];
+                if (SQLiteUtil.getUUIDFromSQLite(force) == null) {
+                    sender.sendMessage(ChatColor.RED + "処理に失敗しました！ data=登録されていないようです (" + force + ")");
                     return true;
                 }
-                SQLiteUtil.removeSQLite(uuid);
-                sender.sendMessage(ChatColor.GREEN + "成功しました！ data=" + uuid);
+                SQLiteUtil.removeSQLite(force);
+                sender.sendMessage(ChatColor.GREEN + "成功しました！ data=" + force);
             }
         }
         return true;

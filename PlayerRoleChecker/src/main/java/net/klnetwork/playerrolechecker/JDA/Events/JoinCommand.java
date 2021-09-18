@@ -27,20 +27,22 @@ public class JoinCommand extends ListenerAdapter {
                     event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.invalid-number", event.getMessage().getTimeCreated(), null, null).build()).queue();
                     return;
                 }
-                String[] alreadyUUID = SQLUtil.getDiscordFromSQL(result[0]);
-                if (alreadyUUID != null) {
-                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.already-registered", event.getMessage().getTimeCreated(), alreadyUUID[0], alreadyUUID[1]).build()).queue();
-                    return;
-                }
-                SQLiteUtil.removeSQLite(result[0], result[1]);
-                SQLUtil.putSQL(result[0], event.getAuthor().getId());
+                SQLUtil.getUUIDFromSQL(result[0], alreadyUUID -> {
+                    if (alreadyUUID != null) {
+                        event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.already-registered", event.getMessage().getTimeCreated(), alreadyUUID[0], alreadyUUID[1]).build()).queue();
+                        return;
+                    }
 
-                String discordID = event.getAuthor().getId();
+                    SQLiteUtil.removeSQLite(result[0], result[1]);
+                    SQLUtil.putSQL(result[0], event.getAuthor().getId());
 
-                event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.success-register", event.getMessage().getTimeCreated(), result[0], discordID).build()).queue();
+                    String discordID = event.getAuthor().getId();
 
-                DiscordUtil.sendMessageToChannel(DiscordUtil.embedBuilder("JoinCommand.sendmessage", event.getMessage().getTimeCreated(), result[0], discordID));
-                DiscordUtil.AddRole(event.getGuild(), event.getMember());
+                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.success-register", event.getMessage().getTimeCreated(), result[0], discordID).build()).queue();
+
+                    DiscordUtil.sendMessageToChannel(DiscordUtil.embedBuilder("JoinCommand.sendmessage", event.getMessage().getTimeCreated(), result[0], discordID));
+                    DiscordUtil.AddRole(event.getGuild(), event.getMember());
+                });
             } else {
                 event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.length-big", event.getMessage().getTimeCreated(), null, null).build()).queue();
             }

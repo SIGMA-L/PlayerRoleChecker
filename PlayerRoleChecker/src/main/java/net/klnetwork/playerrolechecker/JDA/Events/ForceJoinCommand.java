@@ -22,15 +22,17 @@ public class ForceJoinCommand extends ListenerAdapter {
                     } catch (Exception exception) {
                         event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("ForceJoinCommand.invalid-name", event.getMessage().getTimeCreated(), null, null).build()).queue();
                     }
-                    String[] result = SQLUtil.getDiscordFromSQL(uuid);
-                    if (result != null) {
-                        event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("ForceJoinCommand.already-registered", event.getMessage().getTimeCreated(), result[0], result[1]).build()).queue();
-                        return;
-                    }
-                    SQLUtil.putSQL(uuid,args[2]);
-                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("ForceJoinCommand.success-register", event.getMessage().getTimeCreated(), uuid, args[2]).build()).queue();
+                    String finalUUID = uuid;
+                    SQLUtil.getDiscordFromSQL(uuid, result -> {
+                        if (result != null) {
+                            event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("ForceJoinCommand.already-registered", event.getMessage().getTimeCreated(), result[0], result[1]).build()).queue();
+                            return;
+                        }
+                        SQLUtil.putSQL(finalUUID, args[2]);
+                        event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("ForceJoinCommand.success-register", event.getMessage().getTimeCreated(), finalUUID, args[2]).build()).queue();
 
-                    DiscordUtil.AddRole(event.getGuild(), event.getMember());
+                        DiscordUtil.AddRole(event.getGuild(), event.getMember());
+                    });
                 }
             }
         }

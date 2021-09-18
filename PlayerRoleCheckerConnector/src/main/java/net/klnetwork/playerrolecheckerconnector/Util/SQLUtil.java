@@ -1,16 +1,47 @@
 package net.klnetwork.playerrolecheckerconnector.Util;
 
 
+import org.bukkit.Bukkit;
+
 import java.sql.*;
+import java.util.function.Consumer;
 
 import static net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector.plugin;
 
-
+@SuppressWarnings("DeprecatedIsStillUsed")
 public class SQLUtil {
 
     private static Connection connection;
     private static long connectionAlive = 0;
 
+
+    /**
+     * @param uuid - プレイヤーのUUID
+     * @return - discordIDとUUIDを非同期で返します
+     */
+    public static void getDiscordFromSQL(String uuid, Consumer<String[]> consumer) {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            String[] result = SQLUtil.getDiscordFromSQL(uuid);
+            consumer.accept(result);
+        });
+    }
+
+    /**
+     * @param discord - プレイヤーのUUID
+     * @return - UUIDとdiscordIDを非同期で返します
+     */
+    public static void getUUIDFromSQL(String discord, Consumer<String[]> consumer) {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            String[] result = SQLUtil.getUUIDFromSQL(discord);
+            consumer.accept(result);
+        });
+    }
+
+    /**
+     * @param uuid - discordID
+     * @return - discordIDとUUIDを非同期で返します
+     * @deprecated - 2.2
+     */
     public static String[] getDiscordFromSQL(String uuid) {
         String[] result = null;
         try {
@@ -29,6 +60,11 @@ public class SQLUtil {
         return result;
     }
 
+    /**
+     * @param discord - discordID
+     * @return - UUIDとdiscordIDを返します
+     * @deprecated - 2.2
+     */
     public static String[] getUUIDFromSQL(String discord) {
         String[] result = null;
         try {
@@ -48,7 +84,7 @@ public class SQLUtil {
     }
 
     public static void putSQL(String uuid, String discord) {
-        new Thread(() -> {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             try {
                 PreparedStatement preparedStatement = getSQLConnection().prepareStatement("insert into verifyplayer values (?,?)");
                 preparedStatement.setString(1, uuid);
@@ -60,11 +96,11 @@ public class SQLUtil {
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-        }).start();
+        });
     }
 
     public static void removeSQL(String uuid, String discord) {
-        new Thread(() -> {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             try {
                 PreparedStatement preparedStatement = getSQLConnection().prepareStatement("delete from verifyplayer where uuid = ? and discord = ?");
                 preparedStatement.setString(1, uuid);
@@ -76,7 +112,7 @@ public class SQLUtil {
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-        }).start();
+        });
     }
 
     public static Connection getSQLConnection() throws SQLException {

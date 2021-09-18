@@ -22,15 +22,17 @@ public class RemoveCommand extends ListenerAdapter {
                     } catch (Exception exception) {
                         event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("RemoveCommand.invalid-name", event.getMessage().getTimeCreated(), null, null).build()).queue();
                     }
-                    String[] result = SQLUtil.getDiscordFromSQL(uuid);
-                    if (result == null) {
-                        event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("RemoveCommand.not-registered", event.getMessage().getTimeCreated(), null, null).build()).queue();
-                        return;
-                    }
-                    SQLUtil.removeSQL(result[0], result[1]);
-                    DiscordUtil.RemoveRole(event.getGuild(), event.getMember());
+                    String finalUUID = uuid;
+                    SQLUtil.getDiscordFromSQL(uuid, result -> {
+                        if (result == null) {
+                            event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("RemoveCommand.not-registered", event.getMessage().getTimeCreated(), null, null).build()).queue();
+                            return;
+                        }
+                        SQLUtil.removeSQL(result[0], result[1]);
+                        DiscordUtil.RemoveRole(event.getGuild(), event.getMember());
 
-                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("RemoveCommand.success-remove", event.getMessage().getTimeCreated(), uuid, result[1]).build()).queue();
+                        event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("RemoveCommand.success-remove", event.getMessage().getTimeCreated(), finalUUID, result[1]).build()).queue();
+                    });
                 }
             }
         }

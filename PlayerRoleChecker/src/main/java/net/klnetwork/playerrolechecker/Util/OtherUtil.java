@@ -18,7 +18,6 @@ public class OtherUtil {
                 String[] result = SQLiteUtil.getCodeFromSQLite(uuid.toString());
                 if (result != null) {
                     SQLiteUtil.removeSQLite(result[0], result[1]);
-
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();

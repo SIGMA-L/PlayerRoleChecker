@@ -14,7 +14,7 @@ public class AddBypass implements CommandExecutor {
         if (args.length == 1) {
             try {
                 String uuid = OtherUtil.getUUID(args[0]).toString();
-                if(SQLiteUtil.getUUIDFromSQLite(uuid) != null){
+                if (SQLiteUtil.getUUIDFromSQLite(uuid) != null) {
                     sender.sendMessage(ChatColor.RED + "処理に失敗しました！ data=すでに登録されています");
                     return true;
                 }
@@ -25,15 +25,15 @@ public class AddBypass implements CommandExecutor {
             }
 
         }
-        if (args.length == 2){
-            if(args[0].equalsIgnoreCase("force")){
-                String uuid = args[1];
-                if(SQLiteUtil.getUUIDFromSQLite(uuid) != null){
+        if (args.length == 2) {
+            if (args[0].equalsIgnoreCase("force")) {
+                String force = args[1];
+                if (SQLiteUtil.getUUIDFromSQLite(force) != null) {
                     sender.sendMessage(ChatColor.RED + "処理に失敗しました！ data=すでに登録されています");
                     return true;
                 }
-                SQLiteUtil.putSQLite(uuid.toLowerCase());
-                sender.sendMessage(ChatColor.GREEN + "成功しました！ data=" + uuid);
+                SQLiteUtil.putSQLite(force.toLowerCase());
+                sender.sendMessage(ChatColor.GREEN + "成功しました！ data=" + force);
             }
         }
         return true;
