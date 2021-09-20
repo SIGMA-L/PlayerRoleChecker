@@ -45,7 +45,7 @@
 
 | Discordコマンド | 説明 | パーミッション |
 | --- | --- | --- |
-| !join {生成された数字} | データベースに登録します |  |
+| {生成された数字} | データベースに登録します |  |
 | !remove {マインクラフトID} | データベースから強制削除 | Permission.ADMINISTRATOR |
 | !forcejoin {マインクラフトID} {DiscordID} | データベースに強制登録 | Permission.ADMINISTRATOR |
 
