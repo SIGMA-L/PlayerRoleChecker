@@ -36,17 +36,17 @@
 **※2 DiscordコマンドはPlayerRoleCheckerで登録されています**
 
 
-| マインクラフトコマンド | 説明 | パーミッション |
-| --- | --- | --- |
-| /addbypass {マインクラフトID} | 除外プレイヤーを追加する | playerrolechecker.addbypass |
+| マインクラフトコマンド※1             | 説明 | パーミッション |
+|---------------------------| --- | --- |
+| /addbypass {マインクラフトID}    | 除外プレイヤーを追加する | playerrolechecker.addbypass |
 | /removebypass {マインクラフトID} | 除外プレイヤーを削除する | playerrolechecker.removebypass |
-| /joinmode | このプラグインの機能をオフにする | playerrolechecker.op |
-| /sqldebug | 隠しコマンド、あまり実用的ではありません | playerrolechecker.sqldebug |
+| /joinmode                 | このプラグインの機能をオフにする | playerrolechecker.op |
+| /sqldebug                 | 隠しコマンド、あまり実用的ではありません | playerrolechecker.sqldebug |
 
-| Discordコマンド | 説明 | パーミッション |
-| --- | --- | --- |
-| {生成された数字} | データベースに登録します |  |
-| !remove {マインクラフトID} | データベースから強制削除 | Permission.ADMINISTRATOR |
+| Discordコマンド※2                      | 説明 | パーミッション |
+|------------------------------------| --- | --- |
+| {生成された数字}                          | データベースに登録します |  |
+| !remove {マインクラフトID}                | データベースから強制削除 | Permission.ADMINISTRATOR |
 | !forcejoin {マインクラフトID} {DiscordID} | データベースに強制登録 | Permission.ADMINISTRATOR |
 
 ## LICENSE

@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 public class ForceJoinCommand extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        if (!event.getAuthor().isBot() && event.isFromType(ChannelType.TEXT) && DiscordUtil.ChannelChecker(event.getTextChannel().getId())) {
+        if (!event.getAuthor().isBot() && event.isFromType(ChannelType.TEXT) && DiscordUtil.limitChecker(event.getTextChannel().getId())) {
             if (event.getMember() != null && event.getMember().hasPermission(Permission.ADMINISTRATOR)) {
                 String[] args = event.getMessage().getContentRaw().split("\\s+");
                 if (args.length == 3 && args[0].equals("!forcejoin")) {
@@ -31,7 +31,7 @@ public class ForceJoinCommand extends ListenerAdapter {
                         SQLUtil.putSQL(finalUUID, args[2]);
                         event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("ForceJoinCommand.success-register", event.getMessage().getTimeCreated(), finalUUID, args[2]).build()).queue();
 
-                        DiscordUtil.AddRole(event.getGuild(), event.getMember());
+                        DiscordUtil.addRole(event.getGuild(), event.getMember());
                     });
                 }
             }

@@ -12,9 +12,13 @@ import java.time.OffsetDateTime;
 import static net.klnetwork.playerrolechecker.PlayerRoleChecker.plugin;
 
 public class DiscordUtil {
-    public static boolean ChannelChecker(String channelId) {
+    public static boolean channelChecker(String channelId) {
         if (plugin.getConfig().getString("Discord.ChannelID") == null) return true;
         return channelId.equals(plugin.getConfig().getString("Discord.ChannelID"));
+    }
+
+    public static boolean limitChecker(String channelId) {
+        return !plugin.getConfig().getBoolean("Discord.limitCommand") || channelChecker(channelId);
     }
 
     public static void sendMessageToChannel(EmbedBuilder embedBuilder) {
@@ -28,7 +32,7 @@ public class DiscordUtil {
         }
     }
 
-    public static void AddRole(Guild guild, Member member) {
+    public static void addRole(Guild guild, Member member) {
         String roleID = PlayerRoleChecker.plugin.getConfig().getString("Discord.addToRole");
         if (roleID == null) return;
         Role role = guild.getRoleById(roleID);
@@ -36,7 +40,7 @@ public class DiscordUtil {
         guild.addRoleToMember(member, role).queue();
     }
 
-    public static void RemoveRole(Guild guild, Member member) {
+    public static void removeRole(Guild guild, Member member) {
         String roleID = PlayerRoleChecker.plugin.getConfig().getString("Discord.addToRole");
         if (roleID == null) return;
         Role role = guild.getRoleById(roleID);

@@ -146,7 +146,6 @@ public class SQLUtil {
                 e.printStackTrace();
             }
             connection = DriverManager.getConnection("jdbc:mysql://" + plugin.getConfig().getString("MySQL.Server") + ":" + plugin.getConfig().getInt("MySQL.Port") + "/" + plugin.getConfig().getString("MySQL.Database") + plugin.getConfig().getString("MySQL.Option"), plugin.getConfig().getString("MySQL.Username"), plugin.getConfig().getString("MySQL.Password"));
-            System.out.println("[DEBUG] Connection is Regenerated!");
         }
         return connection;
     }

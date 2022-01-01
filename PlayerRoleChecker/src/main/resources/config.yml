@@ -11,11 +11,13 @@ MySQL:
 ## AdminChannel: (チャンネルID) アドミンチャンネル(必要ではない)
 ## ChannelID: チャンネルID(必要ないがほぼ必須)
 ## addToRole: 登録が完了したらつけるロール (1個のみ）
+## limitCommand: 数字以外のコマンドを別の場所で使えるようにするか true: 使えません false: 使えます
 Discord:
   DiscordToken: TokenHere
   AdminChannel:
   ChannelID:
   addToRole:
+  limitCommand: false
 CodeLimit:
   min: 1000
   max: 9999

@@ -32,10 +32,14 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin {
         JDA.init();
         rolelist.addAll(plugin.getConfig().getStringList("Discord.RoleID"));
         commandlist.addAll(plugin.getConfig().getStringList("JoinCommand"));
-        Bukkit.getPluginManager().registerEvents(new JoinEvent(),this);
+        Bukkit.getPluginManager().registerEvents(new JoinEvent(), this);
         getCommand("joinmode").setExecutor(new JoinMode());
-        getCommand("addbypass").setExecutor(new AddBypass());
-        getCommand("removebypass").setExecutor(new RemoveBypass());
+        if (getConfig().getBoolean("SQLite.useBypassCommand")) {
+            SQL.sqlite_init();
+
+            getCommand("addbypass").setExecutor(new AddBypass());
+            getCommand("removebypass").setExecutor(new RemoveBypass());
+        }
         if (getConfig().getBoolean("UseSQLDebug")) {
             getCommand("sqldebug").setExecutor(new SQLDebug());
         }
@@ -45,7 +49,7 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if(jda != null) jda.shutdown();
+        if (jda != null) jda.shutdown();
         // Plugin shutdown logic
     }
 }

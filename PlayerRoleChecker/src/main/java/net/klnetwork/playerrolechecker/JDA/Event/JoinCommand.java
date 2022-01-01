@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 public class JoinCommand extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        if (!event.getAuthor().isBot() && event.isFromType(ChannelType.TEXT) && DiscordUtil.ChannelChecker(event.getTextChannel().getId())) {
+        if (!event.getAuthor().isBot() && event.isFromType(ChannelType.TEXT) && DiscordUtil.channelChecker(event.getTextChannel().getId())) {
             String[] args = event.getMessage().getContentRaw().split("\\s+");
             if (args.length == 1) {
                 int integer;
@@ -41,7 +41,7 @@ public class JoinCommand extends ListenerAdapter {
                     event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.success-register", event.getMessage().getTimeCreated(), result[0], discordID).build()).queue();
 
                     DiscordUtil.sendMessageToChannel(DiscordUtil.embedBuilder("JoinCommand.sendmessage", event.getMessage().getTimeCreated(), result[0], discordID));
-                    DiscordUtil.AddRole(event.getGuild(), event.getMember());
+                    DiscordUtil.addRole(event.getGuild(), event.getMember());
                 });
             } else {
                 event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.length-big", event.getMessage().getTimeCreated(), null, null).build()).queue();

@@ -1,5 +1,7 @@
+## useBypassCommand: bypassコマンドが使えるかどうか、使わない場合SQLiteは使用されません。
 SQLite:
   SQLiteLocate: bypass.db
+  useBypassCommand: true
 MySQL:
   Server: 'localhost'
   Port: 3306
