@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>net.klnetwork.playerrolecheckerconnector</groupId>
-    <artifactId>PlayerRoleCheckerConnector</artifactId>
-    <version>3.0</version>
+    <groupId>net.klnetwork.playerrolechecker</groupId>
+    <artifactId>PlayerRoleCheckerAPI</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>PlayerRoleCheckerConnector</name>
+    <name>PlayerRoleCheckerAPI</name>
 
     <properties>
         <java.version>1.8</java.version>
@@ -31,9 +31,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.2.4</version>
-                <configuration>
-                    <minimizeJar>true</minimizeJar>
-                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -57,8 +54,8 @@
 
     <repositories>
         <repository>
-            <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+            <id>spigotmc-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
         <repository>
             <id>sonatype</id>
@@ -75,15 +72,8 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.8-R0.1-SNAPSHOT</version>
+            <version>1.18.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.28</version>
-            <type>jar</type>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.dv8tion</groupId>

@@ -2,6 +2,8 @@
 SQLite:
   SQLiteLocate: bypass.db
   useBypassCommand: true
+
+## MYSQLがこの中に入っていないのでSpigotのSQLに頼ることになります なので古いspigotは暗号化をlatin1に変更する必要があります
 MySQL:
   Server: 'localhost'
   Port: 3306
@@ -32,8 +34,11 @@ Discord:
 ## %role% - role
 Minecraft:
   kickMessage:
-    line1: '&6あなたには参加権限がありません。'
-    line2: '&bDiscordを確認してみてください。'
+    - '&6あなたには参加権限がありません！'
+    - '&bDiscordを確認してみてみるか、管理者に報告してください。'
+  errorCaught:
+    - '&cエラーを確認しました！'
+    - '&b管理者に報告してください！'
   joinMessage: '&a%name%&fが入室しました'
   joinMessageBoolean: true
   message:

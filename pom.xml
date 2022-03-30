@@ -13,6 +13,7 @@
 
 
     <modules>
+        <module>PlayerRoleCheckerAPI</module>
         <module>PlayerRoleChecker</module>
         <module>PlayerRoleCheckerConnector</module>
         <module>CodeAPI</module>

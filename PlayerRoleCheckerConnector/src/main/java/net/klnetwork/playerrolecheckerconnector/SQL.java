@@ -1,8 +1,8 @@
 package net.klnetwork.playerrolecheckerconnector;
 
 
-import net.klnetwork.playerrolecheckerconnector.Util.SQLUtil;
-import net.klnetwork.playerrolecheckerconnector.Util.SQLiteUtil;
+import net.klnetwork.playerrolecheckerconnector.util.SQLUtil;
+import net.klnetwork.playerrolecheckerconnector.util.SQLiteUtil;
 
 import java.sql.SQLException;
 import java.sql.Statement;

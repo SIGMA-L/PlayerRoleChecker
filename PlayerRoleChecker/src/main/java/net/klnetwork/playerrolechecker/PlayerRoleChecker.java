@@ -1,19 +1,18 @@
 package net.klnetwork.playerrolechecker;
 
-import net.klnetwork.playerrolechecker.Event.JoinEvent;
-import net.klnetwork.playerrolechecker.JDA.JDA;
-import org.bukkit.plugin.Plugin;
+import net.klnetwork.playerrolechecker.event.JoinEvent;
+import net.klnetwork.playerrolechecker.jda.JDA;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import static net.klnetwork.playerrolechecker.JDA.JDA.jda;
-
 public final class PlayerRoleChecker extends JavaPlugin {
-    public static Plugin plugin;
+
+    public static PlayerRoleChecker INSTANCE;
 
     @Override
     public void onEnable() {
+        INSTANCE = this;
+
         saveDefaultConfig();
-        plugin = this;
         SQL.init();
         JDA.init();
         getServer().getPluginManager().registerEvents(new JoinEvent(),this);
@@ -22,7 +21,7 @@ public final class PlayerRoleChecker extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if(jda != null) jda.shutdown();
+        if(JDA.INSTANCE != null) JDA.INSTANCE.shutdown();
         // Plugin shutdown logic
     }
 }

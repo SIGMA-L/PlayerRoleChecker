@@ -1,11 +1,11 @@
-package net.klnetwork.playerrolecheckerconnector.Command;
+package net.klnetwork.playerrolecheckerconnector.command;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class JoinMode implements CommandExecutor {
+public class JoinModeCommand implements CommandExecutor {
 
     public static boolean joinMode = true;
 

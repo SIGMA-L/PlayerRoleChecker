@@ -1,5 +1,7 @@
 SQLite:
   SQLiteLocate: data.db
+
+## MYSQLがこの中に入っていないのでSpigotのSQLに頼ることになります なので古いspigotは暗号化をlatin1に変更する必要があります
 MySQL:
   Server: 'localhost'
   Port: 3306
@@ -27,11 +29,11 @@ CodeLimit:
 ## - code: 発行された場合のkickメッセージ
 JoinEvent:
   already-code:
-    line1: '&c(発行済み) あなたのコードは'
-    line2: '「%code%」 です (発行されてから) 5分以内に認証してください'
+    - '&c(発行済み) あなたのコードは'
+    - '「%code%」 です (発行されてから) 5分以内に認証してください'
   code:
-    line1: '&cあなたのコードは'
-    line2: '「%code%」 です 5分以内に認証してください'
+    - '&cあなたのコードは'
+    - '「%code%」 です 5分以内に認証してください'
 ## JoinCommand: !join コマンド
 ## - not-number: 数字ではないエラーメッセージ (%uuid% %discordid% をサポートしていません)
 ## - invalid-number: 不明な数字のエラーメッセージ (%uuid% %discordid% をサポートしていません)
