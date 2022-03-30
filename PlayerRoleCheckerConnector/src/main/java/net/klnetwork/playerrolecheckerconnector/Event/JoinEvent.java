@@ -2,6 +2,7 @@ package net.klnetwork.playerrolecheckerconnector.Event;
 
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.klnetwork.playerrolecheckerconnector.Command.JoinMode;
 import net.klnetwork.playerrolecheckerconnector.JDA.JDA;
 import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
@@ -31,8 +32,16 @@ public class JoinEvent implements Listener {
             return;
         }
 
-        if (!OtherUtil.CheckPlayer(e.getUniqueId())) {
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Minecraft.kickMessage.line1") + "\n" + plugin.getConfig().getString("Minecraft.kickMessage.line2")));
+        try {
+            if (!OtherUtil.CheckPlayer(e.getUniqueId())) {
+                e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Minecraft.kickMessage.line1") + "\n" + plugin.getConfig().getString("Minecraft.kickMessage.line2")));
+            }
+        } catch (ErrorResponseException exception) {
+            if (exception.getErrorCode() == 10007) {
+                String[] discordid = SQLUtil.getDiscordFromSQL(e.getUniqueId().toString());
+                SQLUtil.removeSQL(e.getUniqueId().toString(),discordid[1]);
+                e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Minecraft.kickMessage.line1") + "\n" + plugin.getConfig().getString("Minecraft.kickMessage.line2")));
+            }
         }
     }
 
