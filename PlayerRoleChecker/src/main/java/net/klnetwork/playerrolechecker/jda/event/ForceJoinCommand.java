@@ -9,6 +9,7 @@ import net.klnetwork.playerrolechecker.api.ForceJoinEvent;
 import net.klnetwork.playerrolechecker.util.DiscordUtil;
 import net.klnetwork.playerrolechecker.util.OtherUtil;
 import net.klnetwork.playerrolechecker.util.SQLUtil;
+import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -30,6 +31,7 @@ public class ForceJoinCommand extends ListenerAdapter {
                             } else {
 
                                 ForceJoinEvent forceJoinEvent = new ForceJoinEvent(args[2], uuid, event.getMember());
+                                Bukkit.getPluginManager().callEvent(forceJoinEvent);
 
                                 if (!forceJoinEvent.isCancelled()) {
 
