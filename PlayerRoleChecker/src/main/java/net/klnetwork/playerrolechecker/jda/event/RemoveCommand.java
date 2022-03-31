@@ -39,6 +39,8 @@ public class RemoveCommand extends ListenerAdapter {
                                     UUID resultUUID = removeEvent.getUUID();
                                     Member resultMember = removeEvent.getMember();
 
+                                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.success-register", event.getMessage().getTimeCreated(), String.valueOf(resultUUID), resultMember.getId()).build()).queue();
+
                                     SQLUtil.removeSQL(resultUUID, resultMember.getId());
 
                                     if (member != null) DiscordUtil.removeRole(event.getGuild(), resultMember);

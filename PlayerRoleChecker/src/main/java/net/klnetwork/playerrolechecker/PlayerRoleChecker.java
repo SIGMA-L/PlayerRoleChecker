@@ -15,13 +15,13 @@ public final class PlayerRoleChecker extends JavaPlugin {
         saveDefaultConfig();
         SQL.init();
         JDA.init();
-        getServer().getPluginManager().registerEvents(new JoinEvent(),this);
+        getServer().getPluginManager().registerEvents(new JoinEvent(), this);
 
     }
 
     @Override
     public void onDisable() {
-        if(JDA.INSTANCE != null) JDA.INSTANCE.shutdown();
+        if (JDA.INSTANCE != null) JDA.INSTANCE.shutdown();
         // Plugin shutdown logic
     }
 }

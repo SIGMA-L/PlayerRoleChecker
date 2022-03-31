@@ -17,6 +17,8 @@ public class RemoveEvent extends Event implements Cancellable {
     private boolean isCancelled;
 
     public RemoveEvent(Member member, UUID uuid, Member executor) {
+        super(true);
+
         this.member = member;
         this.uuid = uuid;
         this.executor = executor;

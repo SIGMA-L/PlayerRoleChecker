@@ -20,7 +20,7 @@ public class JoinEvent implements Listener {
         } else {
             final int code = CodeUtil.CodeIssue(e.getUniqueId());
 
-            String already = String.join("\n", PlayerRoleChecker.INSTANCE.getConfig().getStringList("JoinEvent.already-code"));
+            String already = String.join("\n", PlayerRoleChecker.INSTANCE.getConfig().getStringList("JoinEvent.code"));
 
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST, ChatColor.translateAlternateColorCodes('&', already.replaceAll("%code%", String.valueOf(code))));
 

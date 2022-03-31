@@ -9,11 +9,6 @@ commands:
     aliases:
       - jm
     description: JoinModeCommand!
-  sqldebug:
-    permission: playerrolechecker.sqldebug
-    aliases:
-      - sqld
-    description: SQLDebugCommand!
   addbypass:
     permission: playerrolechecker.addbypass
   removebypass:

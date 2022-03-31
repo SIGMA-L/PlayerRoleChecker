@@ -17,7 +17,10 @@ public class JoinEvent extends Event implements Cancellable {
     private static final HandlerList HANDLER_LIST = new HandlerList();
     private boolean isCancelled;
 
+
     public JoinEvent(Member member, UUID uuid, int code) {
+        super(true);
+
         this.member = member;
         this.uuid = uuid;
         this.code = code;

@@ -18,6 +18,8 @@ public class ForceJoinEvent extends Event implements Cancellable {
     private boolean isCancelled;
 
     public ForceJoinEvent(String memberId, UUID uuid, Member executor) {
+        super(true);
+
         this.memberId = memberId;
         this.uuid = uuid;
         this.executor = executor;
