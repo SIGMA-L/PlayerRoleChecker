@@ -60,8 +60,8 @@ APIの導入方法:
 ### Maven
 
     <repository>
-		    <id>jitpack.io</id>
-		    <url>https://jitpack.io</url>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
     </repository>
 
 	<dependency>

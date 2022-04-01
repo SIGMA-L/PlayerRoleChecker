@@ -1,6 +1,7 @@
 package net.klnetwork.playerrolechecker.api;
 
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -70,5 +71,9 @@ public class JoinEvent extends Event implements Cancellable {
 
     public JDA getInstance() {
         return this.member.getJDA();
+    }
+
+    public Guild getGuild() {
+        return this.member.getGuild();
     }
 }
