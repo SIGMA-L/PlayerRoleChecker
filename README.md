@@ -41,7 +41,6 @@
 | /addbypass {マインクラフトID}    | 除外プレイヤーを追加する | playerrolechecker.addbypass |
 | /removebypass {マインクラフトID} | 除外プレイヤーを削除する | playerrolechecker.removebypass |
 | /joinmode                 | このプラグインの機能をオフにする | playerrolechecker.op |
-| /sqldebug                 | 隠しコマンド、あまり実用的ではありません | playerrolechecker.sqldebug |
 
 | Discordコマンド※2                      | 説明 | パーミッション |
 |------------------------------------| --- | --- |
@@ -53,6 +52,42 @@
 
 [Apache License 2.0](https://github.com/SIGMA-L/PlayerRoleChecker/blob/main/LICENSE)
 
+
+## API
+
+APIの導入方法:
+
+### Maven
+
+    <repository>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+    </repository>
+
+	<dependency>
+	    <groupId>com.github.SIGMA-L.PlayerRoleChecker</groupId>
+	    <artifactId>PlayerRoleCheckerAPI</artifactId>
+	    <version>v3.0</version>
+	</dependency>
+
+### Gradle
+
+    allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+
+    dependencies {
+        implementation 'com.github.SIGMA-L.PlayerRoleChecker:PlayerRoleCheckerAPI:v3.0'
+	}
+
+APIを実装して使えるイベント:
+    
+    JoinEvent
+    RemoveEvent
+    ForceJoinEvent
 
 ## CodeAPI
 
