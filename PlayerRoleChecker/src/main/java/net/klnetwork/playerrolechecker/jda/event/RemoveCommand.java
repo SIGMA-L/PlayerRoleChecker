@@ -31,7 +31,7 @@ public class RemoveCommand extends ListenerAdapter {
                             } else {
                                 Member member = event.getGuild().retrieveMemberById(result).complete();
 
-                                RemoveEvent removeEvent = new RemoveEvent(member, uuid, event.getMember());
+                                RemoveEvent removeEvent = new RemoveEvent(member, uuid, event.getMessage());
                                 Bukkit.getPluginManager().callEvent(removeEvent);
 
                                 if (!removeEvent.isCancelled()) {

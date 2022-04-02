@@ -30,7 +30,7 @@ public class ForceJoinCommand extends ListenerAdapter {
                                 event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("ForceJoinCommand.already-registered", event.getMessage().getTimeCreated(), String.valueOf(uuid), discordId).build()).queue();
                             } else {
 
-                                ForceJoinEvent forceJoinEvent = new ForceJoinEvent(args[2], uuid, event.getMember());
+                                ForceJoinEvent forceJoinEvent = new ForceJoinEvent(args[2], uuid, event.getMessage());
                                 Bukkit.getPluginManager().callEvent(forceJoinEvent);
 
                                 if (!forceJoinEvent.isCancelled()) {

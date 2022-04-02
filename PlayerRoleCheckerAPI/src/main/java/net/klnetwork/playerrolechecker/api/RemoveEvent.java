@@ -3,6 +3,8 @@ package net.klnetwork.playerrolechecker.api;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -14,15 +16,19 @@ public class RemoveEvent extends Event implements Cancellable {
     private Member member, executor;
     private UUID uuid;
 
+    private Message message;
+
     private static final HandlerList HANDLER_LIST = new HandlerList();
     private boolean isCancelled;
 
-    public RemoveEvent(Member member, UUID uuid, Member executor) {
+    public RemoveEvent(Member member, UUID uuid, Message message) {
         super(true);
 
         this.member = member;
         this.uuid = uuid;
-        this.executor = executor;
+        this.executor = message.getMember();
+
+        this.message = message;
     }
 
     @Override
@@ -73,5 +79,13 @@ public class RemoveEvent extends Event implements Cancellable {
 
     public Guild getGuild() {
         return this.member.getGuild();
+    }
+
+    public Message getMessage() {
+        return message;
+    }
+
+    public void setMessage(Message message) {
+        this.message = message;
     }
 }

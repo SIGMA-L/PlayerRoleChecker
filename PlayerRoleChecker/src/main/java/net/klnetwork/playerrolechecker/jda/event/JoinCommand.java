@@ -34,7 +34,7 @@ public class JoinCommand extends ListenerAdapter {
                                 event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.already-registered", event.getMessage().getTimeCreated(), uuid, already).build()).queue();
                             } else {
 
-                                JoinEvent joinEvent = new JoinEvent(event.getMember(), UUID.fromString(uuid), code);
+                                JoinEvent joinEvent = new JoinEvent(UUID.fromString(uuid), code, event.getMessage());
                                 Bukkit.getPluginManager().callEvent(joinEvent);
 
                                 if (!joinEvent.isCancelled()) {

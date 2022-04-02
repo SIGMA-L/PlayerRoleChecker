@@ -13,8 +13,10 @@ public final class PlayerRoleChecker extends JavaPlugin {
         INSTANCE = this;
 
         saveDefaultConfig();
+
         SQL.init();
         JDA.init();
+
         getServer().getPluginManager().registerEvents(new JoinEvent(), this);
 
     }
