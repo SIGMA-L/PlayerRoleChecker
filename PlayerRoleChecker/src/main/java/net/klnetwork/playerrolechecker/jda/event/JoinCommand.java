@@ -32,6 +32,9 @@ public class JoinCommand extends ListenerAdapter {
                         SQLUtil.asyncDiscordId(uuid, already -> {
                             if (already != null) {
                                 event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.already-registered", event.getMessage().getTimeCreated(), uuid, already).build()).queue();
+
+                                //Security Issues
+                                SQLiteUtil.removeSQLite(uuid, code);
                             } else {
 
                                 JoinEvent joinEvent = new JoinEvent(UUID.fromString(uuid), code, event.getMessage());
