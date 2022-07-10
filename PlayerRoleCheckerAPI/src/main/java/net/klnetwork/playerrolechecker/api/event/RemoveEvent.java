@@ -1,4 +1,4 @@
-package net.klnetwork.playerrolechecker.api;
+package net.klnetwork.playerrolechecker.api.event;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;

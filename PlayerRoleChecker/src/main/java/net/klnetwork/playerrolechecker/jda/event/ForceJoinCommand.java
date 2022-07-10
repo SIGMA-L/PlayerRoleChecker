@@ -5,10 +5,10 @@ import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.klnetwork.playerrolechecker.api.ForceJoinEvent;
+import net.klnetwork.playerrolechecker.api.event.ForceJoinEvent;
+import net.klnetwork.playerrolechecker.table.PlayerData;
 import net.klnetwork.playerrolechecker.util.DiscordUtil;
 import net.klnetwork.playerrolechecker.util.OtherUtil;
-import net.klnetwork.playerrolechecker.util.SQLUtil;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,7 +25,7 @@ public class ForceJoinCommand extends ListenerAdapter {
                     try {
                         UUID uuid = OtherUtil.getUUID(args[1]);
 
-                        SQLUtil.asyncDiscordId(uuid, discordId -> {
+                        PlayerData.getInstance().asyncDiscordId(uuid, discordId -> {
                             if (discordId != null) {
                                 event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("ForceJoinCommand.already-registered", event.getMessage().getTimeCreated(), String.valueOf(uuid), discordId).build()).queue();
                             } else {
@@ -38,7 +38,7 @@ public class ForceJoinCommand extends ListenerAdapter {
                                     UUID resultUUID = forceJoinEvent.getUUID();
                                     String resultDiscordID = forceJoinEvent.getMemberId();
 
-                                    SQLUtil.putSQL(resultUUID, resultDiscordID);
+                                    PlayerData.getInstance().put(resultUUID, resultDiscordID);
 
                                     event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("ForceJoinCommand.success-register", event.getMessage().getTimeCreated(), String.valueOf(resultUUID), resultDiscordID).build()).queue();
 

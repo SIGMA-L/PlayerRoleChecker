@@ -3,6 +3,7 @@ package net.klnetwork.playerrolecheckerconnector.util;
 import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
 
 import java.sql.*;
+import java.util.UUID;
 
 public class SQLiteUtil {
 
@@ -24,6 +25,10 @@ public class SQLiteUtil {
             throwables.printStackTrace();
         }
         return result;
+    }
+
+    public static String getUUIDFromSQLite(UUID uuid) {
+        return getUUIDFromSQLite(uuid.toString());
     }
 
     public static void putSQLite(String uuid) {
@@ -52,6 +57,11 @@ public class SQLiteUtil {
         }
     }
 
+    public static void removeSQLite(UUID uuid) {
+        removeSQLite(uuid.toString());
+    }
+
+
     public static Connection getSQLiteConnection() throws SQLException {
         if(connection == null || connection.isClosed()){
             try {
@@ -61,6 +71,6 @@ public class SQLiteUtil {
             }
             connection = DriverManager.getConnection("jdbc:sqlite:" + PlayerRoleCheckerConnector.INSTANCE.getConfig().getString("SQLite.SQLiteLocate"));
         }
-    return connection;
+        return connection;
     }
 }

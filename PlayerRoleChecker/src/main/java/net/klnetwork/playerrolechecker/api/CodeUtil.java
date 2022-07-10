@@ -2,7 +2,7 @@ package net.klnetwork.playerrolechecker.api;
 
 
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
-import net.klnetwork.playerrolechecker.util.SQLiteUtil;
+import net.klnetwork.playerrolechecker.table.Temporary;
 
 import java.util.UUID;
 
@@ -18,11 +18,11 @@ public class CodeUtil {
 
         int result = getRandom(min, max);
 
-        while (SQLiteUtil.hasUUID(result)) {
+        while (Temporary.getInstance().hasUUID(result)) {
             result = getRandom(min, max);
         }
 
-        SQLiteUtil.putSQLite(uuid.toString(), Integer.toString(result));
+        Temporary.getInstance().put(uuid.toString(), Integer.toString(result));
 
         return result;
     }

@@ -43,7 +43,6 @@ public class JoinEvent implements Listener {
     public void onPlayerJoinEvent(PlayerJoinEvent e) {
         PlayerRoleCheckerConnector.INSTANCE.getCommandList().forEach(string -> Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), OtherUtil.replaceString(string, e.getPlayer())));
 
-        //if (plugin.getConfig().getBoolean("Minecraft.joinMessageBoolean")) e.setJoinMessage(ChatColor.translateAlternateColorCodes('&', OtherUtil.replaceString(plugin.getConfig().getString("Minecraft.joinMessage"), player)));
         SQLUtil.asyncDiscordId(e.getPlayer().getUniqueId(), discordId -> {
             if (discordId != null) {
 

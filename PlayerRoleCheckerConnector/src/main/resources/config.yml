@@ -46,4 +46,4 @@ Minecraft:
     - 'MinecraftName: %name%'
     - 'DiscordID: %discordid%'
     - 'DiscordRole: %role%'
-    - '&a-------------------------------------'
+    - '&a--------------------------------------'
