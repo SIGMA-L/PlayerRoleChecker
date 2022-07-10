@@ -3,8 +3,8 @@ package net.klnetwork.playerrolecheckerconnector.event;
 import net.dv8tion.jda.api.entities.Role;
 import net.klnetwork.playerrolecheckerconnector.command.JoinModeCommand;
 import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
+import net.klnetwork.playerrolecheckerconnector.table.PlayerData;
 import net.klnetwork.playerrolecheckerconnector.util.OtherUtil;
-import net.klnetwork.playerrolecheckerconnector.util.SQLUtil;
 import net.klnetwork.playerrolecheckerconnector.util.SQLiteUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -43,7 +43,7 @@ public class JoinEvent implements Listener {
     public void onPlayerJoinEvent(PlayerJoinEvent e) {
         PlayerRoleCheckerConnector.INSTANCE.getCommandList().forEach(string -> Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), OtherUtil.replaceString(string, e.getPlayer())));
 
-        SQLUtil.asyncDiscordId(e.getPlayer().getUniqueId(), discordId -> {
+        PlayerData.getInstance().asyncDiscordId(e.getPlayer().getUniqueId(), discordId -> {
             if (discordId != null) {
 
                 List<Role> roles = OtherUtil.getRolesById(discordId);

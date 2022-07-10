@@ -10,6 +10,9 @@ import org.bukkit.plugin.Plugin;
 import java.util.*;
 
 public class PlayerRoleCheckerAPI {
+
+    private static final Map<HookedAPIType, APIHook> pairs = new HashMap<>();
+
     public static boolean isHookedConnector() {
         final HookedAPIType type = getHookedAPIType();
 
@@ -43,8 +46,6 @@ public class PlayerRoleCheckerAPI {
             init();
         }
 
-        getAPIType();
-
         return getAPIType();
     }
 
@@ -60,8 +61,6 @@ public class PlayerRoleCheckerAPI {
             return HookedAPIType.NONE;
         }
     }
-
-    private static final Map<HookedAPIType, APIHook> pairs = new HashMap<>();
 
     public static void init() {
         pairs.clear();
