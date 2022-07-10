@@ -1,7 +1,8 @@
 package net.klnetwork.playerrolechecker.api;
 
-import net.dv8tion.jda.internal.utils.tuple.Pair;
 import net.klnetwork.playerrolechecker.api.data.APIHook;
+import net.klnetwork.playerrolechecker.api.data.checker.CheckerAPIHook;
+import net.klnetwork.playerrolechecker.api.data.connector.ConnectorAPIHook;
 import net.klnetwork.playerrolechecker.api.enums.HookedAPIType;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -9,22 +10,40 @@ import org.bukkit.plugin.Plugin;
 import java.util.*;
 
 public class PlayerRoleCheckerAPI {
-    public static boolean isConnector() {
+    public static boolean isHookedConnector() {
         final HookedAPIType type = getHookedAPIType();
 
         return type == HookedAPIType.BOTH || type == HookedAPIType.CONNECTOR;
     }
 
-    public static boolean isChecker() {
+    public static ConnectorAPIHook getConnectorAPI() {
+        if (isHookedConnector()) {
+            return (ConnectorAPIHook) pairs.get(HookedAPIType.CONNECTOR);
+        }
+
+        throw new IllegalStateException();
+    }
+
+    public static boolean isHookedChecker() {
         final HookedAPIType type = getHookedAPIType();
 
         return type == HookedAPIType.BOTH || type == HookedAPIType.CHECKER;
+    }
+
+    public static CheckerAPIHook getCheckerAPI() {
+        if (isHookedChecker()) {
+            return (CheckerAPIHook) pairs.get(HookedAPIType.CHECKER);
+        }
+
+        throw new IllegalStateException();
     }
 
     public static HookedAPIType getHookedAPIType() {
         if (pairs.isEmpty()) {
             init();
         }
+
+        getAPIType();
 
         return getAPIType();
     }
