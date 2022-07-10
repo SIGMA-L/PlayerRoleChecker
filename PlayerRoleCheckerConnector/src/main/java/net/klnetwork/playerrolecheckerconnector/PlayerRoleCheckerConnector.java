@@ -9,6 +9,7 @@ import net.klnetwork.playerrolecheckerconnector.command.JoinModeCommand;
 import net.klnetwork.playerrolecheckerconnector.command.RemoveBypassCommand;
 import net.klnetwork.playerrolecheckerconnector.event.JoinEvent;
 import net.klnetwork.playerrolecheckerconnector.jda.JDA;
+import net.klnetwork.playerrolecheckerconnector.table.Bypass;
 import net.klnetwork.playerrolecheckerconnector.table.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -75,7 +76,7 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
 
     @Override
     public ConnectorBypassTable getBypass() {
-        return null;
+        return Bypass.getInstance();
     }
 
     @Override

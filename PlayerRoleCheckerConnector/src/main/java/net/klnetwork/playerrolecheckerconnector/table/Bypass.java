@@ -1,18 +1,35 @@
-package net.klnetwork.playerrolecheckerconnector.util;
+package net.klnetwork.playerrolecheckerconnector.table;
 
+import net.klnetwork.playerrolechecker.api.data.connector.ConnectorBypassTable;
 import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
 
 import java.sql.*;
 import java.util.UUID;
 
-public class SQLiteUtil {
+public class Bypass implements ConnectorBypassTable {
 
-    private static Connection connection;
+    private static Bypass table;
 
-    public static String getUUIDFromSQLite(String uuid) {
+    private Connection connection;
+
+    public static Bypass getInstance() {
+        if (table == null) {
+            table = new Bypass();
+        }
+
+        return table;
+    }
+
+    @Override
+    public String getUUID(UUID uuid) {
+        return getUUID(uuid.toString());
+    }
+
+    @Override
+    public String getUUID(String uuid) {
         String result = null;
         try {
-            PreparedStatement preparedStatement = getSQLiteConnection().prepareStatement("select * from bypass where uuid = ?");
+            PreparedStatement preparedStatement = getConnection().prepareStatement("select * from bypass where uuid = ?");
             preparedStatement.setString(1, uuid);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -27,43 +44,40 @@ public class SQLiteUtil {
         return result;
     }
 
-    public static String getUUIDFromSQLite(UUID uuid) {
-        return getUUIDFromSQLite(uuid.toString());
-    }
-
-    public static void putSQLite(String uuid) {
+    @Override
+    public void put(String uuid) {
         try {
-            PreparedStatement preparedStatement = getSQLiteConnection().prepareStatement("insert into bypass values (?)");
+            PreparedStatement preparedStatement = getConnection().prepareStatement("insert into bypass values (?)");
             preparedStatement.setString(1, uuid);
             preparedStatement.execute();
 
             preparedStatement.close();
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
-    public static void removeSQLite(String uuid) {
+    @Override
+    public void remove(UUID uuid) {
+        remove(uuid.toString());
+    }
+
+    @Override
+    public void remove(String uuid) {
         try {
-            PreparedStatement preparedStatement = getSQLiteConnection().prepareStatement("delete from bypass where uuid = ?");
+            PreparedStatement preparedStatement = getConnection().prepareStatement("delete from bypass where uuid = ?");
             preparedStatement.setString(1, uuid);
             preparedStatement.execute();
 
             preparedStatement.close();
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
-    public static void removeSQLite(UUID uuid) {
-        removeSQLite(uuid.toString());
-    }
-
-
-    public static Connection getSQLiteConnection() throws SQLException {
-        if(connection == null || connection.isClosed()){
+    @Override
+    public Connection getConnection() throws SQLException {
+        if (connection == null || connection.isClosed()) {
             try {
                 Class.forName("org.sqlite.JDBC");
             } catch (ClassNotFoundException e) {
@@ -72,5 +86,10 @@ public class SQLiteUtil {
             connection = DriverManager.getConnection("jdbc:sqlite:" + PlayerRoleCheckerConnector.INSTANCE.getConfig().getString("SQLite.SQLiteLocate"));
         }
         return connection;
+    }
+
+    @Override
+    public void setConnection(Connection connection) {
+        this.connection = connection;
     }
 }

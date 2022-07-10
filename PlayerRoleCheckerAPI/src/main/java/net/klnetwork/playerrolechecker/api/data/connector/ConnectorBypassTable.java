@@ -4,15 +4,17 @@ import java.sql.*;
 import java.util.UUID;
 
 public interface ConnectorBypassTable {
-    String getUUID(String uuid);
-
     String getUUID(UUID uuid);
+
+    String getUUID(String uuid);
 
     void put(String uuid);
 
-    void remove(String uuid);
-
     void remove(UUID uuid);
 
+    void remove(String uuid);
+
     Connection getConnection() throws SQLException;
+
+    void setConnection(Connection connection);
 }
