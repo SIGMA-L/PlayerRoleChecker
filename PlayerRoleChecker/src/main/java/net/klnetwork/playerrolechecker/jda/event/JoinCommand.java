@@ -4,10 +4,10 @@ import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.klnetwork.playerrolechecker.api.JoinEvent;
+import net.klnetwork.playerrolechecker.api.event.JoinEvent;
+import net.klnetwork.playerrolechecker.table.PlayerData;
 import net.klnetwork.playerrolechecker.util.DiscordUtil;
-import net.klnetwork.playerrolechecker.util.SQLUtil;
-import net.klnetwork.playerrolechecker.util.SQLiteUtil;
+import net.klnetwork.playerrolechecker.table.Temporary;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,29 +24,28 @@ public class JoinCommand extends ListenerAdapter {
                 try {
                     final int code = Integer.parseInt(args[0]);
 
-                    String uuid = SQLiteUtil.getUUID(code);
+                    String uuid = Temporary.getInstance().getUUID(code);
 
                     if (uuid == null) {
                         event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.invalid-number", event.getMessage().getTimeCreated(), null, null).build()).queue();
                     } else {
-                        SQLUtil.asyncDiscordId(uuid, already -> {
+                        PlayerData.getInstance().asyncDiscordId(uuid, already -> {
                             if (already != null) {
                                 event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.already-registered", event.getMessage().getTimeCreated(), uuid, already).build()).queue();
 
                                 //Security Issues
-                                SQLiteUtil.removeSQLite(uuid, code);
+                                Temporary.getInstance().remove(uuid, code);
                             } else {
 
                                 JoinEvent joinEvent = new JoinEvent(UUID.fromString(uuid), code, event.getMessage());
                                 Bukkit.getPluginManager().callEvent(joinEvent);
 
                                 if (!joinEvent.isCancelled()) {
-
                                     Member resultMember = joinEvent.getMember();
                                     UUID resultUUID = joinEvent.getUUID();
 
-                                    SQLiteUtil.removeSQLite(resultUUID, joinEvent.getCode());
-                                    SQLUtil.putSQL(resultUUID, resultMember.getId());
+                                    Temporary.getInstance().remove(resultUUID, joinEvent.getCode());
+                                    PlayerData.getInstance().put(resultUUID, resultMember.getId());
 
                                     event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.success-register", event.getMessage().getTimeCreated(), String.valueOf(resultUUID), resultMember.getId()).build()).queue();
                                     DiscordUtil.sendMessageToChannel(DiscordUtil.embedBuilder("JoinCommand.sendmessage", event.getMessage().getTimeCreated(), String.valueOf(resultUUID), resultMember.getId()));

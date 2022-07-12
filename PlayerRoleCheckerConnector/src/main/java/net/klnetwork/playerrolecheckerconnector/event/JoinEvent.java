@@ -3,9 +3,9 @@ package net.klnetwork.playerrolecheckerconnector.event;
 import net.dv8tion.jda.api.entities.Role;
 import net.klnetwork.playerrolecheckerconnector.command.JoinModeCommand;
 import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
+import net.klnetwork.playerrolecheckerconnector.table.Bypass;
+import net.klnetwork.playerrolecheckerconnector.table.PlayerData;
 import net.klnetwork.playerrolecheckerconnector.util.OtherUtil;
-import net.klnetwork.playerrolecheckerconnector.util.SQLUtil;
-import net.klnetwork.playerrolecheckerconnector.util.SQLiteUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -22,7 +22,7 @@ public class JoinEvent implements Listener {
         if (!JoinModeCommand.joinMode) return;
 
         //SQLiteUtilはファイル管理であるため、非同期である必要はありません(位置的にここに必要)
-        if (PlayerRoleCheckerConnector.INSTANCE.getConfig().getBoolean("SQLite.useBypassCommand") && (SQLiteUtil.getUUIDFromSQLite(e.getUniqueId().toString()) != null || SQLiteUtil.getUUIDFromSQLite(e.getName().toLowerCase()) != null)) {
+        if (PlayerRoleCheckerConnector.INSTANCE.getConfig().getBoolean("SQLite.useBypassCommand") && (Bypass.getInstance().getUUID(e.getUniqueId().toString()) != null || Bypass.getInstance().getUUID(e.getName().toLowerCase()) != null)) {
             return;
         }
 
@@ -43,8 +43,7 @@ public class JoinEvent implements Listener {
     public void onPlayerJoinEvent(PlayerJoinEvent e) {
         PlayerRoleCheckerConnector.INSTANCE.getCommandList().forEach(string -> Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), OtherUtil.replaceString(string, e.getPlayer())));
 
-        //if (plugin.getConfig().getBoolean("Minecraft.joinMessageBoolean")) e.setJoinMessage(ChatColor.translateAlternateColorCodes('&', OtherUtil.replaceString(plugin.getConfig().getString("Minecraft.joinMessage"), player)));
-        SQLUtil.asyncDiscordId(e.getPlayer().getUniqueId(), discordId -> {
+        PlayerData.getInstance().asyncDiscordId(e.getPlayer().getUniqueId(), discordId -> {
             if (discordId != null) {
 
                 List<Role> roles = OtherUtil.getRolesById(discordId);

@@ -5,10 +5,10 @@ import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.klnetwork.playerrolechecker.api.RemoveEvent;
+import net.klnetwork.playerrolechecker.api.event.RemoveEvent;
+import net.klnetwork.playerrolechecker.table.PlayerData;
 import net.klnetwork.playerrolechecker.util.DiscordUtil;
 import net.klnetwork.playerrolechecker.util.OtherUtil;
-import net.klnetwork.playerrolechecker.util.SQLUtil;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,7 +25,7 @@ public class RemoveCommand extends ListenerAdapter {
                     try {
                         UUID uuid = OtherUtil.getUUID(args[1]);
 
-                        SQLUtil.asyncDiscordId(uuid, result -> {
+                        PlayerData.getInstance().asyncDiscordId(uuid, result -> {
                             if (result == null) {
                                 event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("RemoveCommand.not-registered", event.getMessage().getTimeCreated(), null, null).build()).queue();
                             } else {
@@ -41,7 +41,7 @@ public class RemoveCommand extends ListenerAdapter {
 
                                     event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.success-register", event.getMessage().getTimeCreated(), String.valueOf(resultUUID), resultMember.getId()).build()).queue();
 
-                                    SQLUtil.removeSQL(resultUUID, resultMember.getId());
+                                    PlayerData.getInstance().remove(resultUUID, resultMember.getId());
 
                                     if (member != null) DiscordUtil.removeRole(event.getGuild(), resultMember);
                                 }

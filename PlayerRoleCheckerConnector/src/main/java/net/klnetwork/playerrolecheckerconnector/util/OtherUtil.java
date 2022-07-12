@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Role;
 import net.klnetwork.playerrolecheckerconnector.jda.JDA;
 import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
+import net.klnetwork.playerrolecheckerconnector.table.PlayerData;
 import org.bukkit.entity.Player;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -32,7 +33,7 @@ public class OtherUtil {
     }
 
     public static boolean hasRole(UUID uuid) {
-        String discordId = SQLUtil.getDiscordId(uuid.toString());
+        String discordId = PlayerData.getInstance().getDiscordId(uuid.toString());
         if (discordId == null) return false;
 
         List<Role> role = getRolesById(discordId);

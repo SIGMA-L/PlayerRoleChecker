@@ -1,18 +1,30 @@
-package net.klnetwork.playerrolechecker.util;
+package net.klnetwork.playerrolechecker.table;
 
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
+import net.klnetwork.playerrolechecker.api.data.checker.CheckerTemporaryTable;
 
 import java.sql.*;
 import java.util.UUID;
 
-public class SQLiteUtil {
+public class Temporary implements CheckerTemporaryTable {
 
-    private static Connection connection;
+    private Connection connection;
 
-    public static boolean hasUUID(Integer code) {
+    private static Temporary table;
+
+    public static Temporary getInstance() {
+        if (table == null) {
+            table = new Temporary();
+        }
+
+        return table;
+    }
+
+    @Override
+    public boolean hasUUID(Integer code) {
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = getSQLiteConnection().prepareStatement("select * from waitverify where code = ?");
+            preparedStatement = getConnection().prepareStatement("select * from waitverify where code = ?");
             preparedStatement.setInt(1, code);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -33,10 +45,11 @@ public class SQLiteUtil {
         return false;
     }
 
-    public static String getUUID(Integer code) {
+    @Override
+    public String getUUID(Integer code) {
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = getSQLiteConnection().prepareStatement("select * from waitverify where code = ?");
+            preparedStatement = getConnection().prepareStatement("select * from waitverify where code = ?");
             preparedStatement.setInt(1, code);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -57,14 +70,35 @@ public class SQLiteUtil {
         return null;
     }
 
+    @Override
+    public String[] getUUID(String code) {
+        String[] result = null;
+        try {
+            PreparedStatement preparedStatement = getConnection().prepareStatement("select * from waitverify where code = ?");
+            preparedStatement.setString(1, code);
 
-    public static Integer getCode(UUID uuid) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) result = new String[]{resultSet.getString(1), resultSet.getString(2)};
+
+            preparedStatement.close();
+            //PreparedStatementが閉じたらResultSetは閉じるはず
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public Integer getCode(UUID uuid) {
         return getCode(uuid.toString());
     }
-    public static Integer getCode(String uuid) {
+
+    @Override
+    public Integer getCode(String uuid) {
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = getSQLiteConnection().prepareStatement("select * from waitverify where uuid = ?");
+            preparedStatement = getConnection().prepareStatement("select * from waitverify where uuid = ?");
             preparedStatement.setString(1, uuid);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -85,27 +119,10 @@ public class SQLiteUtil {
         return null;
     }
 
-    public static String[] getUUIDFromSQLite(String code) {
-        String[] result = null;
+    @Override
+    public void put(String uuid, String code) {
         try {
-            PreparedStatement preparedStatement = getSQLiteConnection().prepareStatement("select * from waitverify where code = ?");
-            preparedStatement.setString(1, code);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) result = new String[]{resultSet.getString(1), resultSet.getString(2)};
-
-            preparedStatement.close();
-            //PreparedStatementが閉じたらResultSetは閉じるはず
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return result;
-    }
-
-    public static void putSQLite(String uuid, String code) {
-        try {
-            PreparedStatement preparedStatement = getSQLiteConnection().prepareStatement("insert into waitverify values (?,?)");
+            PreparedStatement preparedStatement = getConnection().prepareStatement("insert into waitverify values (?,?)");
             preparedStatement.setString(1, uuid);
             preparedStatement.setString(2, code);
             preparedStatement.execute();
@@ -117,13 +134,15 @@ public class SQLiteUtil {
         }
     }
 
-    public static void removeSQLite(UUID uuid, Integer code) {
-        removeSQLite(uuid.toString(), code);
+    @Override
+    public void remove(UUID uuid, Integer code) {
+        remove(uuid.toString(), code);
     }
 
-    public static void removeSQLite(String uuid, Integer code) {
+    @Override
+    public void remove(String uuid, Integer code) {
         try {
-            PreparedStatement preparedStatement = getSQLiteConnection().prepareStatement("delete from waitverify where uuid = ? and code = ?");
+            PreparedStatement preparedStatement = getConnection().prepareStatement("delete from waitverify where uuid = ? and code = ?");
             preparedStatement.setString(1, uuid);
             preparedStatement.setInt(2, code);
             preparedStatement.execute();
@@ -135,7 +154,8 @@ public class SQLiteUtil {
         }
     }
 
-    public static Connection getSQLiteConnection() throws SQLException {
+    @Override
+    public Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
             try {
                 Class.forName("org.sqlite.JDBC");
@@ -145,5 +165,10 @@ public class SQLiteUtil {
             connection = DriverManager.getConnection("jdbc:sqlite:" + PlayerRoleChecker.INSTANCE.getConfig().getString("SQLite.SQLiteLocate"));
         }
         return connection;
+    }
+
+    @Override
+    public void setConnection(Connection connection) {
+        this.connection = connection;
     }
 }

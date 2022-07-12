@@ -1,5 +1,6 @@
 package net.klnetwork.playerrolechecker.util;
 
+import net.klnetwork.playerrolechecker.table.Temporary;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -16,8 +17,10 @@ public class OtherUtil {
             try {
                 TimeUnit.SECONDS.sleep(300);
 
-                Integer integer = SQLiteUtil.getCode(uuid);
-                if (integer != null) SQLiteUtil.removeSQLite(uuid, integer);
+                Integer integer = Temporary.getInstance().getCode(uuid);
+                if (integer != null) {
+                    Temporary.getInstance().remove(uuid, integer);
+                }
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
