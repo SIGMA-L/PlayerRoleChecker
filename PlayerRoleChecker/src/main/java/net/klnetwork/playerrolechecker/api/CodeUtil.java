@@ -2,10 +2,11 @@ package net.klnetwork.playerrolechecker.api;
 
 
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
-import net.klnetwork.playerrolechecker.table.Temporary;
+import net.klnetwork.playerrolechecker.table.LocalSQL;
 
 import java.util.UUID;
 
+/* TODO: REFACTOR */
 public class CodeUtil {
 
     public static int getRandom(int min, int max) {
@@ -18,11 +19,11 @@ public class CodeUtil {
 
         int result = getRandom(min, max);
 
-        while (Temporary.getInstance().hasUUID(result)) {
+        while (LocalSQL.getInstance().hasUUID(result)) {
             result = getRandom(min, max);
         }
 
-        Temporary.getInstance().put(uuid.toString(), Integer.toString(result));
+        LocalSQL.getInstance().put(uuid.toString(), Integer.toString(result));
 
         return result;
     }

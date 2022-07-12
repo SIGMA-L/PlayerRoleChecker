@@ -1,6 +1,6 @@
 package net.klnetwork.playerrolechecker.util;
 
-import net.klnetwork.playerrolechecker.table.Temporary;
+import net.klnetwork.playerrolechecker.table.LocalSQL;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -17,9 +17,9 @@ public class OtherUtil {
             try {
                 TimeUnit.SECONDS.sleep(300);
 
-                Integer integer = Temporary.getInstance().getCode(uuid);
+                Integer integer = LocalSQL.getInstance().getCode(uuid);
                 if (integer != null) {
-                    Temporary.getInstance().remove(uuid, integer);
+                    LocalSQL.getInstance().remove(uuid, integer);
                 }
 
             } catch (InterruptedException e) {

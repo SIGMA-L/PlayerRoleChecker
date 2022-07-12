@@ -3,13 +3,15 @@ package net.klnetwork.playerrolecheckerconnector;
 import net.klnetwork.playerrolechecker.api.data.PlayerDataTable;
 import net.klnetwork.playerrolechecker.api.data.connector.ConnectorAPIHook;
 import net.klnetwork.playerrolechecker.api.data.connector.ConnectorBypassTable;
+import net.klnetwork.playerrolechecker.api.data.connector.ConnectorCustomDataBase;
 import net.klnetwork.playerrolechecker.api.enums.HookedAPIType;
+import net.klnetwork.playerrolecheckerconnector.api.CustomDataBaseImpl;
 import net.klnetwork.playerrolecheckerconnector.command.AddBypassCommand;
 import net.klnetwork.playerrolecheckerconnector.command.JoinModeCommand;
 import net.klnetwork.playerrolecheckerconnector.command.RemoveBypassCommand;
 import net.klnetwork.playerrolecheckerconnector.event.JoinEvent;
 import net.klnetwork.playerrolecheckerconnector.jda.JDA;
-import net.klnetwork.playerrolecheckerconnector.table.Bypass;
+import net.klnetwork.playerrolecheckerconnector.table.LocalSQL;
 import net.klnetwork.playerrolecheckerconnector.table.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -80,7 +82,12 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
 
     @Override
     public ConnectorBypassTable getBypass() {
-        return Bypass.getInstance();
+        return LocalSQL.getInstance();
+    }
+
+    @Override
+    public ConnectorCustomDataBase getCustomDataBase() {
+        return new CustomDataBaseImpl();
     }
 
     @Override

@@ -3,7 +3,7 @@ package net.klnetwork.playerrolecheckerconnector.event;
 import net.dv8tion.jda.api.entities.Role;
 import net.klnetwork.playerrolecheckerconnector.command.JoinModeCommand;
 import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
-import net.klnetwork.playerrolecheckerconnector.table.Bypass;
+import net.klnetwork.playerrolecheckerconnector.table.LocalSQL;
 import net.klnetwork.playerrolecheckerconnector.table.PlayerData;
 import net.klnetwork.playerrolecheckerconnector.util.OtherUtil;
 import org.bukkit.Bukkit;
@@ -22,7 +22,7 @@ public class JoinEvent implements Listener {
         if (!JoinModeCommand.joinMode) return;
 
         //SQLiteUtilはファイル管理であるため、非同期である必要はありません(位置的にここに必要)
-        if (PlayerRoleCheckerConnector.INSTANCE.getConfig().getBoolean("SQLite.useBypassCommand") && (Bypass.getInstance().getUUID(e.getUniqueId().toString()) != null || Bypass.getInstance().getUUID(e.getName().toLowerCase()) != null)) {
+        if (PlayerRoleCheckerConnector.INSTANCE.getConfig().getBoolean("SQLite.useBypassCommand") && (LocalSQL.getInstance().getUUID(e.getUniqueId().toString()) != null || LocalSQL.getInstance().getUUID(e.getName().toLowerCase()) != null)) {
             return;
         }
 

@@ -1,7 +1,7 @@
 package net.klnetwork.playerrolechecker;
 
 import net.klnetwork.playerrolechecker.table.PlayerData;
-import net.klnetwork.playerrolechecker.table.Temporary;
+import net.klnetwork.playerrolechecker.table.LocalSQL;
 
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,7 +10,7 @@ public class SQL {
 
     public static void init() {
         try {
-            Statement LiteSt = Temporary.getInstance().getConnection().createStatement();
+            Statement LiteSt = LocalSQL.getInstance().getConnection().createStatement();
             LiteSt.executeUpdate("drop table if exists waitverify");
             LiteSt.executeUpdate("create table if not exists waitverify (uuid string, code int)");
 

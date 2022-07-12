@@ -6,18 +6,22 @@ import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
 import java.sql.*;
 import java.util.UUID;
 
-public class Bypass implements ConnectorBypassTable {
+public class LocalSQL implements ConnectorBypassTable {
 
-    private static Bypass table;
+    private static ConnectorBypassTable table;
 
     private Connection connection;
 
-    public static Bypass getInstance() {
+    public static ConnectorBypassTable getInstance() {
         if (table == null) {
-            table = new Bypass();
+            table = new LocalSQL();
         }
 
         return table;
+    }
+
+    public static void setInstance(ConnectorBypassTable data) {
+        table = data;
     }
 
     @Override

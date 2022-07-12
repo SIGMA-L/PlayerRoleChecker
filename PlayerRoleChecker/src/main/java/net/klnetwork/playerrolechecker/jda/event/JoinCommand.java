@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.klnetwork.playerrolechecker.api.event.JoinEvent;
 import net.klnetwork.playerrolechecker.table.PlayerData;
 import net.klnetwork.playerrolechecker.util.DiscordUtil;
-import net.klnetwork.playerrolechecker.table.Temporary;
+import net.klnetwork.playerrolechecker.table.LocalSQL;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,7 +24,7 @@ public class JoinCommand extends ListenerAdapter {
                 try {
                     final int code = Integer.parseInt(args[0]);
 
-                    String uuid = Temporary.getInstance().getUUID(code);
+                    String uuid = LocalSQL.getInstance().getUUID(code);
 
                     if (uuid == null) {
                         event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.invalid-number", event.getMessage().getTimeCreated(), null, null).build()).queue();
@@ -34,7 +34,7 @@ public class JoinCommand extends ListenerAdapter {
                                 event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.already-registered", event.getMessage().getTimeCreated(), uuid, already).build()).queue();
 
                                 //Security Issues
-                                Temporary.getInstance().remove(uuid, code);
+                                LocalSQL.getInstance().remove(uuid, code);
                             } else {
 
                                 JoinEvent joinEvent = new JoinEvent(UUID.fromString(uuid), code, event.getMessage());
@@ -44,7 +44,7 @@ public class JoinCommand extends ListenerAdapter {
                                     Member resultMember = joinEvent.getMember();
                                     UUID resultUUID = joinEvent.getUUID();
 
-                                    Temporary.getInstance().remove(resultUUID, joinEvent.getCode());
+                                    LocalSQL.getInstance().remove(resultUUID, joinEvent.getCode());
                                     PlayerData.getInstance().put(resultUUID, resultMember.getId());
 
                                     event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.success-register", event.getMessage().getTimeCreated(), String.valueOf(resultUUID), resultMember.getId()).build()).queue();

@@ -4,4 +4,6 @@ import net.klnetwork.playerrolechecker.api.data.APIHook;
 
 public interface CheckerAPIHook extends APIHook {
     CheckerTemporaryTable getTemporary();
+
+    CheckerCustomDataBase getCustomDataBase();
 }

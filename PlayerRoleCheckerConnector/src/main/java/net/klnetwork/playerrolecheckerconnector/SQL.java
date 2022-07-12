@@ -1,7 +1,7 @@
 package net.klnetwork.playerrolecheckerconnector;
 
 
-import net.klnetwork.playerrolecheckerconnector.table.Bypass;
+import net.klnetwork.playerrolecheckerconnector.table.LocalSQL;
 import net.klnetwork.playerrolecheckerconnector.table.PlayerData;
 
 import java.sql.SQLException;
@@ -20,7 +20,7 @@ public class SQL {
 
     public static void sqlite_init() {
         try {
-            Statement LiteSt = Bypass.getInstance().getConnection().createStatement();
+            Statement LiteSt = LocalSQL.getInstance().getConnection().createStatement();
             LiteSt.executeUpdate("create table if not exists bypass (uuid string)");
         } catch (SQLException throwables) {
             throwables.printStackTrace();

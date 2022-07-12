@@ -11,17 +11,21 @@ import java.util.function.Consumer;
 
 public class PlayerData implements PlayerDataTable {
 
-    private static PlayerData table;
+    private static PlayerDataTable table;
 
     private long lastConnection;
     private Connection connection;
 
-    public static PlayerData getInstance() {
+    public static PlayerDataTable getInstance() {
         if (table == null) {
             table = new PlayerData();
         }
 
         return table;
+    }
+
+    public static void setInstance(PlayerDataTable data) {
+        table = data;
     }
 
     @Override

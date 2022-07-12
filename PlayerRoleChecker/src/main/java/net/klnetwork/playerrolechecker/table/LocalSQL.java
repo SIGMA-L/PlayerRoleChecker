@@ -1,23 +1,28 @@
 package net.klnetwork.playerrolechecker.table;
 
+import com.sun.tools.javac.comp.Check;
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
 import net.klnetwork.playerrolechecker.api.data.checker.CheckerTemporaryTable;
 
 import java.sql.*;
 import java.util.UUID;
 
-public class Temporary implements CheckerTemporaryTable {
+public class LocalSQL implements CheckerTemporaryTable {
 
     private Connection connection;
 
-    private static Temporary table;
+    private static CheckerTemporaryTable table;
 
-    public static Temporary getInstance() {
+    public static CheckerTemporaryTable getInstance() {
         if (table == null) {
-            table = new Temporary();
+            table = new LocalSQL();
         }
 
         return table;
+    }
+
+    public static void setInstance(CheckerTemporaryTable data) {
+        table = data;
     }
 
     @Override
