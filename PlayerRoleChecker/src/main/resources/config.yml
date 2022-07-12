@@ -1,7 +1,9 @@
 SQLite:
   SQLiteLocate: data.db
 
-## MYSQLがこの中に入っていないのでSpigotのSQLに頼ることになります なので古いspigotは暗号化をlatin1に変更する必要があります
+## SpigotにあるMySQLに頼ることになるので
+## バージョンによっては暗号化処理をlatin1にすることをおすすめします
+## 今後のバージョンで内部のMySQLに頼る可能性がります
 MySQL:
   Server: 'localhost'
   Port: 3306

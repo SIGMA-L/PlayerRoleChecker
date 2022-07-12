@@ -30,13 +30,19 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
 
     @Override
     public void onDisable() {
-        if (JDA.INSTANCE != null) JDA.INSTANCE.shutdown();
-        // Plugin shutdown logic
+        if (JDA.INSTANCE != null) {
+            JDA.INSTANCE.shutdown();
+        }
     }
 
     @Override
     public Plugin getPlugin() {
         return this;
+    }
+
+    @Override
+    public net.dv8tion.jda.api.JDA getJDA() {
+        return JDA.INSTANCE;
     }
 
     @Override

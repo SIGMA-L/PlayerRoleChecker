@@ -28,8 +28,6 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
-
         INSTANCE = this;
 
         saveDefaultConfig();
@@ -52,8 +50,9 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
-        if (JDA.INSTANCE != null) JDA.INSTANCE.shutdown();
+        if (JDA.INSTANCE != null) {
+            JDA.INSTANCE.shutdown();
+        }
     }
 
     public List<String> getRoleList() {
@@ -67,6 +66,11 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
     @Override
     public Plugin getPlugin() {
         return this;
+    }
+
+    @Override
+    public net.dv8tion.jda.api.JDA getJDA() {
+        return JDA.INSTANCE;
     }
 
     @Override

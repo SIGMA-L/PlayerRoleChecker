@@ -3,7 +3,9 @@ SQLite:
   SQLiteLocate: bypass.db
   useBypassCommand: true
 
-## MYSQLがこの中に入っていないのでSpigotのSQLに頼ることになります なので古いspigotは暗号化をlatin1に変更する必要があります
+## SpigotにあるMySQLに頼ることになるので
+## バージョンによっては暗号化処理をlatin1にすることをおすすめします
+## 今後のバージョンで内部のMySQLに頼る可能性がります
 MySQL:
   Server: 'localhost'
   Port: 3306
@@ -11,7 +13,6 @@ MySQL:
   Username: 'playerrolecheckeruser'
   Password: 'playerrolecheckerpass'
   Option: '?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=latin1&autoReconnect=true'
-  UseSQLDebug: false
 ## JoinCommand: プレイヤーが参加したときにコマンドを打ちます
 ## %name% - プレイヤー名
 ## %uuid% - UUID
