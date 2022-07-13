@@ -21,6 +21,8 @@ public interface CheckerTemporaryTable {
 
     void remove(String uuid, Integer code);
 
+    void create();
+
     Connection getConnection() throws SQLException;
 
     void setConnection(Connection connection);

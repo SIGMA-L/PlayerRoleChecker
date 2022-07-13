@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 public class CommandManager extends ListenerAdapter {
@@ -35,6 +36,12 @@ public class CommandManager extends ListenerAdapter {
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
         if (event.isFromGuild()) {
+            final Optional<CommandSlash> commandSlash = slashType.stream()
+                    .filter(name -> event.getName().equals(event.getName()))
+                    .findFirst();
+
+            commandSlash.ifPresent(slash -> slash
+                    .onSlashEvent(event));
         }
     }
 

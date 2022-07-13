@@ -17,6 +17,16 @@ import java.util.List;
 
 public class JoinEvent implements Listener {
 
+    /*@EventHandler
+    public void onAsyncPreLoginEvent(AsyncPlayerPreLoginEvent e) {
+        if (JoinModeCommand.joinMode) {
+
+        }
+
+
+    }*/
+
+    //todo: recode
     @EventHandler
     public void onAsyncPreLoginEvent(AsyncPlayerPreLoginEvent e) {
         if (!JoinModeCommand.joinMode) return;
@@ -45,11 +55,9 @@ public class JoinEvent implements Listener {
 
         PlayerData.getInstance().asyncDiscordId(e.getPlayer().getUniqueId(), discordId -> {
             if (discordId != null) {
-
                 List<Role> roles = OtherUtil.getRolesById(discordId);
 
                 if (roles != null) {
-
                     StringBuilder stringBuilder = new StringBuilder();
 
                     roles.forEach(role -> stringBuilder.append(role.getName()).append(" "));

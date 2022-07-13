@@ -160,13 +160,31 @@ public class LocalSQL implements CheckerTemporaryTable {
     }
 
     @Override
+    public void create() {
+        Statement statement = null;
+        try {
+            statement = PlayerData.getInstance().getConnection().createStatement();
+
+            statement.executeUpdate("drop table if exists waitverify");
+            statement.executeUpdate("create table if not exists waitverify (uuid string, code int)");
+
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    @Override
     public Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
-            try {
-                Class.forName("org.sqlite.JDBC");
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
             connection = DriverManager.getConnection("jdbc:sqlite:" + PlayerRoleChecker.INSTANCE.getConfig().getString("SQLite.SQLiteLocate"));
         }
         return connection;

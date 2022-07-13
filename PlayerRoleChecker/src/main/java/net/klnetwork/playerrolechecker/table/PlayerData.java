@@ -146,6 +146,26 @@ public class PlayerData implements PlayerDataTable {
     }
 
     @Override
+    public void create() {
+        Statement statement = null;
+        try {
+            statement = PlayerData.getInstance().getConnection().createStatement();
+
+            statement.executeUpdate("create table if not exists verifyplayer (uuid VARCHAR(50), discord VARCHAR(50))");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    @Override
     public Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed() || isConnectionDead()) {
 

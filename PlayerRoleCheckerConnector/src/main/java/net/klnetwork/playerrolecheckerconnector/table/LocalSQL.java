@@ -80,6 +80,28 @@ public class LocalSQL implements ConnectorBypassTable {
     }
 
     @Override
+    public void create() {
+        Statement statement = null;
+        try {
+            statement = getConnection().createStatement();
+            statement.executeUpdate("create table if not exists bypass (uuid string)");
+
+            statement.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    @Override
     public Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
             try {

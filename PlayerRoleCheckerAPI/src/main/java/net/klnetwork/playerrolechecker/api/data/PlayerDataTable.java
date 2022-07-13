@@ -26,6 +26,8 @@ public interface PlayerDataTable {
 
     void remove(String uuid, String discordId);
 
+    void create();
+
     Connection getConnection() throws SQLException;
 
     void setConnection(Connection connection);

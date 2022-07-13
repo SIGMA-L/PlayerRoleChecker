@@ -33,7 +33,8 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
         INSTANCE = this;
 
         saveDefaultConfig();
-        SQL.init();
+
+        PlayerData.getInstance().create();
         JDA.init();
 
         roleList.addAll(getConfig().getStringList("Discord.RoleID"));
@@ -43,7 +44,7 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
 
         getCommand("joinmode").setExecutor(new JoinModeCommand());
         if (getConfig().getBoolean("SQLite.useBypassCommand")) {
-            SQL.sqlite_init();
+            LocalSQL.getInstance().create();
 
             getCommand("addbypass").setExecutor(new AddBypassCommand());
             getCommand("removebypass").setExecutor(new RemoveBypassCommand());
