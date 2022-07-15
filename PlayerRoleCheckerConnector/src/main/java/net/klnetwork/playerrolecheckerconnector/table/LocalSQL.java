@@ -37,11 +37,11 @@ public class LocalSQL implements ConnectorBypassTable {
             preparedStatement.setString(1, uuid);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()) result = resultSet.getString(1);
+            if (resultSet.next()) {
+                result = resultSet.getString(1);
+            }
 
             preparedStatement.close();
-            //PreparedStatementが閉じたらResultSetは閉じるはず
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -85,9 +85,6 @@ public class LocalSQL implements ConnectorBypassTable {
         try {
             statement = getConnection().createStatement();
             statement.executeUpdate("create table if not exists bypass (uuid string)");
-
-            statement.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

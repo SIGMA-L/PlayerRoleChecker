@@ -20,11 +20,11 @@ public class PlayerRoleCheckerAPI {
     }
 
     public static ConnectorAPIHook getConnectorAPI() {
-        if (isHookedConnector()) {
-            return (ConnectorAPIHook) pairs.get(HookedAPIType.CONNECTOR);
+        if (!isHookedConnector()) {
+            init();
         }
 
-        throw new IllegalStateException();
+        return (ConnectorAPIHook) pairs.get(HookedAPIType.CONNECTOR);
     }
 
     public static boolean isHookedChecker() {
@@ -34,11 +34,11 @@ public class PlayerRoleCheckerAPI {
     }
 
     public static CheckerAPIHook getCheckerAPI() {
-        if (isHookedChecker()) {
-            return (CheckerAPIHook) pairs.get(HookedAPIType.CHECKER);
+        if (!isHookedChecker()) {
+            init();
         }
 
-        throw new IllegalStateException();
+        return (CheckerAPIHook) pairs.get(HookedAPIType.CHECKER);
     }
 
     public static HookedAPIType getHookedAPIType() {
