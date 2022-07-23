@@ -3,6 +3,7 @@ package net.klnetwork.playerrolechecker.api.utils;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.Scanner;
 import java.util.UUID;
@@ -15,6 +16,18 @@ public class CommonUtils {
 
         JSONObject UUIDObject = (JSONObject) JSONValue.parseWithException(input);
         return UUID.fromString(UUIDObject.get("id").toString().replaceFirst("([0-9a-fA-F]{8})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]+)", "$1-$2-$3-$4-$5"));
+    }
+
+    public static Color getColor(String color) {
+        try {
+            return (Color) Color.class
+                    .getField(color)
+                    .get(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public static boolean isUpdated(String owner, String repo, String version) throws Exception{

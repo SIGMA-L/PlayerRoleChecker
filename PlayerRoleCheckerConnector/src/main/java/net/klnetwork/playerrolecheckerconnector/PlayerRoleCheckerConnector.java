@@ -4,6 +4,7 @@ import net.klnetwork.playerrolechecker.api.data.PlayerDataTable;
 import net.klnetwork.playerrolechecker.api.data.connector.ConnectorAPIHook;
 import net.klnetwork.playerrolechecker.api.data.connector.ConnectorBypassTable;
 import net.klnetwork.playerrolechecker.api.data.connector.ConnectorCustomDataBase;
+import net.klnetwork.playerrolechecker.api.discord.CommandManager;
 import net.klnetwork.playerrolechecker.api.enums.HookedAPIType;
 import net.klnetwork.playerrolecheckerconnector.api.CustomDataBaseImpl;
 import net.klnetwork.playerrolecheckerconnector.command.AddBypassCommand;
@@ -37,6 +38,8 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
 
         PlayerData.getInstance().create();
         JDA.init();
+
+        getCommandManager().setJDA(getJDA());
 
         roleList.addAll(getConfig().getStringList("Discord.RoleID"));
         commandList.addAll(getConfig().getStringList("JoinCommand"));
@@ -80,6 +83,11 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
     @Override
     public PlayerDataTable getPlayerData() {
         return PlayerData.getInstance();
+    }
+
+    @Override
+    public CommandManager getCommandManager() {
+        return new CommandManager(null);
     }
 
     @Override

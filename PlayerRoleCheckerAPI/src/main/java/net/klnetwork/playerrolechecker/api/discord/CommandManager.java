@@ -4,13 +4,16 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.klnetwork.playerrolechecker.api.discord.data.CommandData;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandMessage;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandSlash;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 public class CommandManager extends ListenerAdapter {
@@ -21,15 +24,36 @@ public class CommandManager extends ListenerAdapter {
     private final List<CommandMessage> messageType = new ArrayList<>();
 
     public CommandManager(JDA jda) {
-        this.jda = jda;
+        if (jda != null) {
+            this.jda = jda;
 
-        jda.addEventListener(this);
+            jda.addEventListener(this);
+        }
     }
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        if (event.isFromGuild()) {
+        if (event.isFromGuild()
+                && !event.getAuthor().isBot()
+                && !event.getAuthor().isSystem()
+                && !event.isWebhookMessage()) {
 
+            String[] args = event.getMessage()
+                    .getContentRaw()
+                    .split("\\s+");
+
+            String commandName = args[0];
+
+            List<String> finalArgs = Arrays.stream(args)
+                    .filter(d -> commandName != d)
+                    .collect(Collectors.toList());
+
+            CommandData data = new CommandData(commandName, finalArgs, event);
+
+            messageType.stream()
+                    .filter(name -> commandName.equalsIgnoreCase(name.getCommandName()))
+                    .collect(Collectors.toList())
+                    .forEach(r -> r.onMessageReceiveEvent(data));
         }
     }
 
@@ -59,5 +83,17 @@ public class CommandManager extends ListenerAdapter {
 
     public List<CommandMessage> getMessageType() {
         return messageType;
+    }
+
+    public JDA getJDA() {
+        return jda;
+    }
+
+    public void setJDA(JDA jda) {
+        if (this.jda != null) {
+            this.jda = jda;
+
+            jda.addEventListener(this);
+        }
     }
 }
