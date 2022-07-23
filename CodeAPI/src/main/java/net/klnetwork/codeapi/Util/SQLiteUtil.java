@@ -15,7 +15,7 @@ public class SQLiteUtil {
             PreparedStatement preparedStatement = getSQLiteConnection().prepareStatement("select * from waitverify where code = ?");
             preparedStatement.setString(1, code.toString());
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()) result = true;
+            if (resultSet.next()) result = true;
 
             preparedStatement.close();
             //PreparedStatementが閉じたらResultSetは閉じるはず
@@ -33,7 +33,7 @@ public class SQLiteUtil {
             preparedStatement.setString(1, uuid);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()) result = new String[] {resultSet.getString(1),resultSet.getString(2)};
+            if (resultSet.next()) result = new String[]{resultSet.getString(1), resultSet.getString(2)};
 
             preparedStatement.close();
             //PreparedStatementが閉じたらResultSetは閉じるはず
@@ -41,7 +41,7 @@ public class SQLiteUtil {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-    return result;
+        return result;
     }
 
     public static String[] getUUIDFromSQLite(String code) {
@@ -51,7 +51,7 @@ public class SQLiteUtil {
             preparedStatement.setString(1, code);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()) result = new String[] {resultSet.getString(1),resultSet.getString(2)};
+            if (resultSet.next()) result = new String[]{resultSet.getString(1), resultSet.getString(2)};
 
             preparedStatement.close();
             //PreparedStatementが閉じたらResultSetは閉じるはず
@@ -91,7 +91,7 @@ public class SQLiteUtil {
     }
 
     public static Connection getSQLiteConnection() throws SQLException {
-        if(connection == null || connection.isClosed()){
+        if (connection == null || connection.isClosed()) {
             try {
                 Class.forName("org.sqlite.JDBC");
             } catch (ClassNotFoundException e) {
@@ -99,6 +99,6 @@ public class SQLiteUtil {
             }
             connection = DriverManager.getConnection("jdbc:sqlite:" + CodeAPI.plugin.getConfig().getString("SQLite.SQLiteLocate"));
         }
-    return connection;
+        return connection;
     }
 }

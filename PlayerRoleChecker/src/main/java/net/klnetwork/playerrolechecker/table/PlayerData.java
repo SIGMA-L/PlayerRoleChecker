@@ -2,6 +2,7 @@ package net.klnetwork.playerrolechecker.table;
 
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
 import net.klnetwork.playerrolechecker.api.data.PlayerDataTable;
+import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -50,13 +51,13 @@ public class PlayerData implements PlayerDataTable {
 
     @Override
     public String getDiscordId(String uuid) {
-        PreparedStatement preparedStatement = null;
+        PreparedStatement statement = null;
 
         try {
-            preparedStatement = getConnection().prepareStatement("select * from verifyplayer where uuid = ?");
-            preparedStatement.setString(1, uuid);
+            statement = getConnection().prepareStatement("select * from verifyplayer where uuid = ?");
+            statement.setString(1, uuid);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
                 return resultSet.getString(2);
@@ -65,26 +66,20 @@ public class PlayerData implements PlayerDataTable {
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
-            if (preparedStatement != null) {
-                try {
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+            CommonUtils.close(statement);
         }
         return null;
     }
 
     @Override
     public String getUUID(String discordId) {
-        PreparedStatement preparedStatement = null;
+        PreparedStatement statement = null;
 
         try {
-            preparedStatement = getConnection().prepareStatement("select * from verifyplayer where discord = ?");
-            preparedStatement.setString(1, discordId);
+            statement = getConnection().prepareStatement("select * from verifyplayer where discord = ?");
+            statement.setString(1, discordId);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
                 return resultSet.getString(1);
@@ -92,13 +87,7 @@ public class PlayerData implements PlayerDataTable {
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
-            if (preparedStatement != null) {
-                try {
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+            CommonUtils.close(statement);
         }
         return null;
     }
@@ -155,13 +144,7 @@ public class PlayerData implements PlayerDataTable {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+            CommonUtils.close(statement);
         }
     }
 

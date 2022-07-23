@@ -1,6 +1,7 @@
 package net.klnetwork.playerrolecheckerconnector.table;
 
 import net.klnetwork.playerrolechecker.api.data.connector.ConnectorBypassTable;
+import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
 
 import java.sql.*;
@@ -88,13 +89,7 @@ public class LocalSQL implements ConnectorBypassTable {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+            CommonUtils.close(statement);
         }
     }
 

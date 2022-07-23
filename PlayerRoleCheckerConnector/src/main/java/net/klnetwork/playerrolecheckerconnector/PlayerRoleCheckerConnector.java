@@ -24,6 +24,7 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
 
     public static PlayerRoleCheckerConnector INSTANCE;
 
+    //todo~ remove
     private final List<String> roleList = new ArrayList<>();
     private final List<String> commandList = new ArrayList<>();
 

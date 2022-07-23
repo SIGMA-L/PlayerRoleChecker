@@ -15,9 +15,9 @@ public class CodeUtil {
     }
 
     public static int CodeIssue(UUID uuid) {
-        int result = getRandom(1000,9999);
+        int result = getRandom(1000, 9999);
         while (CheckCode(result)) {
-            result = getRandom(1000,9999);
+            result = getRandom(1000, 9999);
         }
         SQLiteUtil.putSQLite(uuid.toString(), Integer.toString(result));
         return result;
