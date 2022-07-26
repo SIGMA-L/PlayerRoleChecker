@@ -2,7 +2,6 @@ package net.klnetwork.playerrolechecker.jda;
 
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
-import net.klnetwork.playerrolechecker.jda.event.ForceJoinCommand;
 import net.klnetwork.playerrolechecker.jda.event.RemoveCommand;
 import net.klnetwork.playerrolechecker.jda.event.JoinCommand;
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
