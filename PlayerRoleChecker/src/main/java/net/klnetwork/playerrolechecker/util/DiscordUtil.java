@@ -4,11 +4,10 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
-import net.klnetwork.playerrolechecker.jda.JDA;
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
+import net.klnetwork.playerrolechecker.jda.JDA;
 
 import java.time.OffsetDateTime;
-import java.util.UUID;
 
 public class DiscordUtil {
     public static boolean channelChecker(String channelId) {
@@ -45,6 +44,10 @@ public class DiscordUtil {
         Role role = guild.getRoleById(roleID);
         if (role == null || member == null) return;
         guild.removeRoleFromMember(member, role).queue();
+    }
+
+    public static EmbedBuilder embedBuilder(String configPath, OffsetDateTime offsetDateTime, Object uuid, String discordId) {
+        return embedBuilder(configPath, offsetDateTime, String.valueOf(uuid), discordId);
     }
 
     public static EmbedBuilder embedBuilder(String configPath, OffsetDateTime offsetDateTime, String uuid, String discordID) {

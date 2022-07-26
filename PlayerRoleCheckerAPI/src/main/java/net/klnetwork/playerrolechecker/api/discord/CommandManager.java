@@ -50,10 +50,17 @@ public class CommandManager extends ListenerAdapter {
 
             CommandData data = new CommandData(commandName, finalArgs, event);
 
+
             messageType.stream()
                     .filter(name -> commandName.equalsIgnoreCase(name.getCommandName()))
                     .collect(Collectors.toList())
-                    .forEach(r -> r.onMessageReceiveEvent(data));
+                    .forEach(message -> {
+                        try {
+                            message.onMessageReceiveEvent(data);
+                        } catch (Exception e) {
+                            message.onErrorCaught(data, e);
+                        }
+                    });
         }
     }
 

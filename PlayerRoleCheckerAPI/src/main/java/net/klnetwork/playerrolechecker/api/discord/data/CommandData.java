@@ -2,6 +2,7 @@ package net.klnetwork.playerrolechecker.api.discord.data;
 
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.List;
@@ -22,6 +23,14 @@ public class CommandData {
 
     public List<String> getArgs() {
         return args;
+    }
+
+    public int length() {
+        return args.size();
+    }
+
+    public Message getMessage() {
+        return event.getMessage();
     }
 
     public String getCommandName() {
