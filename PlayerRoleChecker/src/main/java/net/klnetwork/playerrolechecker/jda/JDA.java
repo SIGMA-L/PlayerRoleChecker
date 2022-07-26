@@ -16,7 +16,7 @@ public class JDA {
         try {
             INSTANCE = JDABuilder.createDefault(PlayerRoleChecker.INSTANCE.getConfig().getString("Discord.DiscordToken"))
                     .setStatus(OnlineStatus.ONLINE)
-                    .addEventListeners(new JoinCommand(), new RemoveCommand(), new ForceJoinCommand())
+                    .addEventListeners(new JoinCommand(), new RemoveCommand())
                     .build();
         } catch (LoginException e) {
             e.printStackTrace();
