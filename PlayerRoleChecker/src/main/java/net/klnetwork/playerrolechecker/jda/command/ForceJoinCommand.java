@@ -36,26 +36,26 @@ public class ForceJoinCommand extends CommandMessage {
         if (event.length() > 2) {
             UUID uuid = CommonUtils.getUUID(event.getArgs().get(0));
 
-            PlayerData.getInstance().asyncDiscordId(uuid, discordId -> {
-                if (discordId != null) {
-                    if (!callEvent(new ForceJoinEvent(event.getArgs().get(1), uuid, event.getMessage(), ForceJoinEventType.ALREADY_REGISTERED)).isCancelled()) {
-                        event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("ForceJoinCommand.already-registered", event.getMessage().getTimeCreated(), uuid, discordId).build()).queue();
-                    }
-                } else {
-                    ForceJoinEvent call = callEvent(new ForceJoinEvent(event.getArgs().get(1), uuid, event.getMessage(), ForceJoinEventType.SUCCESS));
+            String discordId = PlayerData.getInstance().getDiscordId(uuid);
 
-                    if (!call.isCancelled()) {
-                        PlayerData.getInstance().put(call.getUUID(), call.getMemberId());
+            if (discordId != null) {
+                if (!callEvent(new ForceJoinEvent(event.getArgs().get(1), uuid, event.getMessage(), ForceJoinEventType.ALREADY_REGISTERED)).isCancelled()) {
+                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("ForceJoinCommand.already-registered", event.getMessage().getTimeCreated(), uuid, discordId).build()).queue();
+                }
+            } else {
+                ForceJoinEvent call = callEvent(new ForceJoinEvent(event.getArgs().get(1), uuid, event.getMessage(), ForceJoinEventType.SUCCESS));
 
-                        Member member = call.getGuild().retrieveMemberById(call.getMemberId()).complete();
+                if (!call.isCancelled()) {
+                    PlayerData.getInstance().put(call.getUUID(), call.getMemberId());
 
-                        if (member != null) {
-                            //todo: recode!
-                            DiscordUtil.addRole(call.getGuild(), member);
-                        }
+                    Member member = call.getGuild().retrieveMemberById(call.getMemberId()).complete();
+
+                    if (member != null) {
+                        //todo: recode!
+                        DiscordUtil.addRole(call.getGuild(), member);
                     }
                 }
-            });
+            }
         } else if (!callEvent(new ForceJoinEvent(null, null, event.getMessage(), ForceJoinEventType.ARG_INVALID)).isCancelled()) {
             //todo: add message
         }

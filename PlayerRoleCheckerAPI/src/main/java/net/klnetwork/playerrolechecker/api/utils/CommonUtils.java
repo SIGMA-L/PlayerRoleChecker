@@ -89,7 +89,7 @@ public class CommonUtils {
         }
 
         for (Permission permission : permissions) {
-            if (member.getPermissions().contains(permission)) {
+            if (permission == Permission.UNKNOWN || member.getPermissions().contains(permission)) {
                 return true;
             }
         }

@@ -38,31 +38,30 @@ public class JoinCommand extends CommandMessage {
                 event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.invalid-number", event.getMessage().getTimeCreated(), null, null).build()).queue();
             }
         } else {
-            PlayerData.getInstance().asyncDiscordId(uuid, discordId -> {
-                if (discordId != null) {
-                    if (!callEvent(new JoinEvent(UUID.fromString(uuid), code, event.getMessage(), JoinEventType.ALREADY_REGISTERED)).isCancelled()) {
-                        event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.already-registered", event.getMessage().getTimeCreated(), uuid, discordId).build()).queue();
+            String discordId = PlayerData.getInstance().getDiscordId(uuid);
 
-                        //セキュリティー上の問題
-                        LocalSQL.getInstance().remove(uuid, code);
-                    }
-                } else {
-                    JoinEvent call = callEvent(new JoinEvent(UUID.fromString(uuid), code, event.getMessage(), JoinEventType.SUCCESS));
+            if (discordId != null) {
+                if (!callEvent(new JoinEvent(UUID.fromString(uuid), code, event.getMessage(), JoinEventType.ALREADY_REGISTERED)).isCancelled()) {
+                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.already-registered", event.getMessage().getTimeCreated(), uuid, discordId).build()).queue();
 
-                    if (!call.isCancelled()) {
-                        LocalSQL.getInstance().remove(call.getUUID(), call.getCode());
-                        PlayerData.getInstance().put(call.getUUID(), call.getMember().getId());
-
-                        //明らかにcallでgetMessageをするのはよくない (reply系)
-                        event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.success-register", event.getMessage().getTimeCreated(), call.getUUID(), call.getMember().getId()).build()).queue();
-
-                        //todo: recode
-                        DiscordUtil.sendMessageToChannel(DiscordUtil.embedBuilder("JoinCommand.sendmessage", event.getMessage().getTimeCreated(), call.getUUID(), call.getMember().getId()));
-
-                        DiscordUtil.addRole(event.getGuild(), event.getMember());
-                    }
+                    //セキュリティー上の問題
+                    LocalSQL.getInstance().remove(uuid, code);
                 }
-            });
+            } else {
+                JoinEvent call = callEvent(new JoinEvent(UUID.fromString(uuid), code, event.getMessage(), JoinEventType.SUCCESS));
+
+                if (!call.isCancelled()) {
+                    LocalSQL.getInstance().remove(call.getUUID(), call.getCode());
+                    PlayerData.getInstance().put(call.getUUID(), call.getMember().getId());
+
+                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.success-register", event.getMessage().getTimeCreated(), call.getUUID(), call.getMember().getId()).build()).queue();
+
+                    //todo: recode
+                    DiscordUtil.sendMessageToChannel(DiscordUtil.embedBuilder("JoinCommand.sendmessage", event.getMessage().getTimeCreated(), call.getUUID(), call.getMember().getId()));
+
+                    DiscordUtil.addRole(event.getGuild(), event.getMember());
+                }
+            }
         }
     }
 

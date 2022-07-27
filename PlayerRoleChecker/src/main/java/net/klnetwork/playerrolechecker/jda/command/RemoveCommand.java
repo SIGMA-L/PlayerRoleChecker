@@ -32,25 +32,25 @@ public class RemoveCommand extends CommandMessage {
         if (event.length() > 0) {
             UUID uuid = CommonUtils.getUUID(event.getArgs().get(0));
 
-            PlayerData.getInstance().asyncDiscordId(uuid, result -> {
-                if (result == null) {
-                    if (!callEvent(new RemoveEvent(null, null, event.getMessage(), RemoveEventType.NOT_REGISTERED)).isCancelled()) {
-                        event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("RemoveCommand.not-registered", event.getMessage().getTimeCreated(), null, null).build()).queue();
-                    }
-                } else {
-                    RemoveEvent call = callEvent(new RemoveEvent(event.getGuild().retrieveMemberById(result).complete(), uuid, event.getMessage(), RemoveEventType.SUCCESS));
+            String discordId = PlayerData.getInstance().getDiscordId(uuid);
 
-                    if (!call.isCancelled()) {
-                        event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.success-register", event.getMessage().getTimeCreated(), call.getUUID(), call.getMember().getId()).build()).queue();
+            if (discordId == null) {
+                if (!callEvent(new RemoveEvent(null, null, event.getMessage(), RemoveEventType.NOT_REGISTERED)).isCancelled()) {
+                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("RemoveCommand.not-registered", event.getMessage().getTimeCreated(), null, null).build()).queue();
+                }
+            } else {
+                RemoveEvent call = callEvent(new RemoveEvent(event.getGuild().retrieveMemberById(discordId).complete(), uuid, event.getMessage(), RemoveEventType.SUCCESS));
 
-                        PlayerData.getInstance().remove(call.getUUID(), call.getMember().getId());
+                if (!call.isCancelled()) {
+                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.success-register", event.getMessage().getTimeCreated(), call.getUUID(), call.getMember().getId()).build()).queue();
 
-                        if (call.getMember() != null) {
-                            DiscordUtil.removeRole(event.getGuild(), call.getMember());
-                        }
+                    PlayerData.getInstance().remove(call.getUUID(), call.getMember().getId());
+
+                    if (call.getMember() != null) {
+                        DiscordUtil.removeRole(event.getGuild(), call.getMember());
                     }
                 }
-            });
+            }
         } else if (!callEvent(new RemoveEvent(null, null, event.getMessage(), RemoveEventType.ARG_INVALID)).isCancelled()) {
 
         }
