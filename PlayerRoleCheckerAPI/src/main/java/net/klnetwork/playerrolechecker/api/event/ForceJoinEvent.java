@@ -12,8 +12,8 @@ import org.bukkit.event.HandlerList;
 import java.util.UUID;
 
 public class ForceJoinEvent extends Event implements Cancellable {
-
     private Member executor;
+
     private String memberId;
     private UUID uuid;
 
@@ -29,7 +29,6 @@ public class ForceJoinEvent extends Event implements Cancellable {
 
         this.memberId = memberId;
         this.uuid = uuid;
-        this.executor = message.getMember();
 
         this.message = message;
         this.type = type;

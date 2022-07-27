@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandData;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandMessage;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandSlash;
+import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -33,36 +34,37 @@ public class CommandManager extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        if (event.isFromGuild()
-                && !event.getAuthor().isBot()
-                && !event.getAuthor().isSystem()
-                && !event.isWebhookMessage()) {
+        if (event.isFromGuild() && !event.getAuthor().isBot() && !event.getAuthor().isSystem() && !event.isWebhookMessage()) {
+            new Thread(() -> {
+                String[] args = event.getMessage()
+                        .getContentRaw()
+                        .split("\\s+");
 
-            String[] args = event.getMessage()
-                    .getContentRaw()
-                    .split("\\s+");
+                String commandName = args[0];
 
-            String commandName = args[0];
+                List<String> finalArgs = Arrays.stream(args)
+                        .filter(d -> commandName != d)
+                        .collect(Collectors.toList());
 
-            List<String> finalArgs = Arrays.stream(args)
-                    .filter(d -> commandName != d)
-                    .collect(Collectors.toList());
+                CommandData data = new CommandData(commandName, finalArgs, event);
 
-            CommandData data = new CommandData(commandName, finalArgs, event);
-
-
-            messageType.stream()
-                    .filter(name -> commandName.equalsIgnoreCase(name.getCommandName()))
-                    .collect(Collectors.toList())
-                    .forEach(message -> {
-                        try {
-                            message.onMessageReceiveEvent(data);
-                        } catch (Exception e) {
-                            message.onErrorCaught(data, e);
-                        }
-                    });
+                messageType.stream()
+                        .filter(name -> (name == null || commandName.equalsIgnoreCase(name.getCommandName()))
+                                && CommonUtils.hasPermission(data.getMember(), name.requirePermission())
+                                && name.isWork(data))
+                        .collect(Collectors.toList())
+                        .forEach(message -> {
+                            try {
+                                message.onMessageReceiveEvent(data);
+                            } catch (Exception e) {
+                                message.onErrorCaught(data, e);
+                            }
+                        });
+            }).start();
         }
     }
+
+
 
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {

@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.klnetwork.playerrolechecker.api.enums.RemoveEventType;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -16,12 +16,14 @@ public class RemoveEvent extends Event implements Cancellable {
     private Member member, executor;
     private UUID uuid;
 
+    private RemoveEventType type;
+
     private Message message;
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
     private boolean isCancelled;
 
-    public RemoveEvent(Member member, UUID uuid, Message message) {
+    public RemoveEvent(Member member, UUID uuid, Message message, RemoveEventType type) {
         super(true);
 
         this.member = member;
@@ -29,6 +31,7 @@ public class RemoveEvent extends Event implements Cancellable {
         this.executor = message.getMember();
 
         this.message = message;
+        this.type = type;
     }
 
     @Override
@@ -87,5 +90,13 @@ public class RemoveEvent extends Event implements Cancellable {
 
     public void setMessage(Message message) {
         this.message = message;
+    }
+
+    public RemoveEventType getType() {
+        return type;
+    }
+
+    public void setType(RemoveEventType type) {
+        this.type = type;
     }
 }

@@ -1,8 +1,8 @@
 package net.klnetwork.playerrolechecker.table;
 
-import com.sun.tools.javac.comp.Check;
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
 import net.klnetwork.playerrolechecker.api.data.checker.CheckerTemporaryTable;
+import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 
 import java.sql.*;
 import java.util.UUID;
@@ -27,50 +27,37 @@ public class LocalSQL implements CheckerTemporaryTable {
 
     @Override
     public boolean hasUUID(Integer code) {
-        PreparedStatement preparedStatement = null;
+        PreparedStatement statement = null;
         try {
-            preparedStatement = getConnection().prepareStatement("select * from waitverify where code = ?");
-            preparedStatement.setInt(1, code);
+            statement = getConnection().prepareStatement("select * from waitverify where code = ?");
+            statement.setInt(1, code);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
 
             return resultSet.next();
-
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
-            if (preparedStatement != null) {
-                try {
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+            CommonUtils.close(statement);
         }
         return false;
     }
 
     @Override
     public String getUUID(Integer code) {
-        PreparedStatement preparedStatement = null;
+        PreparedStatement statement = null;
         try {
-            preparedStatement = getConnection().prepareStatement("select * from waitverify where code = ?");
-            preparedStatement.setInt(1, code);
+            statement = getConnection().prepareStatement("select * from waitverify where code = ?");
+            statement.setInt(1, code);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) return resultSet.getString(1);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
-            if (preparedStatement != null) {
-                try {
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+            CommonUtils.close(statement);
         }
         return null;
     }
@@ -101,25 +88,19 @@ public class LocalSQL implements CheckerTemporaryTable {
 
     @Override
     public Integer getCode(String uuid) {
-        PreparedStatement preparedStatement = null;
+        PreparedStatement statement = null;
         try {
-            preparedStatement = getConnection().prepareStatement("select * from waitverify where uuid = ?");
-            preparedStatement.setString(1, uuid);
+            statement = getConnection().prepareStatement("select * from waitverify where uuid = ?");
+            statement.setString(1, uuid);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) return resultSet.getInt(2);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
-            if (preparedStatement != null) {
-                try {
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+            CommonUtils.close(statement);
         }
         return null;
     }
@@ -146,16 +127,19 @@ public class LocalSQL implements CheckerTemporaryTable {
 
     @Override
     public void remove(String uuid, Integer code) {
+        PreparedStatement statement = null;
         try {
-            PreparedStatement preparedStatement = getConnection().prepareStatement("delete from waitverify where uuid = ? and code = ?");
-            preparedStatement.setString(1, uuid);
-            preparedStatement.setInt(2, code);
-            preparedStatement.execute();
+            statement = getConnection().prepareStatement("delete from waitverify where uuid = ? and code = ?");
+            statement.setString(1, uuid);
+            statement.setInt(2, code);
+            statement.execute();
 
-            preparedStatement.close();
+            statement.close();
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            CommonUtils.close(statement);
         }
     }
 
@@ -172,13 +156,7 @@ public class LocalSQL implements CheckerTemporaryTable {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+            CommonUtils.close(statement);
         }
     }
 

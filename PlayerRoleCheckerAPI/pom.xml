@@ -6,7 +6,7 @@
 
     <groupId>net.klnetwork.playerrolechecker</groupId>
     <artifactId>PlayerRoleCheckerAPI</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>4.0</version>
     <packaging>jar</packaging>
 
     <name>PlayerRoleCheckerAPI</name>
@@ -23,8 +23,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <source>8</source>
+                    <target>8</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -72,7 +72,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.8-R0.1-SNAPSHOT</version>
+            <version>1.19-R0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.dv8tion</groupId>

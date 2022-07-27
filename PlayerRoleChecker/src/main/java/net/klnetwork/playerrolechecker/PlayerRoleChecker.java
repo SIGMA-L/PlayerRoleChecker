@@ -10,6 +10,8 @@ import net.klnetwork.playerrolechecker.api.enums.HookedAPIType;
 import net.klnetwork.playerrolechecker.event.JoinEvent;
 import net.klnetwork.playerrolechecker.jda.JDA;
 import net.klnetwork.playerrolechecker.jda.command.ForceJoinCommand;
+import net.klnetwork.playerrolechecker.jda.command.JoinCommand;
+import net.klnetwork.playerrolechecker.jda.command.RemoveCommand;
 import net.klnetwork.playerrolechecker.table.LocalSQL;
 import net.klnetwork.playerrolechecker.table.PlayerData;
 import org.bukkit.plugin.Plugin;
@@ -33,6 +35,8 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
         JDA.init();
         commandManager.setJDA(getJDA());
         commandManager.register(new ForceJoinCommand());
+        commandManager.register(new JoinCommand());
+        commandManager.register(new RemoveCommand());
 
         getServer().getPluginManager().registerEvents(new JoinEvent(), this);
     }

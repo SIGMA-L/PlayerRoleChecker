@@ -1,7 +1,7 @@
 package net.klnetwork.playerrolecheckerconnector.command;
 
+import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import net.klnetwork.playerrolecheckerconnector.table.LocalSQL;
-import net.klnetwork.playerrolecheckerconnector.util.OtherUtil;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,7 +15,7 @@ public class RemoveBypassCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 1) {
             try {
-                UUID uuid = OtherUtil.getUUID(args[0]);
+                UUID uuid = CommonUtils.getUUID(args[0]);
                 String result = LocalSQL.getInstance().getUUID(uuid);
 
                 if (result == null) {

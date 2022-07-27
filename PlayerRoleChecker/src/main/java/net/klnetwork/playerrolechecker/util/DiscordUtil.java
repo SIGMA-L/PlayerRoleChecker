@@ -5,10 +5,12 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
+import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import net.klnetwork.playerrolechecker.jda.JDA;
 
 import java.time.OffsetDateTime;
 
+//todo: recode!
 public class DiscordUtil {
     public static boolean channelChecker(String channelId) {
         if (PlayerRoleChecker.INSTANCE.getConfig().getString("Discord.ChannelID") == null) return true;
@@ -50,9 +52,10 @@ public class DiscordUtil {
         return embedBuilder(configPath, offsetDateTime, String.valueOf(uuid), discordId);
     }
 
+
     public static EmbedBuilder embedBuilder(String configPath, OffsetDateTime offsetDateTime, String uuid, String discordID) {
         EmbedBuilder embedBuilder = new EmbedBuilder()
-                .setColor(OtherUtil.ColorFromString(PlayerRoleChecker.INSTANCE.getConfig().getString(configPath + ".color")))
+                .setColor(CommonUtils.getColor(PlayerRoleChecker.INSTANCE.getConfig().getString(configPath + ".color")))
                 .setTitle(replaceString(PlayerRoleChecker.INSTANCE.getConfig().getString(configPath + ".title"), uuid, discordID))
                 .setDescription(replaceString(PlayerRoleChecker.INSTANCE.getConfig().getString(configPath + ".description"), uuid, discordID))
                 .setThumbnail(PlayerRoleChecker.INSTANCE.getConfig().getString(configPath + ".image") != null ? replaceString(PlayerRoleChecker.INSTANCE.getConfig().getString(configPath + ".image"), uuid, discordID) : null)

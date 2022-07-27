@@ -8,7 +8,6 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 public class ConfigManager {
-
     public ConfigManager(Plugin plugin) {
         try {
             for (Field field : getClass().getDeclaredFields()) {

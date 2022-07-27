@@ -1,5 +1,6 @@
 package net.klnetwork.playerrolechecker.jda.command;
 
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandData;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandMessage;
@@ -13,11 +14,21 @@ import org.bukkit.event.Event;
 
 import java.util.UUID;
 
-public class ForceJoinCommand implements CommandMessage {
+public class ForceJoinCommand extends CommandMessage {
     @Override
     public String getCommandName() {
         //todo: customizable!
         return "!forcejoin";
+    }
+
+    @Override
+    public Permission[] requirePermission() {
+        return new Permission[]{Permission.ADMINISTRATOR};
+    }
+
+    @Override
+    public boolean isWork(CommandData data) {
+        return false;
     }
 
     @Override
@@ -26,7 +37,6 @@ public class ForceJoinCommand implements CommandMessage {
             UUID uuid = CommonUtils.getUUID(event.getArgs().get(0));
 
             PlayerData.getInstance().asyncDiscordId(uuid, discordId -> {
-
                 if (discordId != null) {
                     if (!callEvent(new ForceJoinEvent(event.getArgs().get(1), uuid, event.getMessage(), ForceJoinEventType.ALREADY_REGISTERED)).isCancelled()) {
                         event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("ForceJoinCommand.already-registered", event.getMessage().getTimeCreated(), uuid, discordId).build()).queue();
@@ -37,10 +47,11 @@ public class ForceJoinCommand implements CommandMessage {
                     if (!call.isCancelled()) {
                         PlayerData.getInstance().put(call.getUUID(), call.getMemberId());
 
-                        Member member = event.getGuild().retrieveMemberById(call.getMemberId()).complete();
+                        Member member = call.getGuild().retrieveMemberById(call.getMemberId()).complete();
 
                         if (member != null) {
-                            DiscordUtil.addRole(event.getGuild(), member);
+                            //todo: recode!
+                            DiscordUtil.addRole(call.getGuild(), member);
                         }
                     }
                 }
@@ -50,6 +61,7 @@ public class ForceJoinCommand implements CommandMessage {
         }
     }
 
+    //todo: check works in PlayerRoleCheckerAPI
     public <T> T callEvent(T event) {
         if (event instanceof Event) {
             Bukkit.getPluginManager().callEvent((Event) event);

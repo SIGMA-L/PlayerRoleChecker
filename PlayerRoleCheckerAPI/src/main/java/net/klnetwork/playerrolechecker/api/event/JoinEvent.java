@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.klnetwork.playerrolechecker.api.enums.JoinEventType;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -17,12 +17,14 @@ public class JoinEvent extends Event implements Cancellable {
     private UUID uuid;
     private int code;
 
+    private JoinEventType type;
+
     private Message message;
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
     private boolean isCancelled;
 
-    public JoinEvent(UUID uuid, int code, Message message) {
+    public JoinEvent(UUID uuid, int code, Message message, JoinEventType type) {
         super(true);
 
         this.member = message.getMember();
@@ -30,6 +32,7 @@ public class JoinEvent extends Event implements Cancellable {
         this.code = code;
 
         this.message = message;
+        this.type = type;
     }
 
     @Override
@@ -88,5 +91,13 @@ public class JoinEvent extends Event implements Cancellable {
 
     public void setMessage(Message message) {
         this.message = message;
+    }
+
+    public JoinEventType getType() {
+        return type;
+    }
+
+    public void setType(JoinEventType type) {
+        this.type = type;
     }
 }

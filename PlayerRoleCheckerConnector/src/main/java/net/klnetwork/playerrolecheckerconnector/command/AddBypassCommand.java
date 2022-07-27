@@ -1,7 +1,7 @@
 package net.klnetwork.playerrolecheckerconnector.command;
 
+import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import net.klnetwork.playerrolecheckerconnector.table.LocalSQL;
-import net.klnetwork.playerrolecheckerconnector.util.OtherUtil;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,7 +13,7 @@ public class AddBypassCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 1) {
             try {
-                String uuid = OtherUtil.getUUID(args[0]).toString();
+                String uuid = CommonUtils.getUUID(args[0]).toString();
                 if (LocalSQL.getInstance().getUUID(uuid) != null) {
                     sender.sendMessage(ChatColor.RED + "処理に失敗しました！ data=すでに登録されています");
                     return true;
