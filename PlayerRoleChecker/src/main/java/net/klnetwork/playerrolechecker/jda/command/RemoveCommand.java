@@ -1,7 +1,6 @@
 package net.klnetwork.playerrolechecker.jda.command;
 
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Member;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandData;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandMessage;
 import net.klnetwork.playerrolechecker.api.enums.RemoveEventType;
@@ -39,20 +38,16 @@ public class RemoveCommand extends CommandMessage {
                         event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("RemoveCommand.not-registered", event.getMessage().getTimeCreated(), null, null).build()).queue();
                     }
                 } else {
-                    Member member = event.getGuild().retrieveMemberById(result).complete();
+                    RemoveEvent call = callEvent(new RemoveEvent(event.getGuild().retrieveMemberById(result).complete(), uuid, event.getMessage(), RemoveEventType.SUCCESS));
 
-                    RemoveEvent removeEvent = callEvent(new RemoveEvent(member, uuid, event.getMessage(), RemoveEventType.SUCCESS));
+                    if (!call.isCancelled()) {
+                        event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.success-register", event.getMessage().getTimeCreated(), call.getUUID(), call.getMember().getId()).build()).queue();
 
-                    if (!removeEvent.isCancelled()) {
+                        PlayerData.getInstance().remove(call.getUUID(), call.getMember().getId());
 
-                        UUID resultUUID = removeEvent.getUUID();
-                        Member resultMember = removeEvent.getMember();
-
-                        event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.success-register", event.getMessage().getTimeCreated(), String.valueOf(resultUUID), resultMember.getId()).build()).queue();
-
-                        PlayerData.getInstance().remove(resultUUID, resultMember.getId());
-
-                        if (member != null) DiscordUtil.removeRole(event.getGuild(), resultMember);
+                        if (call.getMember() != null) {
+                            DiscordUtil.removeRole(event.getGuild(), call.getMember());
+                        }
                     }
                 }
             });

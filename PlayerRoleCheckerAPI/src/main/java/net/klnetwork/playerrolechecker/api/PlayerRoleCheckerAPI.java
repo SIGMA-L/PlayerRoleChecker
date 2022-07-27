@@ -75,4 +75,8 @@ public class PlayerRoleCheckerAPI {
             }
         });
     }
+
+    public static String getVersion() {
+        return "v4.0";
+    }
 }
