@@ -68,12 +68,6 @@
             <groupId>net.klnetwork.playerrolechecker</groupId>
             <artifactId>PlayerRoleCheckerAPI</artifactId>
             <version>4.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.dv8tion</groupId>
-            <artifactId>JDA</artifactId>
-            <version>5.0.0-alpha.13</version>
         </dependency>
     </dependencies>
 </project>
