@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.Member;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
+import org.geysermc.floodgate.api.FloodgateApi;
 
 import java.awt.*;
 import java.net.URL;
@@ -30,6 +31,14 @@ public class CommonUtils {
 
         JsonObject UUIDObject = new Gson().fromJson(input, JsonObject.class);
         return UUID.fromString(UUIDObject.get("id").getAsString().replaceFirst("([0-9a-fA-F]{8})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]+)", "$1-$2-$3-$4-$5"));
+    }
+
+    public boolean isFloodgateUser(UUID uuid) {
+        return FloodgateApi.getInstance().isFloodgatePlayer(uuid);
+    }
+
+    public String getFloodgateUUID(UUID uuid) {
+        return FloodgateApi.getInstance().getPlayer(uuid).getXuid();
     }
 
     /**
