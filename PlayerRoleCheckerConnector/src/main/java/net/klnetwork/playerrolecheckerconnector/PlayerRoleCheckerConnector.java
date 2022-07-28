@@ -25,6 +25,8 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
 
     public static PlayerRoleCheckerConnector INSTANCE;
 
+    private CommandManager commandManager = new CommandManager(null);
+
     //todo~ remove
     private final List<String> roleList = new ArrayList<>();
     private final List<String> commandList = new ArrayList<>();
@@ -38,10 +40,11 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
 
         PlayerData.getInstance().create();
         JDA.init();
+        commandManager.setJDA(getJDA());
 
         getCommandManager().setJDA(getJDA());
 
-        roleList.addAll(getConfig().getStringList("Discord.RoleID"));
+        //roleList.addAll(getConfig().getStringList("Discord.RoleID"));
         commandList.addAll(getConfig().getStringList("JoinCommand"));
 
         Bukkit.getPluginManager().registerEvents(new JoinEvent(), this);
@@ -87,7 +90,7 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
 
     @Override
     public CommandManager getCommandManager() {
-        return new CommandManager(null);
+        return commandManager;
     }
 
     @Override

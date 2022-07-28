@@ -8,6 +8,8 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 public class ConfigManager {
+    private final Plugin plugin;
+
     public ConfigManager(Plugin plugin) {
         try {
             for (Field field : getClass().getDeclaredFields()) {
@@ -40,5 +42,11 @@ public class ConfigManager {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+
+        this.plugin = plugin;
+    }
+
+    public Plugin getPlugin() {
+        return plugin;
     }
 }

@@ -1,6 +1,5 @@
 package net.klnetwork.playerrolechecker.jda.command;
 
-import net.dv8tion.jda.api.Permission;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandData;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandMessage;
 import net.klnetwork.playerrolechecker.api.enums.RemoveEventType;
@@ -8,23 +7,28 @@ import net.klnetwork.playerrolechecker.api.event.RemoveEvent;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import net.klnetwork.playerrolechecker.table.PlayerData;
 import net.klnetwork.playerrolechecker.util.DiscordUtil;
+import org.bukkit.plugin.Plugin;
 
 import java.util.UUID;
 
 public class RemoveCommand extends CommandMessage {
+    public RemoveCommand(Plugin plugin) {
+        super(plugin);
+    }
+
     @Override
     public String getCommandName() {
         return "!remove";
     }
 
     @Override
-    public Permission[] requirePermission() {
-        return new Permission[] {Permission.ADMINISTRATOR};
+    public String getPath() {
+        return "RemoveCommand";
     }
 
     @Override
     public boolean isWork(CommandData data) {
-        return false;
+        return true;
     }
 
     @Override

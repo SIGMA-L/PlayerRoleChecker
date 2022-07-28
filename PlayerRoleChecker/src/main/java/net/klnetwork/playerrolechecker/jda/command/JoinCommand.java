@@ -1,6 +1,5 @@
 package net.klnetwork.playerrolechecker.jda.command;
 
-import net.dv8tion.jda.api.Permission;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandData;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandMessage;
 import net.klnetwork.playerrolechecker.api.enums.JoinEventType;
@@ -8,23 +7,28 @@ import net.klnetwork.playerrolechecker.api.event.JoinEvent;
 import net.klnetwork.playerrolechecker.table.LocalSQL;
 import net.klnetwork.playerrolechecker.table.PlayerData;
 import net.klnetwork.playerrolechecker.util.DiscordUtil;
+import org.bukkit.plugin.Plugin;
 
 import java.util.UUID;
 
 public class JoinCommand extends CommandMessage {
+    public JoinCommand(Plugin plugin) {
+        super(plugin);
+    }
+
     @Override
     public String getCommandName() {
         return null;
     }
 
     @Override
-    public Permission[] requirePermission() {
-        return null;
+    public String getPath() {
+        return "JoinCommand";
     }
 
     @Override
     public boolean isWork(CommandData data) {
-        return false;
+        return true;
     }
 
     @Override

@@ -3,7 +3,6 @@ package net.klnetwork.playerrolechecker.util;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Role;
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import net.klnetwork.playerrolechecker.jda.JDA;
@@ -12,14 +11,6 @@ import java.time.OffsetDateTime;
 
 //todo: recode!
 public class DiscordUtil {
-    public static boolean channelChecker(String channelId) {
-        if (PlayerRoleChecker.INSTANCE.getConfig().getString("Discord.ChannelID") == null) return true;
-        return channelId.equals(PlayerRoleChecker.INSTANCE.getConfig().getString("Discord.ChannelID"));
-    }
-
-    public static boolean limitChecker(String channelId) {
-        return !PlayerRoleChecker.INSTANCE.getConfig().getBoolean("Discord.limitCommand") || channelChecker(channelId);
-    }
 
     public static void sendMessageToChannel(EmbedBuilder embedBuilder) {
         try {
@@ -33,25 +24,24 @@ public class DiscordUtil {
     }
 
     public static void addRole(Guild guild, Member member) {
-        String roleID = PlayerRoleChecker.INSTANCE.getConfig().getString("Discord.addToRole");
-        if (roleID == null) return;
-        Role role = guild.getRoleById(roleID);
-        if (role == null || member == null) return;
-        guild.addRoleToMember(member, role).queue();
+        try {
+            guild.addRoleToMember(member, guild.getRoleById(PlayerRoleChecker.INSTANCE.getConfig().getLong("Discord.addToRole")));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public static void removeRole(Guild guild, Member member) {
-        String roleID = PlayerRoleChecker.INSTANCE.getConfig().getString("Discord.addToRole");
-        if (roleID == null) return;
-        Role role = guild.getRoleById(roleID);
-        if (role == null || member == null) return;
-        guild.removeRoleFromMember(member, role).queue();
+        try {
+            guild.addRoleToMember(member, guild.getRoleById(PlayerRoleChecker.INSTANCE.getConfig().getLong("Discord.addToRole")));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public static EmbedBuilder embedBuilder(String configPath, OffsetDateTime offsetDateTime, Object uuid, String discordId) {
-        return embedBuilder(configPath, offsetDateTime, String.valueOf(uuid), discordId);
+        return embedBuilder(configPath, offsetDateTime, uuid == null ? null : String.valueOf(uuid), discordId);
     }
-
 
     public static EmbedBuilder embedBuilder(String configPath, OffsetDateTime offsetDateTime, String uuid, String discordID) {
         EmbedBuilder embedBuilder = new EmbedBuilder()

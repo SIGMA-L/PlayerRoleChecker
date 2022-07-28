@@ -1,6 +1,7 @@
 package net.klnetwork.playerrolechecker.api.discord;
 
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -49,8 +50,9 @@ public class CommandManager extends ListenerAdapter {
                 CommandData data = new CommandData(commandName, finalArgs, event);
 
                 messageType.stream()
-                        .filter(name -> (name == null || commandName.equalsIgnoreCase(name.getCommandName()))
-                                && CommonUtils.hasPermission(data.getMember(), name.requirePermission())
+                        .filter(name -> equalsCommandName(getCommandName(name), data)
+                                && hasPermission(name, data)
+                                && (isGlobalCommand(name) || isWorkCommand(name, data))
                                 && name.isWork(data))
                         .collect(Collectors.toList())
                         .forEach(message -> {
@@ -63,8 +65,6 @@ public class CommandManager extends ListenerAdapter {
             }).start();
         }
     }
-
-
 
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
@@ -86,6 +86,54 @@ public class CommandManager extends ListenerAdapter {
         }
     }
 
+    public String getCommandName(CommandMessage message) {
+        if (message.getPlugin() == null || message.getPath() == null) {
+            return message.getCommandName();
+        }
+
+        String name = message.getPlugin().getConfig().getString(message.getPath() + ".name");
+
+        return name == null ? message.getCommandName() : name;
+    }
+
+    public boolean isWorkCommand(CommandMessage message, CommandData data) {
+        if (message.getPlugin() == null) {
+            return true;
+        }
+
+        return message.getPlugin().getConfig().getLong("Discord.ChannelID") == data.getTextChannel().getIdLong();
+    }
+
+    public boolean isGlobalCommand(CommandMessage message) {
+        if (message.getPlugin() == null || message.getPath() == null) {
+            return true;
+        }
+
+        return message.getPlugin().getConfig().getBoolean(message.getPath() + ".globalCommand");
+    }
+
+    public boolean equalsCommandName(String commandName, CommandData data) {
+        if (commandName == null || commandName.isEmpty()) {
+            return true;
+        }
+
+        return commandName.equalsIgnoreCase(data.getCommandName());
+    }
+
+    public boolean hasPermission(CommandMessage message, CommandData data) {
+        if (message.getPlugin() == null || message.getPath() == null) {
+            return true;
+        }
+
+        List<Permission> permissions = new ArrayList<>();
+
+        for (String permission : message.getPlugin().getConfig().getStringList(message.getPath() + ".require-permission")) {
+            permissions.add(Permission.valueOf(permission));
+        }
+
+        return CommonUtils.hasPermission(data.getMember(), permissions);
+    }
+
     public List<CommandSlash> getSlashType() {
         return slashType;
     }
@@ -100,9 +148,8 @@ public class CommandManager extends ListenerAdapter {
 
     public void setJDA(JDA jda) {
         if (this.jda != null) {
-            this.jda = jda;
-
             jda.addEventListener(this);
         }
+        this.jda = jda;
     }
 }

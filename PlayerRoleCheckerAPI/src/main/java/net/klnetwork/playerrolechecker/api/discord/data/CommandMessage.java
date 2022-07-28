@@ -1,17 +1,26 @@
 package net.klnetwork.playerrolechecker.api.discord.data;
 
-import net.dv8tion.jda.api.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
+import org.bukkit.plugin.Plugin;
 
 public abstract class CommandMessage {
+
+    private final Plugin plugin;
+
+    public CommandMessage(Plugin plugin) {
+        this.plugin = plugin;
+    }
+
     public abstract String getCommandName();
 
-    public abstract Permission[] requirePermission();
+    /**
+     * @return Config Path
+     */
+    public abstract String getPath();
 
     public abstract boolean isWork(CommandData data);
 
-    //todo: make custom data type!
     public abstract void onMessageReceiveEvent(CommandData event) throws Exception;
 
     public abstract void onErrorCaught(CommandData event, Exception exception);
@@ -24,4 +33,7 @@ public abstract class CommandMessage {
         return event;
     }
 
+    public Plugin getPlugin() {
+        return plugin;
+    }
 }

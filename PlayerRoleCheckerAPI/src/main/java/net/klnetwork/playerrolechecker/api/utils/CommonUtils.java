@@ -10,6 +10,7 @@ import org.bukkit.event.Event;
 
 import java.awt.*;
 import java.net.URL;
+import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -30,7 +31,6 @@ public class CommonUtils {
     }
 
     /**
-     *
      * @param name player name
      * @return player uuid
      * @throws Exception if player name is Unknown
@@ -83,7 +83,7 @@ public class CommonUtils {
         return object.get("tag_name").getAsString().equals(version);
     }
 
-    public static boolean hasPermission(Member member, Permission[] permissions) {
+    public static boolean hasPermission(Member member, List<Permission> permissions) {
         if (permissions == null) {
             return true;
         }

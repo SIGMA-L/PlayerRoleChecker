@@ -1,6 +1,5 @@
 package net.klnetwork.playerrolechecker.jda.command;
 
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandData;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandMessage;
@@ -9,12 +8,15 @@ import net.klnetwork.playerrolechecker.api.event.ForceJoinEvent;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import net.klnetwork.playerrolechecker.table.PlayerData;
 import net.klnetwork.playerrolechecker.util.DiscordUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.event.Event;
+import org.bukkit.plugin.Plugin;
 
 import java.util.UUID;
 
 public class ForceJoinCommand extends CommandMessage {
+    public ForceJoinCommand(Plugin plugin) {
+        super(plugin);
+    }
+
     @Override
     public String getCommandName() {
         //todo: customizable!
@@ -22,13 +24,13 @@ public class ForceJoinCommand extends CommandMessage {
     }
 
     @Override
-    public Permission[] requirePermission() {
-        return new Permission[]{Permission.ADMINISTRATOR};
+    public String getPath() {
+        return "ForceJoinCommand";
     }
 
     @Override
     public boolean isWork(CommandData data) {
-        return false;
+        return true;
     }
 
     @Override
@@ -61,15 +63,6 @@ public class ForceJoinCommand extends CommandMessage {
         } else if (!callEvent(new ForceJoinEvent(null, null, event.getMessage(), ForceJoinEventType.ARG_INVALID)).isCancelled()) {
             //todo: add message
         }
-    }
-
-    //todo: check works in PlayerRoleCheckerAPI
-    public <T> T callEvent(T event) {
-        if (event instanceof Event) {
-            Bukkit.getPluginManager().callEvent((Event) event);
-        }
-
-        return event;
     }
 
     @Override

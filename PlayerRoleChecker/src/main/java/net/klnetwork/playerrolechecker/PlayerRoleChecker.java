@@ -34,9 +34,9 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
 
         JDA.init();
         commandManager.setJDA(getJDA());
-        commandManager.register(new ForceJoinCommand());
-        commandManager.register(new JoinCommand());
-        commandManager.register(new RemoveCommand());
+        commandManager.register(new ForceJoinCommand(this));
+        commandManager.register(new JoinCommand(this));
+        commandManager.register(new RemoveCommand(this));
 
         getServer().getPluginManager().registerEvents(new JoinEvent(), this);
     }
