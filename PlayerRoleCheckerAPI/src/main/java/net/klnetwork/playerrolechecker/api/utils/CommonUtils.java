@@ -84,7 +84,7 @@ public class CommonUtils {
     }
 
     public static boolean hasPermission(Member member, List<Permission> permissions) {
-        if (permissions == null) {
+        if (permissions == null || permissions.isEmpty()) {
             return true;
         }
 
