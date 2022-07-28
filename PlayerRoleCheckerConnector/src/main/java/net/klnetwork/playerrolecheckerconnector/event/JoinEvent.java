@@ -17,6 +17,13 @@ import java.util.List;
 
 public class JoinEvent implements Listener {
 
+    @EventHandler
+    public void onLoginEvent(AsyncPlayerPreLoginEvent event) {
+        if (!PlayerRoleCheckerConnector.INSTANCE.getConfigManager().isJoinMode()) {
+            return;
+        }
+    }
+
 
     //todo: recode
     @EventHandler

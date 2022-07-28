@@ -6,6 +6,7 @@ import net.klnetwork.playerrolechecker.api.data.connector.ConnectorBypassTable;
 import net.klnetwork.playerrolechecker.api.data.connector.ConnectorCustomDataBase;
 import net.klnetwork.playerrolechecker.api.discord.CommandManager;
 import net.klnetwork.playerrolechecker.api.enums.HookedAPIType;
+import net.klnetwork.playerrolecheckerconnector.api.ConfigValue;
 import net.klnetwork.playerrolecheckerconnector.api.CustomDataBaseImpl;
 import net.klnetwork.playerrolecheckerconnector.command.AddBypassCommand;
 import net.klnetwork.playerrolecheckerconnector.command.JoinModeCommand;
@@ -25,7 +26,8 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
 
     public static PlayerRoleCheckerConnector INSTANCE;
 
-    private CommandManager commandManager = new CommandManager(null);
+    private final CommandManager commandManager = new CommandManager(null);
+    private final ConfigValue configManager = new ConfigValue(this);
 
     //todo~ remove
     private final List<String> roleList = new ArrayList<>();
@@ -45,7 +47,8 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
 
         getCommandManager().setJDA(getJDA());
 
-        //roleList.addAll(getConfig().getStringList("Discord.RoleID"));
+        //todo: !!!!!!
+        roleList.addAll(getConfig().getStringList("Discord.RoleID"));
         commandList.addAll(getConfig().getStringList("JoinCommand"));
 
         Bukkit.getPluginManager().registerEvents(new JoinEvent(), this);
@@ -95,6 +98,11 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
     }
 
     @Override
+    public ConfigValue getConfigManager() {
+        return configManager;
+    }
+
+    @Override
     public ConnectorBypassTable getBypass() {
         return LocalSQL.getInstance();
     }
@@ -102,16 +110,6 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
     @Override
     public ConnectorCustomDataBase getCustomDataBase() {
         return new CustomDataBaseImpl();
-    }
-
-    @Override
-    public boolean getJoinMode() {
-        return joinMode;
-    }
-
-    @Override
-    public void setJoinMode(boolean joinMode) {
-        this.joinMode = joinMode;
     }
 
     @Override
