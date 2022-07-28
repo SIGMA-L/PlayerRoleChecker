@@ -200,7 +200,7 @@ public class PlayerData implements PlayerDataTable {
     }
 
     @Override
-    public SQLType setType() {
+    public SQLType setType(SQLType type) {
         return null;
     }
 }

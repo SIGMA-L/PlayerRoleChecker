@@ -1,9 +1,11 @@
 package net.klnetwork.playerrolechecker.api.data.checker;
 
+import net.klnetwork.playerrolechecker.api.data.SQLInterface;
+
 import java.sql.*;
 import java.util.UUID;
 
-public interface CheckerTemporaryTable {
+public interface CheckerTemporaryTable extends SQLInterface {
     boolean hasUUID(Integer code);
 
     String getUUID(Integer code);

@@ -1,7 +1,5 @@
 package net.klnetwork.playerrolechecker.api.data;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -25,10 +23,4 @@ public interface PlayerDataTable extends SQLInterface {
     void remove(UUID uuid, String discordId);
 
     void remove(String uuid, String discordId);
-
-    void create();
-
-    Connection getConnection() throws SQLException;
-
-    void setConnection(Connection connection);
 }

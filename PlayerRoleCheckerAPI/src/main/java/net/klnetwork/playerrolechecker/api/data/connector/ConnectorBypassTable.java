@@ -1,9 +1,11 @@
 package net.klnetwork.playerrolechecker.api.data.connector;
 
+import net.klnetwork.playerrolechecker.api.data.SQLInterface;
+
 import java.sql.*;
 import java.util.UUID;
 
-public interface ConnectorBypassTable {
+public interface ConnectorBypassTable extends SQLInterface {
     String getUUID(UUID uuid);
 
     String getUUID(String uuid);

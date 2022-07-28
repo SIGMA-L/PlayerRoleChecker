@@ -168,4 +168,29 @@ public class LocalSQL implements CheckerTemporaryTable {
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
+
+    @Override
+    public long getLastConnection() {
+        return 0;
+    }
+
+    @Override
+    public void setLastConnection(long lastConnection) {
+
+    }
+
+    @Override
+    public boolean isConnectionDead() throws SQLException {
+        return false;
+    }
+
+    @Override
+    public SQLType getType() {
+        return null;
+    }
+
+    @Override
+    public SQLType setType(SQLType type) {
+        return null;
+    }
 }
