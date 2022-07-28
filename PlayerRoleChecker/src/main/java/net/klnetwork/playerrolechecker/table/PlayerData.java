@@ -192,4 +192,15 @@ public class PlayerData implements PlayerDataTable {
         }
         return false;
     }
+
+    //todo: implement
+    @Override
+    public SQLType getType() {
+        return null;
+    }
+
+    @Override
+    public SQLType setType() {
+        return null;
+    }
 }

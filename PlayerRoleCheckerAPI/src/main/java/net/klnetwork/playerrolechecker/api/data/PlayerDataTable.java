@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-public interface PlayerDataTable {
+public interface PlayerDataTable extends SQLInterface {
     void asyncDiscordId(UUID uuid, Consumer<String> discordId);
 
     void asyncDiscordId(String uuid, Consumer<String> discordId);
@@ -31,11 +31,4 @@ public interface PlayerDataTable {
     Connection getConnection() throws SQLException;
 
     void setConnection(Connection connection);
-
-    long getLastConnection();
-
-    void setLastConnection(long lastConnection);
-
-    /* ToDo: Recode */
-    boolean isConnectionDead() throws SQLException;
 }
