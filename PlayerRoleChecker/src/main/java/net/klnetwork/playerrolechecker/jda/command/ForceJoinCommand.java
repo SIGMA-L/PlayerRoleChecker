@@ -46,6 +46,8 @@ public class ForceJoinCommand extends CommandMessage {
                 ForceJoinEvent call = callEvent(new ForceJoinEvent(event.getArgs().get(1), uuid, event.getMessage(), ForceJoinEventType.SUCCESS));
 
                 if (!call.isCancelled()) {
+                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("ForceJoinCommand.success-register", event.getMessage().getTimeCreated(), call.getUUID(), call.getMemberId()).build()).queue();
+
                     PlayerData.getInstance().put(call.getUUID(), call.getMemberId());
 
                     Member member = call.getGuild().retrieveMemberById(call.getMemberId()).complete();

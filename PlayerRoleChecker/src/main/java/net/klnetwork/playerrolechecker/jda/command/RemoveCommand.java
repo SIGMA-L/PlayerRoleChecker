@@ -42,12 +42,12 @@ public class RemoveCommand extends CommandMessage {
                 RemoveEvent call = callEvent(new RemoveEvent(event.getGuild().retrieveMemberById(discordId).complete(), uuid, event.getMessage(), RemoveEventType.SUCCESS));
 
                 if (!call.isCancelled()) {
-                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.success-register", event.getMessage().getTimeCreated(), call.getUUID(), call.getMember().getId()).build()).queue();
+                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("RemoveCommand.success-remove", event.getMessage().getTimeCreated(), call.getUUID(), call.getMember().getId()).build()).queue();
 
                     PlayerData.getInstance().remove(call.getUUID(), call.getMember().getId());
 
                     if (call.getMember() != null) {
-                        DiscordUtil.removeRole(event.getGuild(), call.getMember());
+                        DiscordUtil.removeRole(call.getGuild(), call.getMember());
                     }
                 }
             }

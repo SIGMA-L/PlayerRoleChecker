@@ -52,8 +52,9 @@ public class LocalSQL implements CheckerTemporaryTable {
 
             ResultSet resultSet = statement.executeQuery();
 
-            if (resultSet.next()) return resultSet.getString(1);
-
+            if (resultSet.next()) {
+                return resultSet.getString(1);
+            }
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
@@ -63,6 +64,7 @@ public class LocalSQL implements CheckerTemporaryTable {
     }
 
     @Override
+    @Deprecated
     public String[] getUUID(String code) {
         String[] result = null;
         try {
@@ -70,11 +72,9 @@ public class LocalSQL implements CheckerTemporaryTable {
             preparedStatement.setString(1, code);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) result = new String[]{resultSet.getString(1), resultSet.getString(2)};
-
-            preparedStatement.close();
-            //PreparedStatementが閉じたらResultSetは閉じるはず
-
+            if (resultSet.next()) {
+                result = new String[]{resultSet.getString(1), resultSet.getString(2)};
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -95,8 +95,9 @@ public class LocalSQL implements CheckerTemporaryTable {
 
             ResultSet resultSet = statement.executeQuery();
 
-            if (resultSet.next()) return resultSet.getInt(2);
-
+            if (resultSet.next()) {
+                return resultSet.getInt(2);
+            }
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
@@ -107,16 +108,16 @@ public class LocalSQL implements CheckerTemporaryTable {
 
     @Override
     public void put(String uuid, String code) {
+        PreparedStatement statement = null;
         try {
-            PreparedStatement preparedStatement = getConnection().prepareStatement("insert into waitverify values (?,?)");
-            preparedStatement.setString(1, uuid);
-            preparedStatement.setString(2, code);
-            preparedStatement.execute();
-
-            preparedStatement.close();
-
+            statement = getConnection().prepareStatement("insert into waitverify values (?,?)");
+            statement.setString(1, uuid);
+            statement.setString(2, code);
+            statement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } finally {
+            CommonUtils.close(statement);
         }
     }
 
@@ -133,9 +134,6 @@ public class LocalSQL implements CheckerTemporaryTable {
             statement.setString(1, uuid);
             statement.setInt(2, code);
             statement.execute();
-
-            statement.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -151,8 +149,6 @@ public class LocalSQL implements CheckerTemporaryTable {
 
             statement.executeUpdate("drop table if exists waitverify");
             statement.executeUpdate("create table if not exists waitverify (uuid string, code int)");
-
-            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

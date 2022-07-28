@@ -100,15 +100,16 @@ public class PlayerData implements PlayerDataTable {
     @Override
     public void put(String uuid, String discordId) {
         Bukkit.getScheduler().runTaskAsynchronously(PlayerRoleChecker.INSTANCE, () -> {
+            PreparedStatement statement = null;
             try {
-                PreparedStatement preparedStatement = getConnection().prepareStatement("insert into verifyplayer values (?,?)");
-                preparedStatement.setString(1, uuid);
-                preparedStatement.setString(2, discordId);
-                preparedStatement.execute();
-
-                preparedStatement.close();
+                statement = getConnection().prepareStatement("insert into verifyplayer values (?,?)");
+                statement.setString(1, uuid);
+                statement.setString(2, discordId);
+                statement.execute();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
+            } finally {
+                CommonUtils.close(statement);
             }
         });
     }
