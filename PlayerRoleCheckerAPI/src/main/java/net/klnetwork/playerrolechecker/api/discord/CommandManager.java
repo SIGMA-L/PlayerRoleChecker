@@ -1,14 +1,12 @@
 package net.klnetwork.playerrolechecker.api.discord;
 
 import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandData;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandMessage;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandSlash;
-import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -50,9 +48,9 @@ public class CommandManager extends ListenerAdapter {
                 CommandData data = new CommandData(commandName, finalArgs, event);
 
                 messageType.stream()
-                        .filter(name -> equalsCommandName(getCommandName(name), data)
-                                && hasPermission(name, data)
-                                && (isGlobalCommand(name) || isWorkCommand(name, data))
+                        .filter(name -> equalsCommandName(name.selectCommandName(), data)
+                                && name.hasPermission(data.getMember())
+                                && (name.isGlobalCommand() || name.isWorkCommand(data))
                                 && name.isWork(data))
                         .collect(Collectors.toList())
                         .forEach(message -> {
@@ -86,52 +84,12 @@ public class CommandManager extends ListenerAdapter {
         }
     }
 
-    public String getCommandName(CommandMessage message) {
-        if (message.getPlugin() == null || message.getPath() == null) {
-            return message.getCommandName();
-        }
-
-        String name = message.getPlugin().getConfig().getString(message.getPath() + ".name");
-
-        return name == null ? message.getCommandName() : name;
-    }
-
-    public boolean isWorkCommand(CommandMessage message, CommandData data) {
-        if (message.getPlugin() == null) {
-            return true;
-        }
-
-        return message.getPlugin().getConfig().getLong("Discord.ChannelID") == data.getTextChannel().getIdLong();
-    }
-
-    public boolean isGlobalCommand(CommandMessage message) {
-        if (message.getPlugin() == null || message.getPath() == null) {
-            return true;
-        }
-
-        return message.getPlugin().getConfig().getBoolean(message.getPath() + ".globalCommand");
-    }
-
     public boolean equalsCommandName(String commandName, CommandData data) {
         if (commandName == null || commandName.isEmpty()) {
             return true;
         }
 
         return commandName.equalsIgnoreCase(data.getCommandName());
-    }
-
-    public boolean hasPermission(CommandMessage message, CommandData data) {
-        if (message.getPlugin() == null || message.getPath() == null) {
-            return true;
-        }
-
-        List<Permission> permissions = new ArrayList<>();
-
-        for (String permission : message.getPlugin().getConfig().getStringList(message.getPath() + ".require-permission")) {
-            permissions.add(Permission.valueOf(permission));
-        }
-
-        return CommonUtils.hasPermission(data.getMember(), permissions);
     }
 
     public List<CommandSlash> getSlashType() {
