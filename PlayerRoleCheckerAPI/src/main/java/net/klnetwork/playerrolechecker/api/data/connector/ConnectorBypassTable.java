@@ -14,6 +14,8 @@ public interface ConnectorBypassTable {
 
     void remove(String uuid);
 
+    boolean isCreated();
+
     void create();
 
     Connection getConnection() throws SQLException;

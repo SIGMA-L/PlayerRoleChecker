@@ -1,7 +1,6 @@
 package net.klnetwork.playerrolecheckerconnector.event;
 
 import net.dv8tion.jda.api.entities.Role;
-import net.klnetwork.playerrolecheckerconnector.command.JoinModeCommand;
 import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
 import net.klnetwork.playerrolecheckerconnector.table.LocalSQL;
 import net.klnetwork.playerrolecheckerconnector.table.PlayerData;
@@ -22,13 +21,19 @@ public class JoinEvent implements Listener {
         if (!PlayerRoleCheckerConnector.INSTANCE.getConfigManager().isJoinMode()) {
             return;
         }
+
+        if (LocalSQL.getInstance().isCreated() && LocalSQL.getInstance().getUUID(event.getUniqueId()) != null){
+            return;
+        }
+
+        //....
     }
 
 
     //todo: recode
     @EventHandler
     public void onAsyncPreLoginEvent(AsyncPlayerPreLoginEvent e) {
-        if (!JoinModeCommand.joinMode) return;
+        if (!PlayerRoleCheckerConnector.INSTANCE.getConfigManager().isJoinMode()) return;
 
         //SQLiteUtilはファイル管理であるため、非同期である必要はありません(位置的にここに必要)
         if (PlayerRoleCheckerConnector.INSTANCE.getConfig().getBoolean("SQLite.useBypassCommand") && (LocalSQL.getInstance().getUUID(e.getUniqueId().toString()) != null || LocalSQL.getInstance().getUUID(e.getName().toLowerCase()) != null)) {
@@ -50,7 +55,9 @@ public class JoinEvent implements Listener {
 
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent e) {
-        PlayerRoleCheckerConnector.INSTANCE.getCommandList().forEach(string -> Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), OtherUtil.replaceString(string, e.getPlayer())));
+        PlayerRoleCheckerConnector.INSTANCE.getConfigManager()
+                .getJoinCommand()
+                .forEach(string -> Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), OtherUtil.replaceString(string, e.getPlayer())));
 
         PlayerData.getInstance().asyncDiscordId(e.getPlayer().getUniqueId(), discordId -> {
             if (discordId != null) {

@@ -19,7 +19,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public final class PlayerRoleCheckerConnector extends JavaPlugin implements ConnectorAPIHook {
@@ -29,12 +28,6 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
     private final CommandManager commandManager = new CommandManager(null);
     private final ConfigValue configManager = new ConfigValue(this);
 
-    //todo~ remove
-    private final List<String> roleList = new ArrayList<>();
-    private final List<String> commandList = new ArrayList<>();
-
-    private boolean joinMode = getConfig().getBoolean("Minecraft.defaultJoinMode");
-
     @Override
     public void onEnable() {
         INSTANCE = this;
@@ -42,14 +35,9 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
         saveDefaultConfig();
 
         PlayerData.getInstance().create();
+
         JDA.init();
         commandManager.setJDA(getJDA());
-
-        getCommandManager().setJDA(getJDA());
-
-        //todo: !!!!!!
-        roleList.addAll(getConfig().getStringList("Discord.RoleID"));
-        commandList.addAll(getConfig().getStringList("JoinCommand"));
 
         Bukkit.getPluginManager().registerEvents(new JoinEvent(), this);
 
@@ -69,12 +57,14 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
         }
     }
 
+    @Deprecated
     public List<String> getRoleList() {
-        return roleList;
+        return configManager.getRoleList();
     }
 
+    @Deprecated
     public List<String> getCommandList() {
-        return commandList;
+        return configManager.getJoinCommand();
     }
 
     @Override

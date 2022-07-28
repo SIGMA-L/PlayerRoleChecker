@@ -13,23 +13,11 @@ import java.net.URL;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
-import java.util.function.Consumer;
 
 /**
  * ランダムなUtilほとんどは内部で使われています
  */
 public class CommonUtils {
-
-    public static void asyncUUID(String name, Consumer<UUID> consumer) {
-        new Thread(() -> {
-            try {
-                consumer.accept(getUUID(name));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
-    }
-
     /**
      * @param name player name
      * @return player uuid
@@ -59,10 +47,15 @@ public class CommonUtils {
         return false;
     }
 
+    /**
+     * @param color get Color from {@link Color} class
+     * @return {@link Color}
+     * @see Color
+     */
     public static Color getColor(String color) {
         try {
             return (Color) Color.class
-                    .getField(color)
+                    .getField(color.toUpperCase())
                     .get(null);
         } catch (Exception e) {
             e.printStackTrace();

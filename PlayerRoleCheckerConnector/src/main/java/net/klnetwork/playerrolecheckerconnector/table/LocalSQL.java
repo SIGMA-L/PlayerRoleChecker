@@ -11,6 +11,7 @@ public class LocalSQL implements ConnectorBypassTable {
 
     private static ConnectorBypassTable table;
 
+    private boolean created;
     private Connection connection;
 
     public static ConnectorBypassTable getInstance() {
@@ -85,12 +86,17 @@ public class LocalSQL implements ConnectorBypassTable {
         Statement statement = null;
         try {
             statement = getConnection().createStatement();
-            statement.executeUpdate("create table if not exists bypass (uuid string)");
+            created = statement.executeUpdate("create table if not exists bypass (uuid string)") >= 0;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             CommonUtils.close(statement);
         }
+    }
+
+    @Override
+    public boolean isCreated() {
+        return created;
     }
 
     @Override

@@ -33,7 +33,7 @@ public class OtherUtil {
         }
 
         for (Role role : roles) {
-            if (PlayerRoleCheckerConnector.INSTANCE.getRoleList().contains(role.getId())) {
+            if (PlayerRoleCheckerConnector.INSTANCE.getConfigManager().getRoleList().contains(role.getId())) {
                 return true;
             }
         }
