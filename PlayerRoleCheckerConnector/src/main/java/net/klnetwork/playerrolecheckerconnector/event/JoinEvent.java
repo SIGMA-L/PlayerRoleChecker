@@ -17,14 +17,6 @@ import java.util.List;
 
 public class JoinEvent implements Listener {
 
-    /*@EventHandler
-    public void onAsyncPreLoginEvent(AsyncPlayerPreLoginEvent e) {
-        if (JoinModeCommand.joinMode) {
-
-        }
-
-
-    }*/
 
     //todo: recode
     @EventHandler

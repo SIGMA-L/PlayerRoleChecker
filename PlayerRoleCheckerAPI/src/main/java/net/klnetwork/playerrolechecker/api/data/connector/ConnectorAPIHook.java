@@ -6,4 +6,8 @@ public interface ConnectorAPIHook extends APIHook {
     ConnectorBypassTable getBypass();
 
     ConnectorCustomDataBase getCustomDataBase();
+
+    boolean getJoinMode();
+
+    void setJoinMode(boolean joinMode);
 }

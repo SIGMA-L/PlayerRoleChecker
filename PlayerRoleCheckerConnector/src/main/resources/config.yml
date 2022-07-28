@@ -34,6 +34,7 @@ Discord:
 ## %discordid% - discordID
 ## %role% - role
 Minecraft:
+  defaultJoinMode: true
   kickMessage:
     - '&6あなたには参加権限がありません！'
     - '&bDiscordを確認してみてみるか、管理者に報告してください。'

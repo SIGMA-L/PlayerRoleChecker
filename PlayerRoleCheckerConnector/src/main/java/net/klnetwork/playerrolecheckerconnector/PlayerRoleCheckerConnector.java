@@ -31,6 +31,7 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
     private final List<String> roleList = new ArrayList<>();
     private final List<String> commandList = new ArrayList<>();
 
+    private boolean joinMode = getConfig().getBoolean("Minecraft.defaultJoinMode");
 
     @Override
     public void onEnable() {
@@ -101,6 +102,16 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
     @Override
     public ConnectorCustomDataBase getCustomDataBase() {
         return new CustomDataBaseImpl();
+    }
+
+    @Override
+    public boolean getJoinMode() {
+        return joinMode;
+    }
+
+    @Override
+    public void setJoinMode(boolean joinMode) {
+        this.joinMode = joinMode;
     }
 
     @Override
