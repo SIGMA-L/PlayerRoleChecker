@@ -33,7 +33,9 @@ public class JoinCommand extends CommandMessage {
 
     @Override
     public void onMessageReceiveEvent(CommandData event) throws Exception {
-        final int code = Integer.parseInt(event.getCommandName());
+        String commandName = selectCommandName();
+
+        final int code = Integer.parseInt(commandName == null || commandName.isEmpty() ? event.getCommandName() : event.getArgs().get(0));
 
         String uuid = LocalSQL.getInstance().getUUID(code);
 
