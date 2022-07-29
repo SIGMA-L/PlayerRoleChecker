@@ -5,27 +5,27 @@ import net.klnetwork.playerrolechecker.api.data.SQLInterface;
 import java.sql.*;
 import java.util.UUID;
 
-public interface CheckerTemporaryTable extends SQLInterface {
-    boolean hasUUID(Integer code);
+public abstract class CheckerTemporaryTable extends SQLInterface {
+    public abstract boolean hasUUID(Integer code);
 
-    String getUUID(Integer code);
+    public abstract String getUUID(Integer code);
 
     @Deprecated
-    String[] getUUID(String code);
+    public abstract String[] getUUID(String code);
 
-    Integer getCode(UUID uuid);
+    public abstract Integer getCode(UUID uuid);
 
-    Integer getCode(String uuid);
+    public abstract Integer getCode(String uuid);
 
-    void put(String uuid, String code);
+    public abstract void put(String uuid, String code);
 
-    void remove(UUID uuid, Integer code);
+    public abstract void remove(UUID uuid, Integer code);
 
-    void remove(String uuid, Integer code);
+    public abstract void remove(String uuid, Integer code);
 
-    void create();
+    public abstract void create();
 
-    Connection getConnection() throws SQLException;
+    public abstract Connection getConnection() throws SQLException;
 
-    void setConnection(Connection connection);
+    public abstract void setConnection(Connection connection);
 }

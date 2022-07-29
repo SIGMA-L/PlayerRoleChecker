@@ -5,22 +5,22 @@ import net.klnetwork.playerrolechecker.api.data.SQLInterface;
 import java.sql.*;
 import java.util.UUID;
 
-public interface ConnectorBypassTable extends SQLInterface {
-    String getUUID(UUID uuid);
+public abstract class ConnectorBypassTable extends SQLInterface {
+    public abstract String getUUID(UUID uuid);
 
-    String getUUID(String uuid);
+    public abstract String getUUID(String uuid);
 
-    void put(String uuid);
+    public abstract void put(String uuid);
 
-    void remove(UUID uuid);
+    public abstract void remove(UUID uuid);
 
-    void remove(String uuid);
+    public abstract void remove(String uuid);
 
-    boolean isCreated();
+    public abstract boolean isCreated();
 
-    void create();
+    public abstract void create();
 
-    Connection getConnection() throws SQLException;
+    public abstract Connection getConnection() throws SQLException;
 
-    void setConnection(Connection connection);
+    public abstract void setConnection(Connection connection);
 }

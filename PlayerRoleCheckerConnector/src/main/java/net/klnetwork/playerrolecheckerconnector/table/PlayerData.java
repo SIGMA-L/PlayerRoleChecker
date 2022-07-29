@@ -17,10 +17,6 @@ public class PlayerData extends PlayerDataTable {
 
     private SQLType type = CommonUtils.getSQLType(PlayerRoleCheckerConnector.INSTANCE.getPlugin().getConfig().getString("DataBase.PlayerDataTable.type"));
 
-
-    private long lastConnection;
-    private Connection connection;
-
     public static PlayerDataTable getInstance() {
         if (table == null) {
             table = new PlayerData();

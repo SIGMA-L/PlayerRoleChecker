@@ -18,9 +18,6 @@ public class PlayerData extends PlayerDataTable {
 
     private SQLType type;
 
-    private long lastConnection;
-    private Connection connection;
-
     public static PlayerDataTable getInstance() {
         if (table == null) {
             table = new PlayerData();

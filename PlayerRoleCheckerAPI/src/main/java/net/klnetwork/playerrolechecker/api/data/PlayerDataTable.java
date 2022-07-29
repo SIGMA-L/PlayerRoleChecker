@@ -3,14 +3,14 @@ package net.klnetwork.playerrolechecker.api.data;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-public abstract class PlayerDataTable implements SQLInterface {
+public abstract class PlayerDataTable extends SQLInterface {
     public abstract void asyncDiscordId(UUID uuid, Consumer<String> discordId);
 
     public abstract void asyncDiscordId(String uuid, Consumer<String> discordId);
 
     public abstract void asyncUUID(String discordId, Consumer<String> uuid);
 
-    public  abstract String getDiscordId(UUID uuid);
+    public abstract String getDiscordId(UUID uuid);
 
     public abstract String getDiscordId(String uuid);
 

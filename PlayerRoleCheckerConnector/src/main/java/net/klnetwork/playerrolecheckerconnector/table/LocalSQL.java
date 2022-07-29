@@ -8,14 +8,13 @@ import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
 import java.sql.*;
 import java.util.UUID;
 
-public class LocalSQL implements ConnectorBypassTable {
+public class LocalSQL extends ConnectorBypassTable {
 
     private static ConnectorBypassTable table;
 
     private SQLType type;
 
     private boolean created;
-    private Connection connection;
 
     public static ConnectorBypassTable getInstance() {
         if (table == null) {

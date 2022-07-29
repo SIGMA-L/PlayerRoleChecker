@@ -8,11 +8,9 @@ import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import java.sql.*;
 import java.util.UUID;
 
-public class LocalSQL implements CheckerTemporaryTable {
+public class LocalSQL extends CheckerTemporaryTable {
 
     private SQLType type;
-
-    private Connection connection;
 
     private static CheckerTemporaryTable table;
 

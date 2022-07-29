@@ -5,21 +5,25 @@ import net.klnetwork.playerrolechecker.api.enums.SQLType;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public interface SQLInterface {
-    void create();
+public abstract class SQLInterface {
 
-    Connection getConnection() throws SQLException;
+    protected Connection connection;
+    protected long lastConnection;
 
-    void setConnection(Connection connection);
+    public abstract void create();
 
-    long getLastConnection();
+    public abstract Connection getConnection() throws SQLException;
 
-    void setLastConnection(long lastConnection);
+    public abstract void setConnection(Connection connection);
+
+    public abstract long getLastConnection();
+
+    public abstract void setLastConnection(long lastConnection);
 
     /* ToDo: Recode */
-    boolean isConnectionDead() throws SQLException;
+    public abstract boolean isConnectionDead() throws SQLException;
 
-    SQLType getType();
+    public abstract SQLType getType();
 
-    void setType(SQLType type);
+    public abstract void setType(SQLType type);
 }
