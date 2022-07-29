@@ -105,11 +105,6 @@ public class LocalSQL implements ConnectorBypassTable {
     @Override
     public Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
-            try {
-                Class.forName("org.sqlite.JDBC");
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
             connection = DriverManager.getConnection("jdbc:sqlite:" + PlayerRoleCheckerConnector.INSTANCE.getConfig().getString("SQLite.SQLiteLocate"));
         }
         return connection;

@@ -16,9 +16,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 
-/**
- * ランダムなUtilほとんどは内部で使われています
- */
 public class CommonUtils {
     /**
      * @param name player name
@@ -32,6 +29,10 @@ public class CommonUtils {
 
         JsonObject UUIDObject = new Gson().fromJson(input, JsonObject.class);
         return UUID.fromString(UUIDObject.get("id").getAsString().replaceFirst("([0-9a-fA-F]{8})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]+)", "$1-$2-$3-$4-$5"));
+    }
+
+    public boolean hasFloodGate() {
+        return Bukkit.getPluginManager().getPlugin("Floodgate") != null;
     }
 
     public boolean isFloodgateUser(UUID uuid) {
@@ -107,6 +108,10 @@ public class CommonUtils {
                 ex.printStackTrace();
             }
         }
+    }
+
+    public static boolean checkIsValid(final long time, final long now) {
+        return time - now > 100_000;
     }
 
     public static SQLType getSQLType(String type) {

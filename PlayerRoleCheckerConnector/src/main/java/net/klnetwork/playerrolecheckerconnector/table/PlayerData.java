@@ -11,7 +11,7 @@ import java.sql.*;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-public class PlayerData implements PlayerDataTable {
+public class PlayerData extends PlayerDataTable {
 
     private static PlayerDataTable table;
 
@@ -159,6 +159,7 @@ public class PlayerData implements PlayerDataTable {
         if (connection == null || connection.isClosed() || isConnectionDead()) {
 
             //todo: add to utils
+            //ほんとに必要？
             try {
                 Class.forName("com.mysql.jdbc.Driver");
             } catch (ClassNotFoundException e) {
@@ -191,10 +192,11 @@ public class PlayerData implements PlayerDataTable {
     public boolean isConnectionDead() throws SQLException {
         final long now = System.currentTimeMillis();
 
-        if (now - lastConnection > 900000) {
+        if (CommonUtils.checkIsValid(lastConnection, now)) {
             lastConnection = now;
             return !connection.isValid(1);
         }
+
         return false;
     }
 

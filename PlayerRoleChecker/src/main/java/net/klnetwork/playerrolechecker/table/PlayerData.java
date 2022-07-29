@@ -12,7 +12,7 @@ import java.sql.*;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-public class PlayerData implements PlayerDataTable {
+public class PlayerData extends PlayerDataTable {
 
     private static PlayerDataTable table;
 
