@@ -153,14 +153,6 @@ public class PlayerData extends PlayerDataTable {
     @Override
     public Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed() || isConnectionDead()) {
-
-            //todo: add to utils
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-
             FileConfiguration config = PlayerRoleChecker.INSTANCE.getConfig();
 
             connection = DriverManager.getConnection("jdbc:mysql://" + config.getString("MySQL.Server") + ":" + config.getInt("MySQL.Port") + "/" + config.getString("MySQL.Database") + config.getString("MySQL.Option"), config.getString("MySQL.Username"), config.getString("MySQL.Password"));
