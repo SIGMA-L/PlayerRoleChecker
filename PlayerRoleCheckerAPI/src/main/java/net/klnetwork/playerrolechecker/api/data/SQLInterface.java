@@ -18,9 +18,13 @@ public abstract class SQLInterface {
 
     public abstract void setConnection(Connection connection);
 
-    public abstract long getLastConnection();
+    public long getLastConnection() {
+        return lastConnection;
+    }
 
-    public abstract void setLastConnection(long lastConnection);
+    public void setLastConnection(long lastConnection) {
+        this.lastConnection = lastConnection;
+    }
 
     public boolean isConnectionDead() throws SQLException {
         final long now = System.currentTimeMillis();

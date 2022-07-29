@@ -115,16 +115,6 @@ public class LocalSQL extends ConnectorBypassTable {
     }
 
     @Override
-    public long getLastConnection() {
-        return 0;
-    }
-
-    @Override
-    public void setLastConnection(long lastConnection) {
-
-    }
-
-    @Override
     public SQLType getType() {
         return type;
     }

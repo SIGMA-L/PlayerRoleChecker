@@ -175,16 +175,6 @@ public class PlayerData extends PlayerDataTable {
     }
 
     @Override
-    public long getLastConnection() {
-        return this.lastConnection;
-    }
-
-    @Override
-    public void setLastConnection(long lastConnection) {
-        this.lastConnection = lastConnection;
-    }
-
-    @Override
     public SQLType getType() {
         return type;
     }
