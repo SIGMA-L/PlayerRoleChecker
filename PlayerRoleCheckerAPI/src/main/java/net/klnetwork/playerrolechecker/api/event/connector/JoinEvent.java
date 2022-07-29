@@ -1,34 +1,35 @@
-package net.klnetwork.playerrolechecker.api.event;
+package net.klnetwork.playerrolechecker.api.event.connector;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
-import net.klnetwork.playerrolechecker.api.enums.ForceJoinEventType;
+import net.klnetwork.playerrolechecker.api.enums.JoinEventType;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import java.util.UUID;
 
-public class ForceJoinEvent extends Event implements Cancellable {
-    private Member executor;
+public class JoinEvent extends Event implements Cancellable {
 
-    private String memberId;
+    private Member member;
     private UUID uuid;
+    private int code;
 
-    private ForceJoinEventType type;
+    private JoinEventType type;
 
     private Message message;
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
     private boolean isCancelled;
 
-    public ForceJoinEvent(String memberId, UUID uuid, Message message, ForceJoinEventType type) {
+    public JoinEvent(UUID uuid, int code, Message message, JoinEventType type) {
         super(true);
 
-        this.memberId = memberId;
+        this.member = message.getMember();
         this.uuid = uuid;
+        this.code = code;
 
         this.message = message;
         this.type = type;
@@ -52,12 +53,12 @@ public class ForceJoinEvent extends Event implements Cancellable {
         return HANDLER_LIST;
     }
 
-    public String getMemberId() {
-        return memberId;
+    public Member getMember() {
+        return member;
     }
 
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     public UUID getUUID() {
@@ -68,20 +69,20 @@ public class ForceJoinEvent extends Event implements Cancellable {
         this.uuid = uuid;
     }
 
-    public Member getExecutor() {
-        return executor;
+    public int getCode() {
+        return code;
     }
 
-    public void setExecutor(Member executor) {
-        this.executor = executor;
+    public void setCode(int code) {
+        this.code = code;
     }
 
     public JDA getInstance() {
-        return this.executor.getJDA();
+        return this.member.getJDA();
     }
 
     public Guild getGuild() {
-        return this.executor.getGuild();
+        return this.member.getGuild();
     }
 
     public Message getMessage() {
@@ -92,11 +93,11 @@ public class ForceJoinEvent extends Event implements Cancellable {
         this.message = message;
     }
 
-    public ForceJoinEventType getType() {
+    public JoinEventType getType() {
         return type;
     }
 
-    public void setType(ForceJoinEventType type) {
+    public void setType(JoinEventType type) {
         this.type = type;
     }
 }

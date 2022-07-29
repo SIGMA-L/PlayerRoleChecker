@@ -1,35 +1,34 @@
-package net.klnetwork.playerrolechecker.api.event;
+package net.klnetwork.playerrolechecker.api.event.connector;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
-import net.klnetwork.playerrolechecker.api.enums.JoinEventType;
+import net.klnetwork.playerrolechecker.api.enums.RemoveEventType;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import java.util.UUID;
 
-public class JoinEvent extends Event implements Cancellable {
+public class RemoveEvent extends Event implements Cancellable {
 
-    private Member member;
+    private Member member, executor;
     private UUID uuid;
-    private int code;
 
-    private JoinEventType type;
+    private RemoveEventType type;
 
     private Message message;
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
     private boolean isCancelled;
 
-    public JoinEvent(UUID uuid, int code, Message message, JoinEventType type) {
+    public RemoveEvent(Member member, UUID uuid, Message message, RemoveEventType type) {
         super(true);
 
-        this.member = message.getMember();
+        this.member = member;
         this.uuid = uuid;
-        this.code = code;
+        this.executor = message.getMember();
 
         this.message = message;
         this.type = type;
@@ -69,16 +68,16 @@ public class JoinEvent extends Event implements Cancellable {
         this.uuid = uuid;
     }
 
-    public int getCode() {
-        return code;
+    public Member getExecutor() {
+        return executor;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public void setExecutor(Member executor) {
+        this.executor = executor;
     }
 
     public JDA getInstance() {
-        return this.member.getJDA();
+        return this.executor.getJDA();
     }
 
     public Guild getGuild() {
@@ -93,11 +92,11 @@ public class JoinEvent extends Event implements Cancellable {
         this.message = message;
     }
 
-    public JoinEventType getType() {
+    public RemoveEventType getType() {
         return type;
     }
 
-    public void setType(JoinEventType type) {
+    public void setType(RemoveEventType type) {
         this.type = type;
     }
 }

@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandData;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandMessage;
 import net.klnetwork.playerrolechecker.api.enums.ForceJoinEventType;
-import net.klnetwork.playerrolechecker.api.event.ForceJoinEvent;
+import net.klnetwork.playerrolechecker.api.event.connector.ForceJoinEvent;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import net.klnetwork.playerrolechecker.table.PlayerData;
 import net.klnetwork.playerrolechecker.util.DiscordUtil;

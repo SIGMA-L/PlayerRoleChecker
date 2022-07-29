@@ -4,7 +4,7 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 
 public abstract class JoinHandler {
-    public abstract void onPreLoginEvent(AsyncPlayerPreLoginEvent event);
+    public void onPreLoginEvent(AsyncPlayerPreLoginEvent event) {};
 
-    public abstract void onLoginEvent(PlayerLoginEvent event);
+    public void onLoginEvent(PlayerLoginEvent event) {};
 }

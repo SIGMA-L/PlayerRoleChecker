@@ -3,7 +3,7 @@ package net.klnetwork.playerrolechecker.jda.command;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandData;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandMessage;
 import net.klnetwork.playerrolechecker.api.enums.JoinEventType;
-import net.klnetwork.playerrolechecker.api.event.JoinEvent;
+import net.klnetwork.playerrolechecker.api.event.connector.JoinEvent;
 import net.klnetwork.playerrolechecker.table.LocalSQL;
 import net.klnetwork.playerrolechecker.table.PlayerData;
 import net.klnetwork.playerrolechecker.util.DiscordUtil;

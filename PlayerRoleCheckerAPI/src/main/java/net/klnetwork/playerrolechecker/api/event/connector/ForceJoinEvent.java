@@ -1,34 +1,34 @@
-package net.klnetwork.playerrolechecker.api.event;
+package net.klnetwork.playerrolechecker.api.event.connector;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
-import net.klnetwork.playerrolechecker.api.enums.RemoveEventType;
+import net.klnetwork.playerrolechecker.api.enums.ForceJoinEventType;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import java.util.UUID;
 
-public class RemoveEvent extends Event implements Cancellable {
+public class ForceJoinEvent extends Event implements Cancellable {
+    private Member executor;
 
-    private Member member, executor;
+    private String memberId;
     private UUID uuid;
 
-    private RemoveEventType type;
+    private ForceJoinEventType type;
 
     private Message message;
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
     private boolean isCancelled;
 
-    public RemoveEvent(Member member, UUID uuid, Message message, RemoveEventType type) {
+    public ForceJoinEvent(String memberId, UUID uuid, Message message, ForceJoinEventType type) {
         super(true);
 
-        this.member = member;
+        this.memberId = memberId;
         this.uuid = uuid;
-        this.executor = message.getMember();
 
         this.message = message;
         this.type = type;
@@ -52,12 +52,12 @@ public class RemoveEvent extends Event implements Cancellable {
         return HANDLER_LIST;
     }
 
-    public Member getMember() {
-        return member;
+    public String getMemberId() {
+        return memberId;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
     }
 
     public UUID getUUID() {
@@ -81,7 +81,7 @@ public class RemoveEvent extends Event implements Cancellable {
     }
 
     public Guild getGuild() {
-        return this.member.getGuild();
+        return this.executor.getGuild();
     }
 
     public Message getMessage() {
@@ -92,11 +92,11 @@ public class RemoveEvent extends Event implements Cancellable {
         this.message = message;
     }
 
-    public RemoveEventType getType() {
+    public ForceJoinEventType getType() {
         return type;
     }
 
-    public void setType(RemoveEventType type) {
+    public void setType(ForceJoinEventType type) {
         this.type = type;
     }
 }
