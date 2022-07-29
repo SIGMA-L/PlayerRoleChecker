@@ -40,7 +40,6 @@ JoinEvent:
 ## - invalid-number: 不明な数字のエラーメッセージ (%uuid% %discordid% をサポートしていません)
 ## - already-registered: すでに登録されていますのエラーメッセージ (%uuid% %discordid% をサポートしています)
 ## - success-register: 登録が完了されたメッセージ (%uuid %discordid% をサポートしています)
-## - length-big: length <= 2 の時に出るエラーメッセージ (%uuid% %discordid% をサポートしていません)
 JoinCommand:
   name: ''
   globalCommand: false
@@ -88,13 +87,6 @@ JoinCommand:
     message:
       - 'UUID: | %uuid% | false'
       - 'DiscordID: | %discordid% | false'
-  length-big:
-    color: 'RED'
-    title: 'リクエストに失敗しました'
-    description: '理由: length <= 2'
-    image:
-    timestamp: true
-    message:
 ## RemoveCommand: !remove コマンド
 ## - invalid-name: 不明な名前のエラーメッセージ (%uuid% %discordid% をサポートしていません)
 ## - not-registered: 登録されていないエラーメッセージ (%uuid% %discordid% をサポートしていません)
