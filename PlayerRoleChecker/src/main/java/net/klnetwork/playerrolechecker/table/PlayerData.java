@@ -1,6 +1,7 @@
 package net.klnetwork.playerrolechecker.table;
 
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
+
 import net.klnetwork.playerrolechecker.api.enums.SQLType;
 import net.klnetwork.playerrolechecker.api.data.PlayerDataTable;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
@@ -14,6 +15,8 @@ import java.util.function.Consumer;
 public class PlayerData implements PlayerDataTable {
 
     private static PlayerDataTable table;
+
+    private SQLType type;
 
     private long lastConnection;
     private Connection connection;
@@ -193,15 +196,14 @@ public class PlayerData implements PlayerDataTable {
         }
         return false;
     }
-
-    //todo: implement
+    
     @Override
     public SQLType getType() {
-        return null;
+        return type;
     }
 
     @Override
-    public SQLType setType(SQLType type) {
-        return null;
+    public void setType(SQLType type) {
+        this.type = type;
     }
 }

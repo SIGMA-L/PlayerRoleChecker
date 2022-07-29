@@ -21,5 +21,5 @@ public interface SQLInterface {
 
     SQLType getType();
 
-    SQLType setType(SQLType type);
+    void setType(SQLType type);
 }
