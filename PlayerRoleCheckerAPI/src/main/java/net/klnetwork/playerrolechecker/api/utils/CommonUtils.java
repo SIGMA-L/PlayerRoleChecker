@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
+import net.klnetwork.playerrolechecker.api.enums.SQLType;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -37,7 +38,7 @@ public class CommonUtils {
         return FloodgateApi.getInstance().isFloodgatePlayer(uuid);
     }
 
-    public String getFloodgateUUID(UUID uuid) {
+    public String getFloodgateXuid(UUID uuid) {
         return FloodgateApi.getInstance().getPlayer(uuid).getXuid();
     }
 
@@ -105,6 +106,14 @@ public class CommonUtils {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+        }
+    }
+
+    public static SQLType getSQLType(String type) {
+        try {
+            return SQLType.valueOf(type);
+        } catch (Exception ex) {
+            return SQLType.CUSTOM;
         }
     }
 

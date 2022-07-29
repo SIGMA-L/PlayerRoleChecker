@@ -2,12 +2,15 @@ package net.klnetwork.playerrolechecker.table;
 
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
 import net.klnetwork.playerrolechecker.api.data.checker.CheckerTemporaryTable;
+import net.klnetwork.playerrolechecker.api.enums.SQLType;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 
 import java.sql.*;
 import java.util.UUID;
 
 public class LocalSQL implements CheckerTemporaryTable {
+
+    private SQLType type;
 
     private Connection connection;
 

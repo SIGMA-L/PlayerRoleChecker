@@ -1,6 +1,7 @@
 package net.klnetwork.playerrolecheckerconnector.table;
 
 import net.klnetwork.playerrolechecker.api.data.PlayerDataTable;
+import net.klnetwork.playerrolechecker.api.enums.SQLType;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
 import org.bukkit.Bukkit;
@@ -13,6 +14,9 @@ import java.util.function.Consumer;
 public class PlayerData implements PlayerDataTable {
 
     private static PlayerDataTable table;
+
+    private SQLType type = CommonUtils.getSQLType(PlayerRoleCheckerConnector.INSTANCE.getPlugin().getConfig().getString("DataBase.PlayerDataTable.type"));
+
 
     private long lastConnection;
     private Connection connection;

@@ -1,6 +1,7 @@
 package net.klnetwork.playerrolechecker.table;
 
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
+import net.klnetwork.playerrolechecker.api.enums.SQLType;
 import net.klnetwork.playerrolechecker.api.data.PlayerDataTable;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import org.bukkit.Bukkit;

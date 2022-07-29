@@ -1,8 +1,9 @@
 package net.klnetwork.playerrolechecker.api.data;
 
+import net.klnetwork.playerrolechecker.api.enums.SQLType;
+
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.SQLType;
 
 public interface SQLInterface {
     void create();

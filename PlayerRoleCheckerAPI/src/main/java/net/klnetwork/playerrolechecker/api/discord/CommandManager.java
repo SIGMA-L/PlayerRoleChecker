@@ -25,10 +25,9 @@ public class CommandManager extends ListenerAdapter {
 
     public CommandManager(JDA jda) {
         if (jda != null) {
-            this.jda = jda;
-
-            jda.addEventListener(this);
+            init(jda);
         }
+        this.jda = jda;
     }
 
     @Override
@@ -100,13 +99,17 @@ public class CommandManager extends ListenerAdapter {
         return messageType;
     }
 
+    public void init(JDA jda) {
+        jda.addEventListener(this);
+    }
+
     public JDA getJDA() {
         return jda;
     }
 
     public void setJDA(JDA jda) {
         if (this.jda != null) {
-            jda.addEventListener(this);
+            init(jda);
         }
         this.jda = jda;
     }

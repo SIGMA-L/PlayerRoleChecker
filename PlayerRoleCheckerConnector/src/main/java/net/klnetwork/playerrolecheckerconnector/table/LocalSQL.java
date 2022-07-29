@@ -1,6 +1,7 @@
 package net.klnetwork.playerrolecheckerconnector.table;
 
 import net.klnetwork.playerrolechecker.api.data.connector.ConnectorBypassTable;
+import net.klnetwork.playerrolechecker.api.enums.SQLType;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
 
@@ -10,6 +11,8 @@ import java.util.UUID;
 public class LocalSQL implements ConnectorBypassTable {
 
     private static ConnectorBypassTable table;
+
+    private SQLType type;
 
     private boolean created;
     private Connection connection;
