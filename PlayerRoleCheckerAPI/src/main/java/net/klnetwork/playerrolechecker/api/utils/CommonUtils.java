@@ -111,7 +111,7 @@ public class CommonUtils {
     }
 
     public static boolean checkIsValid(final long time, final long now) {
-        return time - now > 1_000_000;
+        return now - time > 1_000_000;
     }
 
     public static SQLType getSQLType(String type) {
