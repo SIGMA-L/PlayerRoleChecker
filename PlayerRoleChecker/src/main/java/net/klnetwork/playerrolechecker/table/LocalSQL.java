@@ -179,12 +179,7 @@ public class LocalSQL extends CheckerTemporaryTable {
     public void setLastConnection(long lastConnection) {
 
     }
-
-    @Override
-    public boolean isConnectionDead() throws SQLException {
-        return false;
-    }
-
+    
     @Override
     public SQLType getType() {
         return type;

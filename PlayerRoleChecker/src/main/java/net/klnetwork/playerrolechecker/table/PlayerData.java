@@ -182,17 +182,6 @@ public class PlayerData extends PlayerDataTable {
     public void setLastConnection(long lastConnection) {
         this.lastConnection = lastConnection;
     }
-
-    @Override
-    public boolean isConnectionDead() throws SQLException {
-        final long now = System.currentTimeMillis();
-
-        if (now - lastConnection > 900000) {
-            lastConnection = now;
-            return !connection.isValid(1);
-        }
-        return false;
-    }
     
     @Override
     public SQLType getType() {

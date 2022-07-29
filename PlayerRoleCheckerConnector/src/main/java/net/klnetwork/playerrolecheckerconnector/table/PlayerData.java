@@ -185,18 +185,6 @@ public class PlayerData extends PlayerDataTable {
     }
 
     @Override
-    public boolean isConnectionDead() throws SQLException {
-        final long now = System.currentTimeMillis();
-
-        if (CommonUtils.checkIsValid(lastConnection, now)) {
-            lastConnection = now;
-            return !connection.isValid(1);
-        }
-
-        return false;
-    }
-
-    @Override
     public SQLType getType() {
         return type;
     }

@@ -125,11 +125,6 @@ public class LocalSQL extends ConnectorBypassTable {
     }
 
     @Override
-    public boolean isConnectionDead() throws SQLException {
-        return false;
-    }
-
-    @Override
     public SQLType getType() {
         return type;
     }
