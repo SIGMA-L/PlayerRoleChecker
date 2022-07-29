@@ -2,7 +2,6 @@ package net.klnetwork.playerrolechecker.api.data.checker;
 
 import net.klnetwork.playerrolechecker.api.data.SQLInterface;
 
-import java.sql.*;
 import java.util.UUID;
 
 public abstract class CheckerTemporaryTable extends SQLInterface {
@@ -24,8 +23,4 @@ public abstract class CheckerTemporaryTable extends SQLInterface {
     public abstract void remove(String uuid, Integer code);
 
     public abstract void create();
-
-    public abstract Connection getConnection() throws SQLException;
-
-    public abstract void setConnection(Connection connection);
 }

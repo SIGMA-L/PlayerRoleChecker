@@ -166,11 +166,6 @@ public class LocalSQL extends CheckerTemporaryTable {
     }
 
     @Override
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-    }
-
-    @Override
     public SQLType getType() {
         return type;
     }

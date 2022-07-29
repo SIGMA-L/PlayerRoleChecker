@@ -12,9 +12,11 @@ public class LocalSQL extends ConnectorBypassTable {
 
     private static ConnectorBypassTable table;
 
-    private SQLType type;
-
     private boolean created;
+
+    public LocalSQL() {
+        type = CommonUtils.getSQLType(PlayerRoleCheckerConnector.INSTANCE.getPlugin().getConfig().getString("DataBase.BypassTable.type"));
+    }
 
     public static ConnectorBypassTable getInstance() {
         if (table == null) {
@@ -107,11 +109,6 @@ public class LocalSQL extends ConnectorBypassTable {
             connection = DriverManager.getConnection("jdbc:sqlite:" + PlayerRoleCheckerConnector.INSTANCE.getConfig().getString("SQLite.SQLiteLocate"));
         }
         return connection;
-    }
-
-    @Override
-    public void setConnection(Connection connection) {
-        this.connection = connection;
     }
 
     @Override

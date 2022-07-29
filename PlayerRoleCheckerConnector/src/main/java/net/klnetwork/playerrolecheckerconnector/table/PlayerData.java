@@ -15,7 +15,9 @@ public class PlayerData extends PlayerDataTable {
 
     private static PlayerDataTable table;
 
-    private SQLType type = CommonUtils.getSQLType(PlayerRoleCheckerConnector.INSTANCE.getPlugin().getConfig().getString("DataBase.PlayerDataTable.type"));
+    public PlayerData() {
+        type = CommonUtils.getSQLType(PlayerRoleCheckerConnector.INSTANCE.getPlugin().getConfig().getString("DataBase.PlayerDataTable.type"));
+    }
 
     public static PlayerDataTable getInstance() {
         if (table == null) {
@@ -167,11 +169,6 @@ public class PlayerData extends PlayerDataTable {
             connection = DriverManager.getConnection("jdbc:mysql://" + config.getString("MySQL.Server") + ":" + config.getInt("MySQL.Port") + "/" + config.getString("MySQL.Database") + config.getString("MySQL.Option"), config.getString("MySQL.Username"), config.getString("MySQL.Password"));
         }
         return connection;
-    }
-
-    @Override
-    public void setConnection(Connection connection) {
-        this.connection = connection;
     }
 
     @Override

@@ -167,11 +167,6 @@ public class PlayerData extends PlayerDataTable {
         }
         return connection;
     }
-
-    @Override
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-    }
     
     @Override
     public SQLType getType() {

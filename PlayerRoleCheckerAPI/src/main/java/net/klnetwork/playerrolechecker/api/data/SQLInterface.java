@@ -16,7 +16,9 @@ public abstract class SQLInterface {
 
     public abstract Connection getConnection() throws SQLException;
 
-    public abstract void setConnection(Connection connection);
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
 
     public long getLastConnection() {
         return lastConnection;
