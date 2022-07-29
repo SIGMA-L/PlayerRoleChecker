@@ -41,8 +41,6 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
 
         Bukkit.getPluginManager().registerEvents(new JoinEvent(), this);
 
-
-
         getCommand("joinmode").setExecutor(new JoinModeCommand());
         if (getConfig().getBoolean("SQLite.useBypassCommand")) {
             LocalSQL.getInstance().create();
