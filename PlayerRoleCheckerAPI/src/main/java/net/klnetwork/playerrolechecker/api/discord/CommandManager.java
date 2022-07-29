@@ -32,7 +32,7 @@ public class CommandManager extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        if (event.isFromGuild() && !event.getAuthor().isBot() && !event.getAuthor().isSystem() && !event.isWebhookMessage() && !messageType.isEmpty()) {
+        if (!messageType.isEmpty() && event.isFromGuild() && !event.getAuthor().isBot() && !event.getAuthor().isSystem() && !event.isWebhookMessage()) {
             new Thread(() -> {
                 String[] args = event.getMessage()
                         .getContentRaw()
@@ -65,7 +65,7 @@ public class CommandManager extends ListenerAdapter {
 
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
-        if (event.isFromGuild() && !slashType.isEmpty()) {
+        if (!slashType.isEmpty() && event.isFromGuild()) {
             final Optional<CommandSlash> commandSlash = slashType.stream()
                     .filter(name -> event.getName().equals(event.getName()))
                     .findFirst();

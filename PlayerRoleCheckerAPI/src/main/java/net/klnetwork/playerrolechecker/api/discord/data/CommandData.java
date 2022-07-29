@@ -1,5 +1,6 @@
 package net.klnetwork.playerrolechecker.api.discord.data;
 
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
@@ -48,6 +49,10 @@ public class CommandData {
 
     public Guild getGuild() {
         return event.getGuild();
+    }
+
+    public JDA getJDA() {
+        return event.getJDA();
     }
 
     public MessageReceivedEvent getEvent() {
