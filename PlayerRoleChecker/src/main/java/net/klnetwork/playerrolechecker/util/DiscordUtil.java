@@ -25,7 +25,8 @@ public class DiscordUtil {
 
     public static void addRole(Guild guild, Member member) {
         try {
-            guild.addRoleToMember(member, guild.getRoleById(PlayerRoleChecker.INSTANCE.getConfig().getLong("Discord.addToRole")));
+            guild.addRoleToMember(member, guild.getRoleById(PlayerRoleChecker.INSTANCE.getConfig().getLong("Discord.addToRole")))
+                    .queue();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -33,7 +34,8 @@ public class DiscordUtil {
 
     public static void removeRole(Guild guild, Member member) {
         try {
-            guild.addRoleToMember(member, guild.getRoleById(PlayerRoleChecker.INSTANCE.getConfig().getLong("Discord.addToRole")));
+            guild.addRoleToMember(member, guild.getRoleById(PlayerRoleChecker.INSTANCE.getConfig().getLong("Discord.addToRole")))
+                    .queue();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
