@@ -46,26 +46,34 @@ public class DiscordUtil {
     public static EmbedBuilder embedBuilder(String configPath, OffsetDateTime offsetDateTime, String uuid, String discordID) {
         EmbedBuilder embedBuilder = new EmbedBuilder()
                 .setColor(CommonUtils.getColor(PlayerRoleChecker.INSTANCE.getConfig().getString(configPath + ".color")))
-                .setTitle(replaceString(PlayerRoleChecker.INSTANCE.getConfig().getString(configPath + ".title"), uuid, discordID))
-                .setDescription(replaceString(PlayerRoleChecker.INSTANCE.getConfig().getString(configPath + ".description"), uuid, discordID))
-                .setThumbnail(PlayerRoleChecker.INSTANCE.getConfig().getString(configPath + ".image") != null ? replaceString(PlayerRoleChecker.INSTANCE.getConfig().getString(configPath + ".image"), uuid, discordID) : null)
+                .setTitle(addString(PlayerRoleChecker.INSTANCE.getConfig().getString(configPath + ".title"), uuid, discordID))
+                .setDescription(addString(PlayerRoleChecker.INSTANCE.getConfig().getString(configPath + ".description"), uuid, discordID))
+                .setThumbnail(PlayerRoleChecker.INSTANCE.getConfig().getString(configPath + ".image") != null ? addString(PlayerRoleChecker.INSTANCE.getConfig().getString(configPath + ".image"), uuid, discordID) : null)
                 .setTimestamp(PlayerRoleChecker.INSTANCE.getConfig().getBoolean(configPath + ".timestamp") ? offsetDateTime : null);
         return (splitBuilder(embedBuilder, configPath + ".message", uuid, discordID));
     }
 
-    public static EmbedBuilder splitBuilder(EmbedBuilder embedBuilder, String configPath, String uuid, String discordID) {
-        PlayerRoleChecker.INSTANCE.getConfig().getStringList(configPath).forEach(i -> {
-            String[] split = replaceString(i, uuid, discordID).split("\\|");
-            embedBuilder.addField(split[0], split[1], Boolean.parseBoolean(split[2]));
-        });
+    public static EmbedBuilder splitBuilder(EmbedBuilder embedBuilder, String configPath, String uuid, String discordId) {
+        for (String c : PlayerRoleChecker.INSTANCE.getConfig().getStringList(configPath)) {
+            String[] strings = addString(c, uuid, discordId).split("\\|", 3);
+
+            if (strings.length != 3) {
+                throw new IllegalStateException("Illegal format");
+            }
+            embedBuilder.addField(strings[0], strings[1], Boolean.parseBoolean(strings[2]));
+        }
         return embedBuilder;
     }
 
-    public static String replaceString(String string, String uuid, String discordID) {
-        if (string != null) {
-            if (uuid != null) string = string.replaceAll("%uuid%", uuid);
-            if (discordID != null) string = string.replaceAll("%discordid%", discordID);
+    public static String addString(String target, String uuid, String discordId) {
+        if (target == null) {
+            return null;
         }
-        return string;
+        if (uuid != null)
+            target = target.replaceAll("%uuid%", uuid);
+        if (discordId != null)
+            target = target.replaceAll("%discordid%", discordId);
+
+        return target;
     }
 }
