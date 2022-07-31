@@ -67,6 +67,11 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
     }
 
     @Override
+    public void setPlayerData(PlayerDataTable table) {
+        PlayerDataSQL.setInstance(table);
+    }
+
+    @Override
     public CommandManager getCommandManager() {
         return commandManager;
     }
@@ -79,6 +84,11 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
     @Override
     public CheckerTemporaryTable getTemporary() {
         return LocalSQL.getInstance();
+    }
+
+    @Override
+    public void setTemporary(CheckerTemporaryTable table) {
+        LocalSQL.setInstance(table);
     }
 
     @Override

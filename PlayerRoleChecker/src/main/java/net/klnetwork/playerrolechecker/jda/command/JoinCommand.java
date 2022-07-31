@@ -36,8 +36,6 @@ public class JoinCommand extends CommandMessage {
         String commandName = selectCommandName();
 
         final int code = Integer.parseInt(commandName == null || commandName.isEmpty() ? event.getCommandName() : event.getArgs().get(0));
-
-        //update localsql???????
         TemporaryData temp = LocalSQL.getInstance().getUUID(code);
 
         if (temp == null) {

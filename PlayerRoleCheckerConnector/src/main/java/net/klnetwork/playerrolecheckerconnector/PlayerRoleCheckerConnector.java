@@ -83,6 +83,11 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
     }
 
     @Override
+    public void setPlayerData(PlayerDataTable table) {
+        PlayerDataSQL.setInstance(table);
+    }
+
+    @Override
     public CommandManager getCommandManager() {
         return commandManager;
     }
@@ -95,6 +100,11 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
     @Override
     public ConnectorBypassTable getBypass() {
         return LocalSQL.getInstance();
+    }
+
+    @Override
+    public void setBypass(ConnectorBypassTable table) {
+        LocalSQL.setInstance(table);
     }
 
     @Override

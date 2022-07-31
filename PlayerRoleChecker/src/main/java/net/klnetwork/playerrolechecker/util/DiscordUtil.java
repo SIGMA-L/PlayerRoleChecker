@@ -8,6 +8,7 @@ import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import net.klnetwork.playerrolechecker.jda.JDA;
 
 import java.time.OffsetDateTime;
+import java.util.Arrays;
 
 //todo: recode!
 public class DiscordUtil {
@@ -60,7 +61,7 @@ public class DiscordUtil {
             String[] strings = addString(c, uuid, discordId).split("\\|", 3);
 
             if (strings.length != 3) {
-                throw new IllegalStateException("Illegal format");
+                throw new IllegalStateException("Illegal format=" + Arrays.toString(strings));
             }
             embedBuilder.addField(strings[0], strings[1], Boolean.parseBoolean(strings[2]));
         }
