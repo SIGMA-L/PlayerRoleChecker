@@ -2,7 +2,6 @@ package net.klnetwork.playerrolechecker.event;
 
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
 import net.klnetwork.playerrolechecker.api.CodeUtil;
-import net.klnetwork.playerrolechecker.api.data.PlayerData;
 import net.klnetwork.playerrolechecker.api.data.TemporaryData;
 import net.klnetwork.playerrolechecker.table.LocalSQL;
 import net.klnetwork.playerrolechecker.util.OtherUtil;
@@ -18,7 +17,7 @@ public class JoinEvent implements Listener {
         if (data != null) {
             String already = String.join("\n", PlayerRoleChecker.INSTANCE.getConfig().getStringList("JoinEvent.already-code"));
 
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST, ChatColor.translateAlternateColorCodes('&', already.replaceAll("%code%", String.valueOf(result))));
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST, ChatColor.translateAlternateColorCodes('&', already.replaceAll("%code%", String.valueOf(data.getCode()))));
         } else {
             final int code = CodeUtil.CodeIssue(e.getUniqueId());
 

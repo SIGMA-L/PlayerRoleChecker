@@ -59,12 +59,10 @@ public class JoinCommand extends CommandMessage {
 
                 if (!call.isCancelled()) {
                     LocalSQL.getInstance().remove(call.getUUID(), call.getCode());
-                    //TODO: WRITE
                     PlayerDataSQL.getInstance().put(call.getUUID(), call.getMember().getId(), call.isBedrock());
 
                     event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.success-register", event.getMessage().getTimeCreated(), call.getUUID(), call.getMember().getId()).build()).queue();
 
-                    //todo: recode
                     DiscordUtil.sendMessageToChannel(DiscordUtil.embedBuilder("JoinCommand.sendmessage", event.getMessage().getTimeCreated(), call.getUUID(), call.getMember().getId()));
 
                     DiscordUtil.addRole(event.getGuild(), event.getMember());
