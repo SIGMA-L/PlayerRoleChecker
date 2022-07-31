@@ -1,7 +1,7 @@
 package net.klnetwork.playerrolechecker.event;
 
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
-import net.klnetwork.playerrolechecker.api.CodeUtil;
+import net.klnetwork.playerrolechecker.util.CodeUtil;
 import net.klnetwork.playerrolechecker.api.data.TemporaryData;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import net.klnetwork.playerrolechecker.table.LocalSQL;

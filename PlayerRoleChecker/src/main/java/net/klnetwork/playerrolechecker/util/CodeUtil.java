@@ -1,4 +1,4 @@
-package net.klnetwork.playerrolechecker.api;
+package net.klnetwork.playerrolechecker.util;
 
 
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
