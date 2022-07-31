@@ -2,23 +2,18 @@ package net.klnetwork.playerrolechecker.api;
 
 
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
+import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import net.klnetwork.playerrolechecker.table.LocalSQL;
 
-/* TODO: REFACTOR */
 public class CodeUtil {
-
-    public static int getRandom(int min, int max) {
-        return (int) (Math.random() * (max - min + 1)) + min;
-    }
-
     public static int generateCode() {
-        int max = PlayerRoleChecker.INSTANCE.getConfig().getInt("CodeLimit.max");
-        int min = PlayerRoleChecker.INSTANCE.getConfig().getInt("CodeLimit.min");
+        int max = PlayerRoleChecker.INSTANCE.getConfigManager().getMax();
+        int min = PlayerRoleChecker.INSTANCE.getConfigManager().getMin();
 
-        int result = getRandom(min, max);
+        int result = CommonUtils.random(min, max);
 
         while (LocalSQL.getInstance().hasUUID(result)) {
-            result = getRandom(min, max);
+            result = CommonUtils.random(min, max);
         }
 
         return result;

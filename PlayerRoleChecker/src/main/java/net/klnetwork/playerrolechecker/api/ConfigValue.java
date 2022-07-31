@@ -12,6 +12,10 @@ public class ConfigValue extends ConfigManager implements CheckerConfigManager {
 
     @ConfigKey(key = "JoinEvent.deleteSecond")
     private int deleteSeconds = 30;
+    @ConfigKey(key = "CodeLimit.min")
+    private int min;
+    @ConfigKey(key = "CodeLimit.max")
+    private int max;
 
     @Override
     public int getDeleteSecond() {
@@ -21,5 +25,23 @@ public class ConfigValue extends ConfigManager implements CheckerConfigManager {
     @Override
     public void setDeleteSecond(int deleteSecond) {
         this.deleteSeconds = deleteSecond;
+    }
+
+    @Override
+    public int getMin() {
+        return min;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+    }
+
+    @Override
+    public int getMax() {
+        return max;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
     }
 }

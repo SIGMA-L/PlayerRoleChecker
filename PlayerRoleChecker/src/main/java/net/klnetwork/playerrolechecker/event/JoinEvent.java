@@ -22,7 +22,6 @@ public class JoinEvent implements Listener {
 
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST, ChatColor.translateAlternateColorCodes('&', already.replaceAll("%code%", String.valueOf(data.getCode()))));
         } else {
-
             final boolean isFloodGateUser = CommonUtils.hasFloodGate()
                     && CommonUtils.isFloodgateUser(e.getUniqueId());
 

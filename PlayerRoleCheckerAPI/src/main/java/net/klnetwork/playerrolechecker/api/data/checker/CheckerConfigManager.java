@@ -4,4 +4,12 @@ public interface CheckerConfigManager {
     int getDeleteSecond();
 
     void setDeleteSecond(int deleteSecond);
+
+    int getMax();
+
+    void setMax(int max);
+
+    int getMin();
+
+    void setMin(int min);
 }
