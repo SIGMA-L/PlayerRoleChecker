@@ -108,7 +108,7 @@ public class CommandManager extends ListenerAdapter {
     }
 
     public void setJDA(JDA jda) {
-        if (this.jda != null) {
+        if (this.jda == null) {
             init(jda);
         }
         this.jda = jda;

@@ -158,18 +158,6 @@ public class PlayerDataSQL extends PlayerDataTable {
         });
     }
 
-    public void alter() {
-        Statement statement = null;
-        try {
-            statement = getConnection().createStatement();
-            statement.executeUpdate("ALTER TABLE verifyplayer ADD bedrock boolean DEFAULT FALSE");
-        } catch (SQLException ex) {
-            /* ignored */
-        } finally {
-            CommonUtils.close(statement);
-        }
-    }
-
     @Override
     public Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed() || isConnectionDead()) {
