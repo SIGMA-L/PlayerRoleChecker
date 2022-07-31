@@ -6,4 +6,6 @@ public interface CheckerAPIHook extends APIHook {
     CheckerTemporaryTable getTemporary();
 
     CheckerCustomDataBase getCustomDataBase();
+
+    CheckerConfigManager getConfigManager();
 }

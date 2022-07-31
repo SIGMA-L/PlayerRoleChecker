@@ -109,6 +109,11 @@ public class LocalSQL extends CheckerTemporaryTable {
     }
 
     @Override
+    public void put(UUID uuid, Integer code, boolean bedrock) {
+        put(uuid.toString(), code.toString(), bedrock);
+    }
+
+    @Override
     public void put(String uuid, String code, boolean bedrock) {
         PreparedStatement statement = null;
         try {

@@ -29,6 +29,7 @@ CodeLimit:
 ## - already-code: すでに発行されている場合のkickメッセージ
 ## - code: 発行された場合のkickメッセージ
 JoinEvent:
+  deleteSecond: 300
   already-code:
     - '&c(発行済み) あなたのコードは'
     - '「%code%」 です (発行されてから) 5分以内に認証してください'

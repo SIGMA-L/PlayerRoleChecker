@@ -31,15 +31,19 @@ public class CommonUtils {
         return UUID.fromString(UUIDObject.get("id").getAsString().replaceFirst("([0-9a-fA-F]{8})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]+)", "$1-$2-$3-$4-$5"));
     }
 
-    public boolean hasFloodGate() {
+    public static boolean hasFloodGate() {
         return Bukkit.getPluginManager().getPlugin("Floodgate") != null;
     }
 
-    public boolean isFloodgateUser(UUID uuid) {
+    public static boolean isFloodgateUser(UUID uuid) {
         return FloodgateApi.getInstance().isFloodgatePlayer(uuid);
     }
 
-    public String getFloodgateXuid(UUID uuid) {
+    public static UUID getFloodgateUserUUID(UUID uuid) {
+        return FloodgateApi.getInstance().getPlayer(uuid).getJavaUniqueId();
+    }
+
+    public static String getFloodgateXuid(UUID uuid) {
         return FloodgateApi.getInstance().getPlayer(uuid).getXuid();
     }
 

@@ -4,8 +4,6 @@ package net.klnetwork.playerrolechecker.api;
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
 import net.klnetwork.playerrolechecker.table.LocalSQL;
 
-import java.util.UUID;
-
 /* TODO: REFACTOR */
 public class CodeUtil {
 
@@ -13,7 +11,7 @@ public class CodeUtil {
         return (int) (Math.random() * (max - min + 1)) + min;
     }
 
-    public static int CodeIssue(UUID uuid) {
+    public static int generateCode() {
         int max = PlayerRoleChecker.INSTANCE.getConfig().getInt("CodeLimit.max");
         int min = PlayerRoleChecker.INSTANCE.getConfig().getInt("CodeLimit.min");
 
@@ -22,9 +20,6 @@ public class CodeUtil {
         while (LocalSQL.getInstance().hasUUID(result)) {
             result = getRandom(min, max);
         }
-
-        //
-        //LocalSQL.getInstance().put(uuid.toString(), Integer.toString(result));
 
         return result;
     }
