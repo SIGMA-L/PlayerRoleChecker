@@ -1,5 +1,6 @@
 package net.klnetwork.playerrolecheckerconnector.table;
 
+import net.klnetwork.playerrolechecker.api.data.PlayerData;
 import net.klnetwork.playerrolechecker.api.data.PlayerDataTable;
 import net.klnetwork.playerrolechecker.api.enums.SQLType;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
@@ -11,17 +12,17 @@ import java.sql.*;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-public class PlayerData extends PlayerDataTable {
+public class PlayerDataSQL extends PlayerDataTable {
 
     private static PlayerDataTable table;
 
-    public PlayerData() {
+    public PlayerDataSQL() {
         type = CommonUtils.getSQLType(PlayerRoleCheckerConnector.INSTANCE.getPlugin().getConfig().getString("DataBase.PlayerDataTable.type"));
     }
 
     public static PlayerDataTable getInstance() {
         if (table == null) {
-            table = new PlayerData();
+            table = new PlayerDataSQL();
         }
 
         return table;
@@ -32,27 +33,27 @@ public class PlayerData extends PlayerDataTable {
     }
 
     @Override
-    public void asyncUUID(String discordId, Consumer<String> uuid) {
+    public void asyncUUID(String discordId, Consumer<PlayerData> uuid) {
         Bukkit.getScheduler().runTaskAsynchronously(PlayerRoleCheckerConnector.INSTANCE, () -> uuid.accept(getUUID(discordId)));
     }
 
     @Override
-    public void asyncDiscordId(UUID uuid, Consumer<String> discordId) {
+    public void asyncDiscordId(UUID uuid, Consumer<PlayerData> discordId) {
         asyncDiscordId(uuid.toString(), discordId);
     }
 
     @Override
-    public void asyncDiscordId(String uuid, Consumer<String> discordId) {
+    public void asyncDiscordId(String uuid, Consumer<PlayerData> discordId) {
         Bukkit.getScheduler().runTaskAsynchronously(PlayerRoleCheckerConnector.INSTANCE, () -> discordId.accept(getDiscordId(uuid)));
     }
 
     @Override
-    public String getDiscordId(UUID uuid) {
+    public PlayerData getDiscordId(UUID uuid) {
         return getDiscordId(uuid.toString());
     }
 
     @Override
-    public String getDiscordId(String uuid) {
+    public PlayerData getDiscordId(String uuid) {
         PreparedStatement statement = null;
 
         try {
@@ -62,11 +63,11 @@ public class PlayerData extends PlayerDataTable {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                return resultSet.getString(2);
+                return new PlayerData(resultSet.getString(1), resultSet.getString(2), resultSet.getBoolean(3));
             }
 
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
             CommonUtils.close(statement);
         }
@@ -74,7 +75,7 @@ public class PlayerData extends PlayerDataTable {
     }
 
     @Override
-    public String getUUID(String discordId) {
+    public PlayerData getUUID(String discordId) {
         PreparedStatement statement = null;
 
         try {
@@ -84,10 +85,10 @@ public class PlayerData extends PlayerDataTable {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                return resultSet.getString(1);
+                return new PlayerData(resultSet.getString(1), resultSet.getString(2), resultSet.getBoolean(3));
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
             CommonUtils.close(statement);
         }
@@ -95,21 +96,22 @@ public class PlayerData extends PlayerDataTable {
     }
 
     @Override
-    public void put(UUID uuid, String discordId) {
-        put(uuid.toString(), discordId);
+    public void put(UUID uuid, String discordId, boolean bedrock) {
+        put(uuid.toString(), discordId, bedrock);
     }
 
     @Override
-    public void put(String uuid, String discordId) {
+    public void put(String uuid, String discordId, boolean bedrock) {
         Bukkit.getScheduler().runTaskAsynchronously(PlayerRoleCheckerConnector.INSTANCE, () -> {
             PreparedStatement statement = null;
             try {
                 statement = getConnection().prepareStatement("insert into verifyplayer values (?,?)");
                 statement.setString(1, uuid);
                 statement.setString(2, discordId);
+                statement.setBoolean(3, bedrock);
                 statement.execute();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
             } finally {
                 CommonUtils.close(statement);
             }
@@ -130,8 +132,8 @@ public class PlayerData extends PlayerDataTable {
                 statement.setString(1, uuid);
                 statement.setString(2, discordId);
                 statement.execute();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
             } finally {
                 CommonUtils.close(statement);
             }
@@ -142,11 +144,25 @@ public class PlayerData extends PlayerDataTable {
     public void create() {
         Statement statement = null;
         try {
-            statement = PlayerData.getInstance().getConnection().createStatement();
+            alter();
 
-            statement.executeUpdate("create table if not exists verifyplayer (uuid VARCHAR(50), discord VARCHAR(50))");
+            statement = PlayerDataSQL.getInstance().getConnection().createStatement();
+
+            statement.executeUpdate("create table if not exists verifyplayer (uuid VARCHAR(50), discord VARCHAR(50), bedrock BOOLEAN)");
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            CommonUtils.close(statement);
+        }
+    }
+
+    public void alter() {
+        Statement statement = null;
+        try {
+            statement = getConnection().createStatement();
+            statement.executeUpdate("ALTER TABLE verifyplayer ADD bedrock boolean DEFAULT FALSE");
+        } catch (SQLException ex) {
+            /* ignored */
         } finally {
             CommonUtils.close(statement);
         }

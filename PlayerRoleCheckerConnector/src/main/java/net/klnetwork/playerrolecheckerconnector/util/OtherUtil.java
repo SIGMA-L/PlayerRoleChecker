@@ -2,9 +2,10 @@ package net.klnetwork.playerrolecheckerconnector.util;
 
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Role;
+import net.klnetwork.playerrolechecker.api.data.PlayerData;
 import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
 import net.klnetwork.playerrolecheckerconnector.jda.JDA;
-import net.klnetwork.playerrolecheckerconnector.table.PlayerData;
+import net.klnetwork.playerrolecheckerconnector.table.PlayerDataSQL;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -20,13 +21,13 @@ public class OtherUtil {
     }
 
     public static boolean hasRole(UUID uuid) {
-        String discordId = PlayerData.getInstance().getDiscordId(uuid);
+        PlayerData data = PlayerDataSQL.getInstance().getDiscordId(uuid);
 
-        if (discordId == null) {
+        if (data == null) {
             return false;
         }
 
-        List<Role> roles = getRolesById(discordId);
+        List<Role> roles = getRolesById(data.getDiscordId());
 
         if (roles == null) {
             return false;

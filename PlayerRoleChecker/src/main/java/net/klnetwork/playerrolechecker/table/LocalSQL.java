@@ -146,7 +146,7 @@ public class LocalSQL extends CheckerTemporaryTable {
     public void create() {
         Statement statement = null;
         try {
-            statement = PlayerData.getInstance().getConnection().createStatement();
+            statement = PlayerDataSQL.getInstance().getConnection().createStatement();
 
             statement.executeUpdate("drop table if exists waitverify");
             statement.executeUpdate("create table if not exists waitverify (uuid string, code int)");

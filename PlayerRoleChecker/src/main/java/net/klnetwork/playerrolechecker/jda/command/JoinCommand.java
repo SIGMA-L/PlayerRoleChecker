@@ -1,11 +1,12 @@
 package net.klnetwork.playerrolechecker.jda.command;
 
+import net.klnetwork.playerrolechecker.api.data.PlayerData;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandData;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandMessage;
 import net.klnetwork.playerrolechecker.api.enums.JoinEventType;
 import net.klnetwork.playerrolechecker.api.event.connector.JoinEvent;
 import net.klnetwork.playerrolechecker.table.LocalSQL;
-import net.klnetwork.playerrolechecker.table.PlayerData;
+import net.klnetwork.playerrolechecker.table.PlayerDataSQL;
 import net.klnetwork.playerrolechecker.util.DiscordUtil;
 import org.bukkit.plugin.Plugin;
 
@@ -37,6 +38,7 @@ public class JoinCommand extends CommandMessage {
 
         final int code = Integer.parseInt(commandName == null || commandName.isEmpty() ? event.getCommandName() : event.getArgs().get(0));
 
+        //update localsql???????
         String uuid = LocalSQL.getInstance().getUUID(code);
 
         if (uuid == null) {
@@ -44,11 +46,11 @@ public class JoinCommand extends CommandMessage {
                 event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.invalid-number", event.getMessage().getTimeCreated(), null, null).build()).queue();
             }
         } else {
-            String discordId = PlayerData.getInstance().getDiscordId(uuid);
+            PlayerData data = PlayerDataSQL.getInstance().getDiscordId(uuid);
 
-            if (discordId != null) {
+            if (data != null) {
                 if (!callEvent(new JoinEvent(UUID.fromString(uuid), code, event.getMessage(), JoinEventType.ALREADY_REGISTERED)).isCancelled()) {
-                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.already-registered", event.getMessage().getTimeCreated(), uuid, discordId).build()).queue();
+                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.already-registered", event.getMessage().getTimeCreated(), uuid, data.getDiscordId()).build()).queue();
 
                     //セキュリティー上の問題
                     LocalSQL.getInstance().remove(uuid, code);
@@ -58,7 +60,8 @@ public class JoinCommand extends CommandMessage {
 
                 if (!call.isCancelled()) {
                     LocalSQL.getInstance().remove(call.getUUID(), call.getCode());
-                    PlayerData.getInstance().put(call.getUUID(), call.getMember().getId());
+                    //TODO: WRITE
+                    //PlayerDataSQL.getInstance().put(call.getUUID(), call.getMember().getId());
 
                     event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.success-register", event.getMessage().getTimeCreated(), call.getUUID(), call.getMember().getId()).build()).queue();
 

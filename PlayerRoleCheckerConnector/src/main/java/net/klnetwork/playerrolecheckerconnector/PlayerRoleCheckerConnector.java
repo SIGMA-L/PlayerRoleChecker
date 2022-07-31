@@ -14,7 +14,7 @@ import net.klnetwork.playerrolecheckerconnector.command.RemoveBypassCommand;
 import net.klnetwork.playerrolecheckerconnector.event.JoinEvent;
 import net.klnetwork.playerrolecheckerconnector.jda.JDA;
 import net.klnetwork.playerrolecheckerconnector.table.LocalSQL;
-import net.klnetwork.playerrolecheckerconnector.table.PlayerData;
+import net.klnetwork.playerrolecheckerconnector.table.PlayerDataSQL;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -34,7 +34,7 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
 
         saveDefaultConfig();
 
-        PlayerData.getInstance().create();
+        PlayerDataSQL.getInstance().create();
 
         JDA.init();
         commandManager.setJDA(getJDA());
@@ -79,7 +79,7 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
 
     @Override
     public PlayerDataTable getPlayerData() {
-        return PlayerData.getInstance();
+        return PlayerDataSQL.getInstance();
     }
 
     @Override

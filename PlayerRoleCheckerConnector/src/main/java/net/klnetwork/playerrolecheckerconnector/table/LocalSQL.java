@@ -48,8 +48,8 @@ public class LocalSQL extends ConnectorBypassTable {
             }
 
             preparedStatement.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return result;
     }
@@ -62,8 +62,8 @@ public class LocalSQL extends ConnectorBypassTable {
             preparedStatement.execute();
 
             preparedStatement.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -80,8 +80,8 @@ public class LocalSQL extends ConnectorBypassTable {
             preparedStatement.execute();
 
             preparedStatement.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

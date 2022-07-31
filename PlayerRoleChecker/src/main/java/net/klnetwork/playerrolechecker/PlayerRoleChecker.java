@@ -13,7 +13,7 @@ import net.klnetwork.playerrolechecker.jda.command.ForceJoinCommand;
 import net.klnetwork.playerrolechecker.jda.command.JoinCommand;
 import net.klnetwork.playerrolechecker.jda.command.RemoveCommand;
 import net.klnetwork.playerrolechecker.table.LocalSQL;
-import net.klnetwork.playerrolechecker.table.PlayerData;
+import net.klnetwork.playerrolechecker.table.PlayerDataSQL;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -29,7 +29,7 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
 
         saveDefaultConfig();
 
-        PlayerData.getInstance().create();
+        PlayerDataSQL.getInstance().create();
         LocalSQL.getInstance().create();
 
         JDA.init();
@@ -60,7 +60,7 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
 
     @Override
     public PlayerDataTable getPlayerData() {
-        return PlayerData.getInstance();
+        return PlayerDataSQL.getInstance();
     }
 
     @Override

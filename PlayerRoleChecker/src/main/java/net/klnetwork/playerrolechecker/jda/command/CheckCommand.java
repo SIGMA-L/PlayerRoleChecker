@@ -1,8 +1,9 @@
 package net.klnetwork.playerrolechecker.jda.command;
 
+import net.klnetwork.playerrolechecker.api.data.PlayerData;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandData;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandMessage;
-import net.klnetwork.playerrolechecker.table.PlayerData;
+import net.klnetwork.playerrolechecker.table.PlayerDataSQL;
 import org.bukkit.plugin.Plugin;
 
 public class CheckCommand extends CommandMessage {
@@ -29,9 +30,9 @@ public class CheckCommand extends CommandMessage {
     public void onMessageReceiveEvent(CommandData event) throws Exception {
         final String memberId = event.getArgs().get(0).replaceAll("[^0-9]", "");
 
-        String uuid = PlayerData.getInstance().getUUID(memberId);
+        PlayerData data = PlayerDataSQL.getInstance().getUUID(memberId);
 
-        if (uuid != null) {
+        if (data != null) {
 
         }
     }
