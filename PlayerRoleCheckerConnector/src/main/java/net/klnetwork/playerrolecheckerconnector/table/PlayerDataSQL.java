@@ -142,18 +142,20 @@ public class PlayerDataSQL extends PlayerDataTable {
 
     @Override
     public void create() {
-        Statement statement = null;
-        try {
-            alter();
+        Bukkit.getScheduler().runTaskAsynchronously(PlayerRoleCheckerConnector.INSTANCE, () -> {
+            Statement statement = null;
+            try {
+                alter();
 
-            statement = PlayerDataSQL.getInstance().getConnection().createStatement();
+                statement = PlayerDataSQL.getInstance().getConnection().createStatement();
 
-            statement.executeUpdate("create table if not exists verifyplayer (uuid VARCHAR(50), discord VARCHAR(50), bedrock BOOLEAN)");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            CommonUtils.close(statement);
-        }
+                statement.executeUpdate("create table if not exists verifyplayer (uuid VARCHAR(50), discord VARCHAR(50), bedrock BOOLEAN)");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                CommonUtils.close(statement);
+            }
+        });
     }
 
     public void alter() {
