@@ -22,14 +22,15 @@ public class JoinEvent extends Event implements Cancellable {
     private Message message;
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
-    private boolean isCancelled;
+    private boolean isCancelled, bedrock;
 
-    public JoinEvent(UUID uuid, int code, Message message, JoinEventType type) {
+    public JoinEvent(UUID uuid, int code, boolean bedrock, Message message, JoinEventType type) {
         super(true);
 
         this.member = message.getMember();
         this.uuid = uuid;
         this.code = code;
+        this.bedrock = bedrock;
 
         this.message = message;
         this.type = type;
@@ -91,6 +92,14 @@ public class JoinEvent extends Event implements Cancellable {
 
     public void setMessage(Message message) {
         this.message = message;
+    }
+
+    public boolean isBedrock() {
+        return bedrock;
+    }
+
+    public void setBedrock(boolean bedrock) {
+        this.bedrock = bedrock;
     }
 
     public JoinEventType getType() {

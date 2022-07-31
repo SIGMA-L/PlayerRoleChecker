@@ -1,5 +1,6 @@
 package net.klnetwork.playerrolechecker.util;
 
+import net.klnetwork.playerrolechecker.api.data.TemporaryData;
 import net.klnetwork.playerrolechecker.table.LocalSQL;
 
 import java.util.UUID;
@@ -12,9 +13,10 @@ public class OtherUtil {
             try {
                 TimeUnit.SECONDS.sleep(300);
 
-                Integer integer = LocalSQL.getInstance().getCode(uuid);
-                if (integer != null) {
-                    LocalSQL.getInstance().remove(uuid, integer);
+                TemporaryData data = LocalSQL.getInstance().getCode(uuid);
+
+                if (data != null) {
+                    LocalSQL.getInstance().remove(data.getUUID(), data.getCode());
                 }
 
             } catch (InterruptedException e) {

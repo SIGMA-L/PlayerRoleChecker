@@ -23,7 +23,8 @@ public class CodeUtil {
             result = getRandom(min, max);
         }
 
-        LocalSQL.getInstance().put(uuid.toString(), Integer.toString(result));
+        //
+        //LocalSQL.getInstance().put(uuid.toString(), Integer.toString(result));
 
         return result;
     }

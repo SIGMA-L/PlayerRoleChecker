@@ -1,6 +1,7 @@
 package net.klnetwork.playerrolechecker.table;
 
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
+import net.klnetwork.playerrolechecker.api.data.TemporaryData;
 import net.klnetwork.playerrolechecker.api.data.checker.CheckerTemporaryTable;
 import net.klnetwork.playerrolechecker.api.enums.SQLType;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
@@ -45,7 +46,7 @@ public class LocalSQL extends CheckerTemporaryTable {
     }
 
     @Override
-    public String getUUID(Integer code) {
+    public TemporaryData getUUID(Integer code) {
         PreparedStatement statement = null;
         try {
             statement = getConnection().prepareStatement("select * from waitverify where code = ?");
@@ -54,7 +55,7 @@ public class LocalSQL extends CheckerTemporaryTable {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                return resultSet.getString(1);
+                return new TemporaryData(resultSet.getString(1), resultSet.getInt(2), resultSet.getBoolean(3));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -83,12 +84,12 @@ public class LocalSQL extends CheckerTemporaryTable {
     }
 
     @Override
-    public Integer getCode(UUID uuid) {
+    public TemporaryData getCode(UUID uuid) {
         return getCode(uuid.toString());
     }
 
     @Override
-    public Integer getCode(String uuid) {
+    public TemporaryData getCode(String uuid) {
         PreparedStatement statement = null;
         try {
             statement = getConnection().prepareStatement("select * from waitverify where uuid = ?");
@@ -97,7 +98,7 @@ public class LocalSQL extends CheckerTemporaryTable {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                return resultSet.getInt(2);
+                return new TemporaryData(resultSet.getString(1), resultSet.getInt(2), resultSet.getBoolean(3));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -108,12 +109,13 @@ public class LocalSQL extends CheckerTemporaryTable {
     }
 
     @Override
-    public void put(String uuid, String code) {
+    public void put(String uuid, String code, boolean bedrock) {
         PreparedStatement statement = null;
         try {
             statement = getConnection().prepareStatement("insert into waitverify values (?,?)");
             statement.setString(1, uuid);
             statement.setString(2, code);
+            statement.setBoolean(3, bedrock);
             statement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -149,7 +151,7 @@ public class LocalSQL extends CheckerTemporaryTable {
             statement = PlayerDataSQL.getInstance().getConnection().createStatement();
 
             statement.executeUpdate("drop table if exists waitverify");
-            statement.executeUpdate("create table if not exists waitverify (uuid string, code int)");
+            statement.executeUpdate("create table if not exists waitverify (uuid string, code int, bedrock boolean)");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
