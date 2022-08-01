@@ -4,9 +4,9 @@ You can use the [editor on GitHub](https://github.com/SIGMA-L/PlayerRoleChecker/
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
+### What is PlayerRoleChecker?
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+PlayerRoleChecker is a Spigot plugin that connects Minecraft and Discord accounts.
 
 ```markdown
 Syntax highlighted code block
