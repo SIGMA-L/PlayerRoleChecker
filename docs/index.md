@@ -82,4 +82,4 @@ http://localhost:8080/api/post/?code=codehere
 
 ## Support or Contact
 
-Having trouble with PRC? Check out our [documentation](https://github.com/SIGMA-L/PlayerRoleChecker/wiki) or [Check issue](https://github.com/SIGMA-L/PlayerRoleChecker/issues) and we’ll help you sort it out.
+Having trouble with PlayerrRoleChecker? Check out our [documentation](https://github.com/SIGMA-L/PlayerRoleChecker/wiki) or [Check issue](https://github.com/SIGMA-L/PlayerRoleChecker/issues) and we’ll help you sort it out.
