@@ -67,7 +67,7 @@ Events that can be used by using the API:
     
 ## Whats is Code API
 
-### **Special plug-ins for developers only**.
+### Special plug-ins for developers only.
 
 - Use WebAPI to retrieve player information
 
