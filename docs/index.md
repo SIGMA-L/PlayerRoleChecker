@@ -1,4 +1,4 @@
-## Welcome to GitHub Pages
+## PlayerRoleChecker
 
 You can use the [editor on GitHub](https://github.com/SIGMA-L/PlayerRoleChecker/edit/web/docs/index.md) to maintain and preview the content for your website in Markdown files.
 
