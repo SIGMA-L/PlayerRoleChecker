@@ -1,36 +1,31 @@
-## PlayerRoleChecker
-
-You can use the [editor on GitHub](https://github.com/SIGMA-L/PlayerRoleChecker/edit/web/docs/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### What is PlayerRoleChecker?
+# What is PlayerRoleChecker?
 
 PlayerRoleChecker is a Spigot plugin that connects Minecraft and Discord accounts.
 
-```markdown
-Syntax highlighted code block
+## What you need to prepare
 
-# Header 1
-## Header 2
-### Header 3
+- MySQL Server
 
-- Bulleted
-- List
+- Discord BotToken
 
-1. Numbered
-2. List
+- Two Minecraft Servers
 
-**Bold** and _Italic_ and `Code` text
 
-[Link](url) and ![Image](src)
-```
+For more details see (https://github.com/SIGMA-L/PlayerRoleChecker/).
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+## Command List
 
-### Jekyll Themes
+| Minecraft Command※1             | Description | Permission |
+|---------------------------| --- | --- |
+| /addbypass {MCID}    | Add Excluded Players | playerrolechecker.addbypass |
+| /removebypass {MCID} | Remove Excluded Players | playerrolechecker.removebypass |
+| /joinmode                 | Turn off this plugin's functionality | playerrolechecker.op |
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/SIGMA-L/PlayerRoleChecker/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+| DiscordCommand※2                      | Description | Permission |
+|------------------------------------| --- | --- |
+| {generated number}                          | Register in the database |  |
+| !remove {MCID}                | Forcibly deleted from database | Permission.ADMINISTRATOR |
+| !forcejoin {MCID} {DiscordID} | Forced registration in database | Permission.ADMINISTRATOR |
 
 ### Support or Contact
 
