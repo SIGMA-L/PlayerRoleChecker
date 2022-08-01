@@ -1,4 +1,6 @@
-# What is PlayerRoleChecker?
+#PlayerRoleChecker
+
+## What is PlayerRoleChecker?
 
 PlayerRoleChecker is a Spigot plugin that connects Minecraft and Discord accounts.
 
