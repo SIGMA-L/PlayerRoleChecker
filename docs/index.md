@@ -29,6 +29,57 @@ For more details see (https://github.com/SIGMA-L/PlayerRoleChecker/).
 | !remove {MCID}                | Forcibly deleted from database | Permission.ADMINISTRATOR |
 | !forcejoin {MCID} {DiscordID} | Forced registration in database | Permission.ADMINISTRATOR |
 
+## API
+
+How to implement the API:
+
+### Maven
+
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+
+	<dependency>
+	    <groupId>com.github.SIGMA-L.PlayerRoleChecker</groupId>
+	    <artifactId>PlayerRoleCheckerAPI</artifactId>
+	    <version>v3.0</version>
+	</dependency>
+
+### Gradle
+
+    allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+
+    dependencies {
+        implementation 'com.github.SIGMA-L.PlayerRoleChecker:PlayerRoleCheckerAPI:v3.0'
+	}
+
+Events that can be used by using the API:
+    
+    JoinEvent
+    RemoveEvent
+    ForceJoinEvent
+    
+## Whats is Code API
+
+# **Special plug-ins for developers only**.
+
+- Use WebAPI to retrieve player information
+
+- MySQL & DiscordBotToken are not required
+
+```
+UUID is returned
+
+http://localhost:8080/api/get/?code=codehere
+http://localhost:8080/api/post/?code=codehere
+```
+
 ### Support or Contact
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+Having trouble with PRC? Check out our [documentation](https://github.com/SIGMA-L/PlayerRoleChecker/wiki) or [Check issue](https://github.com/SIGMA-L/PlayerRoleChecker/issues) and we’ll help you sort it out.
