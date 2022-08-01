@@ -1,5 +1,5 @@
 # PlayerRoleChecker
-[Language] English : [Japanese](https://rpc-mc.net/ja/)
+[Language] English : [日本語](https://rpc-mc.net/ja/)
 
 ## What is PlayerRoleChecker?
 
