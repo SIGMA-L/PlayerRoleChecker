@@ -67,7 +67,7 @@ Events that can be used by using the API:
     
 ## Whats is Code API
 
-# **Special plug-ins for developers only**.
+### **Special plug-ins for developers only**.
 
 - Use WebAPI to retrieve player information
 
@@ -80,6 +80,6 @@ http://localhost:8080/api/get/?code=codehere
 http://localhost:8080/api/post/?code=codehere
 ```
 
-### Support or Contact
+## Support or Contact
 
 Having trouble with PRC? Check out our [documentation](https://github.com/SIGMA-L/PlayerRoleChecker/wiki) or [Check issue](https://github.com/SIGMA-L/PlayerRoleChecker/issues) and we’ll help you sort it out.
