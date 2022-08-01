@@ -13,6 +13,20 @@ PlayerRoleCheckerはMinecraftアカウントとDiscordアカウントを連携�
 
 - 二台のMinecraftサーバー
 
+## PlayerRoleCheckerConnectorの機能
+
+1. PlayerRoleCheckerConnectorは参加したプレイヤーが参加可能か確認するためのプラグインです。
+
+2. ロールを確認して参加可能か確認します。
+
+## PlayerRoleCheckerの機能
+
+1. PlayerRoleCheckerはランダムな4桁な数字を生成します。
+
+2. Discordで生成された数字を入力します。
+
+3. 登録が完了されるはずです
+
 
 詳しくはこちらをご覧ください。 (https://github.com/SIGMA-L/PlayerRoleChecker/).
 
@@ -29,6 +43,10 @@ PlayerRoleCheckerはMinecraftアカウントとDiscordアカウントを連携�
 | {生成された数字}                          | データベースに登録します |  |
 | !remove {MCID}                | データベースから強制削除 | Permission.ADMINISTRATOR |
 | !forcejoin {MCID} {DiscordID} | データベースに強制登録 | Permission.ADMINISTRATOR |
+
+## LICENSE
+
+[Apache License 2.0](https://github.com/SIGMA-L/PlayerRoleChecker/blob/main/LICENSE)
 
 ## API
 
