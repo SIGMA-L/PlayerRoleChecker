@@ -65,7 +65,7 @@ Events that can be used by using the API:
     RemoveEvent
     ForceJoinEvent
     
-## Whats is Code API
+# Whats is Code API
 
 ### **Special plug-ins for developers only**.
 
