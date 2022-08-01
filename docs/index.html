@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="alternate" href="http://www.tti-co.com/" hreflang="ja">
+        <link rel="alternate" href="http://www.tti-co.com/en/" hreflang="en">
+    </head>
+    <script>
+	function browserLanguage() {
+		try {
+			return (navigator.browserLanguage || navigator.language || navigator.userLanguage).substr(0,2)
+		}
+		catch(e) {
+		return undefined;
+		}
+	}
+		if (browserLanguage().indexOf("ja") != -1) {
+		location.replace("/jp/");
+	}
+	else {
+		location.replace("/en/");
+	}
+</script>
+</html>
