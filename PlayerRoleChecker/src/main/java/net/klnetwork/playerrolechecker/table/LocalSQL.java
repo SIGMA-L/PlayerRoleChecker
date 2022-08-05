@@ -75,7 +75,7 @@ public class LocalSQL extends CheckerTemporaryTable {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                result = new String[]{resultSet.getString(1), resultSet.getString(2)};
+                result = new String[]{resultSet.getString(1), resultSet.getString(2), String.valueOf(resultSet.getBoolean(3))};
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

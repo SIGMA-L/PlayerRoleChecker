@@ -17,7 +17,7 @@ public abstract class CheckerTemporaryTable extends SQLInterface {
 
     public abstract TemporaryData getCode(String uuid);
 
-    public abstract void put(UUID uuid, Integer coded, boolean bedrock);
+    public abstract void put(UUID uuid, Integer code, boolean bedrock);
 
     public abstract void put(String uuid, String code, boolean bedrock);
 

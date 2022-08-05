@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
+import net.klnetwork.playerrolechecker.api.PlayerRoleCheckerAPI;
 import net.klnetwork.playerrolechecker.api.enums.SQLType;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Cancellable;
@@ -77,6 +78,14 @@ public class CommonUtils {
         }
 
         return null;
+    }
+
+    public static boolean isNewerVersion() {
+        try {
+            return isNewerVersion("SIGMA-L", "PlayerRoleChecker", PlayerRoleCheckerAPI.getVersion());
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public static boolean isNewerVersion(String owner, String repo, String version) throws Exception {
