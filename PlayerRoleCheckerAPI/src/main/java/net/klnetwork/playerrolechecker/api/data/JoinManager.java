@@ -3,6 +3,7 @@ package net.klnetwork.playerrolechecker.api.data;
 import net.klnetwork.playerrolechecker.api.data.common.JoinHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -34,6 +35,11 @@ public class JoinManager implements Listener {
 
     public void register(JoinHandler handler) {
         handlers.add(handler);
+    }
+
+    @Deprecated
+    public void destroy() {
+        HandlerList.unregisterAll(this);
     }
 
     public List<JoinHandler> getHandlers() {
