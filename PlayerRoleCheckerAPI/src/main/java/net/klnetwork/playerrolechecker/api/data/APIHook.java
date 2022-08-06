@@ -14,6 +14,8 @@ public interface APIHook {
 
     void setPlayerData(PlayerDataTable table);
 
+    JoinManager getJoinManager();
+
     CommandManager getCommandManager();
 
     HookedAPIType getType();

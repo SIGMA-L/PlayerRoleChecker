@@ -1,6 +1,6 @@
 package net.klnetwork.playerrolecheckerconnector.event;
 
-import net.klnetwork.playerrolechecker.api.data.JoinHandler;
+import net.klnetwork.playerrolechecker.api.data.common.JoinHandler;
 import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
 import net.klnetwork.playerrolecheckerconnector.table.LocalSQL;
 import net.klnetwork.playerrolecheckerconnector.util.OtherUtil;
@@ -14,14 +14,14 @@ public class JoinEvent extends JoinHandler {
         }
 
         /* todo: recode localSQL */
-        if (LocalSQL.getInstance().isCreated() && LocalSQL.getInstance().getUUID(event.getUniqueId()) != null){
+        if (LocalSQL.getInstance().isCreated() && LocalSQL.getInstance().hasUUID(event.getUniqueId())){
             return;
         }
 
         try {
             OtherUtil.hasRole(event.getUniqueId());
         } catch (Exception ex) {
-            
+
         }
     }
 }

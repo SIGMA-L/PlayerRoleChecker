@@ -31,39 +31,63 @@ public class LocalSQL extends ConnectorBypassTable {
     }
 
     @Override
+    public boolean hasUUID(UUID uuid) {
+        return hasUUID(uuid.toString());
+    }
+
+    @Override
+    public boolean hasUUID(String uuid) {
+        PreparedStatement statement = null;
+        try {
+            statement = getConnection().prepareStatement("select * from bypass where uuid = ?");
+            statement.setString(1, uuid);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            return resultSet.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            CommonUtils.close(statement);
+        }
+        return false;
+    }
+
+    @Override
     public String getUUID(UUID uuid) {
         return getUUID(uuid.toString());
     }
 
     @Override
     public String getUUID(String uuid) {
-        String result = null;
+        PreparedStatement statement = null;
         try {
-            PreparedStatement preparedStatement = getConnection().prepareStatement("select * from bypass where uuid = ?");
-            preparedStatement.setString(1, uuid);
+            statement = getConnection().prepareStatement("select * from bypass where uuid = ?");
+            statement.setString(1, uuid);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                result = resultSet.getString(1);
+                return resultSet.getString(1);
             }
-
-            preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            CommonUtils.close(statement);
         }
-        return result;
+        return null;
     }
 
     @Override
     public void put(String uuid) {
+        PreparedStatement statement = null;
         try {
-            PreparedStatement preparedStatement = getConnection().prepareStatement("insert into bypass values (?)");
-            preparedStatement.setString(1, uuid);
-            preparedStatement.execute();
-
-            preparedStatement.close();
+            statement = getConnection().prepareStatement("insert into bypass values (?)");
+            statement.setString(1, uuid);
+            statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            CommonUtils.close(statement);
         }
     }
 
@@ -74,14 +98,15 @@ public class LocalSQL extends ConnectorBypassTable {
 
     @Override
     public void remove(String uuid) {
+        PreparedStatement statement = null;
         try {
-            PreparedStatement preparedStatement = getConnection().prepareStatement("delete from bypass where uuid = ?");
-            preparedStatement.setString(1, uuid);
-            preparedStatement.execute();
-
-            preparedStatement.close();
+            statement = getConnection().prepareStatement("delete from bypass where uuid = ?");
+            statement.setString(1, uuid);
+            statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            CommonUtils.close(statement);
         }
     }
 

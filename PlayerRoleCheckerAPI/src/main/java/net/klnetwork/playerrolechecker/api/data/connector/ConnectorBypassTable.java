@@ -5,6 +5,10 @@ import net.klnetwork.playerrolechecker.api.data.SQLInterface;
 import java.util.UUID;
 
 public abstract class ConnectorBypassTable extends SQLInterface {
+    public abstract boolean hasUUID(UUID uuid);
+
+    public abstract boolean hasUUID(String uuid);
+
     public abstract String getUUID(UUID uuid);
 
     public abstract String getUUID(String uuid);

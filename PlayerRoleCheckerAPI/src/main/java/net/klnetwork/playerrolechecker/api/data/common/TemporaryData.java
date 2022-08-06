@@ -1,4 +1,4 @@
-package net.klnetwork.playerrolechecker.api.data;
+package net.klnetwork.playerrolechecker.api.data.common;
 
 import java.util.UUID;
 

@@ -2,7 +2,7 @@ package net.klnetwork.playerrolecheckerconnector.util;
 
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Role;
-import net.klnetwork.playerrolechecker.api.data.PlayerData;
+import net.klnetwork.playerrolechecker.api.data.common.PlayerData;
 import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
 import net.klnetwork.playerrolecheckerconnector.jda.JDA;
 import net.klnetwork.playerrolecheckerconnector.table.PlayerDataSQL;

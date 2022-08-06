@@ -1,7 +1,7 @@
 package net.klnetwork.playerrolechecker.api.data.checker;
 
 import net.klnetwork.playerrolechecker.api.data.SQLInterface;
-import net.klnetwork.playerrolechecker.api.data.TemporaryData;
+import net.klnetwork.playerrolechecker.api.data.common.TemporaryData;
 
 import java.util.UUID;
 

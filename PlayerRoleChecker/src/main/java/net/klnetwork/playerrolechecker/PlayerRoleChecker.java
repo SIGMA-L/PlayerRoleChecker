@@ -2,6 +2,7 @@ package net.klnetwork.playerrolechecker;
 
 import net.klnetwork.playerrolechecker.api.ConfigValue;
 import net.klnetwork.playerrolechecker.api.CustomDataBaseImpl;
+import net.klnetwork.playerrolechecker.api.data.JoinManager;
 import net.klnetwork.playerrolechecker.api.data.PlayerDataTable;
 import net.klnetwork.playerrolechecker.api.data.checker.CheckerAPIHook;
 import net.klnetwork.playerrolechecker.api.data.checker.CheckerConfigManager;
@@ -23,6 +24,7 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
 
     public static PlayerRoleChecker INSTANCE;
 
+    private final JoinManager joinManager = new JoinManager(this);
     private final CommandManager commandManager = new CommandManager(null);
     private final ConfigValue configManger = new ConfigValue(this);
 
@@ -69,6 +71,11 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
     @Override
     public void setPlayerData(PlayerDataTable table) {
         PlayerDataSQL.setInstance(table);
+    }
+
+    @Override
+    public JoinManager getJoinManager() {
+        return joinManager;
     }
 
     @Override

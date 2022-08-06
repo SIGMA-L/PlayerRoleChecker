@@ -1,7 +1,7 @@
 package net.klnetwork.playerrolechecker.jda.command;
 
 import net.dv8tion.jda.api.entities.Member;
-import net.klnetwork.playerrolechecker.api.data.PlayerData;
+import net.klnetwork.playerrolechecker.api.data.common.PlayerData;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandData;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandMessage;
 import net.klnetwork.playerrolechecker.api.enums.ForceJoinEventType;

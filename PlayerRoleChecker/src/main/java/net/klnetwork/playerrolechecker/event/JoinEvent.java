@@ -2,7 +2,7 @@ package net.klnetwork.playerrolechecker.event;
 
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
 import net.klnetwork.playerrolechecker.util.CodeUtil;
-import net.klnetwork.playerrolechecker.api.data.TemporaryData;
+import net.klnetwork.playerrolechecker.api.data.common.TemporaryData;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import net.klnetwork.playerrolechecker.table.LocalSQL;
 import net.md_5.bungee.api.ChatColor;
@@ -14,6 +14,7 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import java.util.UUID;
 
 public class JoinEvent implements Listener {
+    /* todo: use joinHandlers */
     @EventHandler
     public void onAsyncPlayerPreLoginEvent(AsyncPlayerPreLoginEvent e) {
         TemporaryData data = LocalSQL.getInstance().getCode(e.getUniqueId());

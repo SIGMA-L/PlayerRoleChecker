@@ -1,5 +1,6 @@
 package net.klnetwork.playerrolecheckerconnector;
 
+import net.klnetwork.playerrolechecker.api.data.JoinManager;
 import net.klnetwork.playerrolechecker.api.data.PlayerDataTable;
 import net.klnetwork.playerrolechecker.api.data.connector.ConnectorAPIHook;
 import net.klnetwork.playerrolechecker.api.data.connector.ConnectorBypassTable;
@@ -25,6 +26,7 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
 
     public static PlayerRoleCheckerConnector INSTANCE;
 
+    private final JoinManager joinManager = new JoinManager(this);
     private final CommandManager commandManager = new CommandManager(null);
     private final ConfigValue configManager = new ConfigValue(this);
 
@@ -35,6 +37,8 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
         saveDefaultConfig();
 
         PlayerDataSQL.getInstance().create();
+
+        joinManager.register(new JoinEvent());
 
         JDA.init();
         commandManager.setJDA(getJDA());
@@ -85,6 +89,11 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
     @Override
     public void setPlayerData(PlayerDataTable table) {
         PlayerDataSQL.setInstance(table);
+    }
+
+    @Override
+    public JoinManager getJoinManager() {
+        return joinManager;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package net.klnetwork.playerrolechecker.api.data;
 
+import net.klnetwork.playerrolechecker.api.data.common.PlayerData;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 
 import java.sql.SQLException;
