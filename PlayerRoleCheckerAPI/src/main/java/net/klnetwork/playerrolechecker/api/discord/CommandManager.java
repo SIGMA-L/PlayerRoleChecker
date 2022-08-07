@@ -104,9 +104,11 @@ public class CommandManager extends ListenerAdapter {
     }
 
     public void destroy() {
-        jda.removeEventListener(this);
+        if (jda != null) {
+            jda.removeEventListener(this);
 
-        jda = null;
+            jda = null;
+        }
     }
 
     public JDA getJDA() {
@@ -114,9 +116,8 @@ public class CommandManager extends ListenerAdapter {
     }
 
     public void setJDA(JDA jda) {
+        destroy();
         if (this.jda == null) {
-            destroy();
-
             init(jda);
         }
         this.jda = jda;
