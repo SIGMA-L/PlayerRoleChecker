@@ -13,6 +13,9 @@ import java.util.UUID;
 
 public class OtherUtil {
 
+    /**
+     * @throws Exception (memberId is null)
+     */
     public static List<Role> getRolesById(String id) {
         String guildID = PlayerRoleCheckerConnector.INSTANCE.getConfig().getString("GuildID");
         if (guildID != null) return JDA.INSTANCE.getGuildById(guildID).retrieveMemberById(id).complete().getRoles();
@@ -21,17 +24,9 @@ public class OtherUtil {
     }
 
     public static boolean hasRole(UUID uuid) {
-        PlayerData data = PlayerDataSQL.getInstance().getDiscordId(uuid);
+        PlayerData data = checkNotNull(PlayerDataSQL.getInstance().getDiscordId(uuid));
 
-        if (data == null) {
-            return false;
-        }
-
-        List<Role> roles = getRolesById(data.getDiscordId());
-
-        if (roles == null) {
-            return false;
-        }
+        List<Role> roles = checkNotNull(getRolesById(data.getDiscordId()));
 
         for (Role role : roles) {
             if (PlayerRoleCheckerConnector.INSTANCE.getConfigManager().getRoleList().contains(role.getId())) {
@@ -40,6 +35,13 @@ public class OtherUtil {
         }
 
         return false;
+    }
+
+    public static <T> T checkNotNull(T reference) {
+        if (reference == null) {
+            throw new NullPointerException();
+        }
+        return reference;
     }
 
     public static String replaceString(String string, Player player) {

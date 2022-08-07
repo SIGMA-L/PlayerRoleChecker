@@ -14,14 +14,26 @@ public class JoinEvent extends JoinHandler {
         }
 
         /* todo: recode localSQL */
-        if (LocalSQL.getInstance().isCreated() && LocalSQL.getInstance().hasUUID(event.getUniqueId())){
+        if (LocalSQL.getInstance().isCreated() && LocalSQL.getInstance().hasUUID(event.getUniqueId())) {
             return;
         }
 
-        try {
-            OtherUtil.hasRole(event.getUniqueId());
-        } catch (Exception ex) {
+        /* todo: remove OtherUtil */
+        final boolean hasRole = OtherUtil.hasRole(event.getUniqueId());
 
+        /* todo: check is working */
+        if (!hasRole) {
+            disallow(event, String.join("\n", PlayerRoleCheckerConnector.INSTANCE.getConfig().getStringList("Minecraft.kickMessage")));
+        }
+    }
+
+    @Override
+    public void onErrorCaught(AsyncPlayerPreLoginEvent event, Exception ex) {
+        disallow(event, String.join("\n", PlayerRoleCheckerConnector.INSTANCE.getConfig().getStringList("Minecraft.errorCaught")));
+
+        if (PlayerRoleCheckerConnector.INSTANCE.getConfigManager().isDebug()) {
+            /* print error */
+            ex.printStackTrace();
         }
     }
 }

@@ -22,7 +22,14 @@ public class JoinManager implements Listener {
     @EventHandler
     public void onAsyncPlayerJoinEvent(AsyncPlayerPreLoginEvent event) {
         if (!handlers.isEmpty()) {
-            handlers.forEach(h -> h.onPreLoginEvent(event));
+            handlers.forEach(h -> {
+                try {
+                    h.onPreLoginEvent(event);
+                } catch (Exception ex) {
+                    h.onErrorCaught(event, ex);
+                }
+            });
+
         }
     }
 

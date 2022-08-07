@@ -22,6 +22,9 @@ public class ConfigValue extends ConfigManager implements ConnectorConfigManager
     @ConfigKey(key = "JoinCommand")
     private List<String> joinCommand = new ArrayList<>();
 
+    @ConfigKey(key = "Minecraft.debug")
+    private boolean debug = false;
+
     @Override
     public boolean isJoinMode() {
         return joinMode;
@@ -50,5 +53,15 @@ public class ConfigValue extends ConfigManager implements ConnectorConfigManager
     @Override
     public void setJoinCommand(List<String> joinCommand) {
         this.joinCommand = joinCommand;
+    }
+
+    @Override
+    public boolean isDebug() {
+        return debug;
+    }
+
+    @Override
+    public void setDebug(boolean debug) {
+        this.debug = debug;
     }
 }

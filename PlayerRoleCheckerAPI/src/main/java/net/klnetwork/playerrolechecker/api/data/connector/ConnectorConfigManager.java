@@ -14,4 +14,8 @@ public interface ConnectorConfigManager {
     List<String> getJoinCommand();
 
     void setJoinCommand(List<String> joinCommand);
+
+    boolean isDebug();
+
+    void setDebug(boolean debug);
 }
