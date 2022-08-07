@@ -103,12 +103,20 @@ public class CommandManager extends ListenerAdapter {
         jda.addEventListener(this);
     }
 
+    public void destroy() {
+        jda.removeEventListener(this);
+
+        jda = null;
+    }
+
     public JDA getJDA() {
         return jda;
     }
 
     public void setJDA(JDA jda) {
         if (this.jda == null) {
+            destroy();
+
             init(jda);
         }
         this.jda = jda;

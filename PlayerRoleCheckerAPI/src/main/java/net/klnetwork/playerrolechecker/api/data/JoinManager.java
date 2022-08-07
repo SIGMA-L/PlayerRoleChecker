@@ -29,7 +29,6 @@ public class JoinManager implements Listener {
                     h.onErrorCaught(event, ex);
                 }
             });
-
         }
     }
 
