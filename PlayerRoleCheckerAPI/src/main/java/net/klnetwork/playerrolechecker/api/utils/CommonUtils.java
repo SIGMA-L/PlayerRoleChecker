@@ -37,7 +37,9 @@ public class CommonUtils {
     }
 
     public static boolean isFloodgateUser(UUID uuid) {
-        return FloodgateApi.getInstance().isFloodgatePlayer(uuid);
+        if (hasFloodGate()) return FloodgateApi.getInstance().isFloodgatePlayer(uuid);
+        else return false;
+
     }
 
     public static UUID getFloodgateUserUUID(UUID uuid) {

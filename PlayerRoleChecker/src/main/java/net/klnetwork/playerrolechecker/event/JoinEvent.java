@@ -22,8 +22,7 @@ public class JoinEvent extends JoinHandler {
 
             event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST, ChatColor.translateAlternateColorCodes('&', message.replaceAll("%code%", String.valueOf(data.getCode()))));
         } else {
-            final boolean isFloodGateUser = CommonUtils.hasFloodGate()
-                    && CommonUtils.isFloodgateUser(event.getUniqueId());
+            final boolean isFloodGateUser = CommonUtils.isFloodgateUser(event.getUniqueId());
 
             final int code = CodeUtil.generateCode();
             LocalSQL.getInstance().put(event.getUniqueId(), code, isFloodGateUser);
