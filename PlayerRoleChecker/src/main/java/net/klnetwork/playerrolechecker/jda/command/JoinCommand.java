@@ -6,6 +6,7 @@ import net.klnetwork.playerrolechecker.api.discord.data.CommandData;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandMessage;
 import net.klnetwork.playerrolechecker.api.enums.JoinEventType;
 import net.klnetwork.playerrolechecker.api.event.connector.JoinEvent;
+import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import net.klnetwork.playerrolechecker.table.LocalSQL;
 import net.klnetwork.playerrolechecker.table.PlayerDataSQL;
 import net.klnetwork.playerrolechecker.util.DiscordUtil;
@@ -46,7 +47,7 @@ public class JoinCommand extends CommandMessage {
             PlayerData data = PlayerDataSQL.getInstance().getDiscordId(temp.getUUID());
 
             if (data != null) {
-                if (!callEvent(new JoinEvent(data.getUUID(), temp.getCode(), data.isBedrock(), event.getMessage(), JoinEventType.ALREADY_REGISTERED)).isCancelled()) {
+                if (!callEvent(new JoinEvent(data.getUUID(), temp.getCode(), CommonUtils.isFloodgateUser(data.getUUID()), event.getMessage(), JoinEventType.ALREADY_REGISTERED)).isCancelled()) {
                     event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.already-registered", event.getMessage().getTimeCreated(), temp, data.getDiscordId()).build()).queue();
 
                     //セキュリティー上の問題
@@ -57,7 +58,7 @@ public class JoinCommand extends CommandMessage {
 
                 if (!call.isCancelled()) {
                     LocalSQL.getInstance().remove(call.getUUID(), call.getCode());
-                    PlayerDataSQL.getInstance().put(call.getUUID(), call.getMember().getId(), call.isBedrock());
+                    PlayerDataSQL.getInstance().put(call.getUUID(), call.getMember().getId());
 
                     event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.success-register", event.getMessage().getTimeCreated(), call.getUUID(), call.getMember().getId()).build()).queue();
 
