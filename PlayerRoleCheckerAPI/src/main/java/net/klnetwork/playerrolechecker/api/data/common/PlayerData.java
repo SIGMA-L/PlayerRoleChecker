@@ -4,20 +4,17 @@ import java.util.UUID;
 
 public class PlayerData {
 
-    private final boolean bedrock;
     private final String discordId;
     private final UUID uuid;
 
-    public PlayerData(String uuid, String discordID, boolean bedrock) {
+    public PlayerData(String uuid, String discordID) {
         this.uuid = UUID.fromString(uuid);
         this.discordId = discordID;
-        this.bedrock = bedrock;
     }
 
-    public PlayerData(UUID uuid, String discordId, boolean bedrock) {
+    public PlayerData(UUID uuid, String discordId) {
         this.uuid = uuid;
         this.discordId = discordId;
-        this.bedrock = bedrock;
     }
 
     public UUID getUUID() {
@@ -26,9 +23,5 @@ public class PlayerData {
 
     public String getDiscordId() {
         return discordId;
-    }
-
-    public boolean isBedrock() {
-        return bedrock;
     }
 }
