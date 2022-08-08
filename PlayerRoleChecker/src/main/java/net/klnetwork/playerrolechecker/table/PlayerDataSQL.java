@@ -62,7 +62,7 @@ public class PlayerDataSQL extends PlayerDataTable {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                return new PlayerData(resultSet.getString(1), resultSet.getString(2));
+                return new PlayerData(resultSet.getString(1), resultSet.getString(2), resultSet.getBoolean(3));
             }
 
         } catch (SQLException ex) {
@@ -84,7 +84,7 @@ public class PlayerDataSQL extends PlayerDataTable {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                return new PlayerData(resultSet.getString(1), resultSet.getString(2));
+                return new PlayerData(resultSet.getString(1), resultSet.getString(2), resultSet.getBoolean(3));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -95,18 +95,19 @@ public class PlayerDataSQL extends PlayerDataTable {
     }
 
     @Override
-    public void put(UUID uuid, String discordId) {
-        put(uuid.toString(), discordId);
+    public void put(UUID uuid, String discordId, boolean bedrock) {
+        put(uuid.toString(), discordId, bedrock);
     }
 
     @Override
-    public void put(String uuid, String discordId) {
+    public void put(String uuid, String discordId, boolean bedrock) {
         Bukkit.getScheduler().runTaskAsynchronously(PlayerRoleChecker.INSTANCE, () -> {
             PreparedStatement statement = null;
             try {
                 statement = getConnection().prepareStatement("insert into verifyplayer values (?,?,?)");
                 statement.setString(1, uuid);
                 statement.setString(2, discordId);
+                statement.setBoolean(3, bedrock);
                 statement.execute();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -143,6 +144,8 @@ public class PlayerDataSQL extends PlayerDataTable {
         Bukkit.getScheduler().runTaskAsynchronously(PlayerRoleChecker.INSTANCE, () -> {
             Statement statement = null;
             try {
+                alter();
+
                 statement = PlayerDataSQL.getInstance().getConnection().createStatement();
 
                 statement.executeUpdate("create table if not exists verifyplayer (uuid VARCHAR(50), discord VARCHAR(50), bedrock BOOLEAN)");
