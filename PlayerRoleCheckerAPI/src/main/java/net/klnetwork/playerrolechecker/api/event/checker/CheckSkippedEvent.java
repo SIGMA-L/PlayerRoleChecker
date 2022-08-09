@@ -1,21 +1,20 @@
 package net.klnetwork.playerrolechecker.api.event.checker;
 
-import net.klnetwork.playerrolechecker.api.data.common.PlayerData;
+import net.klnetwork.playerrolechecker.api.enums.SkippedReasonEnum;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class CheckStartEvent extends Event implements Cancellable {
+public class CheckSkippedEvent extends Event implements Cancellable {
 
     private boolean isCancelled;
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
-    private PlayerData data;
 
-    public CheckStartEvent(PlayerData data) {
-        super(true);
+    private SkippedReasonEnum reason;
 
-        this.data = data;
+    public CheckSkippedEvent(SkippedReasonEnum reason) {
+        this.reason = reason;
     }
 
     @Override
@@ -32,15 +31,11 @@ public class CheckStartEvent extends Event implements Cancellable {
         return HANDLER_LIST;
     }
 
-    public static HandlerList getHandlerList() {
-        return HANDLER_LIST;
+    public SkippedReasonEnum getReason() {
+        return reason;
     }
 
-    public PlayerData getPlayerData() {
-        return data;
-    }
-
-    public void setPlayerData(PlayerData data) {
-        this.data = data;
+    public void setReason(SkippedReasonEnum reason) {
+        this.reason = reason;
     }
 }

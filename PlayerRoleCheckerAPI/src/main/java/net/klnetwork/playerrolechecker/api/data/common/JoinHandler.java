@@ -7,6 +7,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.util.List;
+
 public abstract class JoinHandler implements Listener {
     public void onPreLoginEvent(AsyncPlayerPreLoginEvent event) {}
 
@@ -16,6 +18,10 @@ public abstract class JoinHandler implements Listener {
 
     public void disallow(AsyncPlayerPreLoginEvent event, String message) {
         event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST, ChatColor.translateAlternateColorCodes('&', message));
+    }
+
+    public void disallow(AsyncPlayerPreLoginEvent event, List<String> list) {
+        disallow(event, String.join("\n", list));
     }
 
     public <T> T callEvent(T event) {
