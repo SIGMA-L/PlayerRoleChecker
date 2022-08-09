@@ -40,7 +40,7 @@ public class CommandData {
     }
 
     public TextChannel getTextChannel() {
-        return event.getTextChannel();
+        return event.getChannel().asTextChannel();
     }
 
     public Member getMember() {
