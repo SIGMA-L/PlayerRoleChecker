@@ -1,5 +1,7 @@
 package net.klnetwork.playerrolechecker.api.data.common;
 
+import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
+
 import java.util.UUID;
 
 public class PlayerData {
@@ -22,6 +24,10 @@ public class PlayerData {
 
     public UUID getUUID() {
         return uuid;
+    }
+
+    public long getXUID() {
+        return CommonUtils.getXUID(uuid);
     }
 
     public String getDiscordId() {

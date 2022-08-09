@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
 import net.klnetwork.playerrolechecker.api.PlayerRoleCheckerAPI;
 import net.klnetwork.playerrolechecker.api.enums.SQLType;
 import org.bukkit.Bukkit;
@@ -90,6 +91,10 @@ public class CommonUtils {
         }
     }
 
+    public static long getXUID(UUID uuid) {
+        return uuid.getLeastSignificantBits();
+    }
+
     public static boolean isNewerVersion(String owner, String repo, String version) throws Exception {
         String url = "https://api.github.com/repos/" + owner + "/" + repo + "/releases/latest";
 
@@ -100,6 +105,15 @@ public class CommonUtils {
         JsonObject object = new Gson().fromJson(input, JsonObject.class);
 
         return object.get("tag_name").getAsString().equals(version);
+    }
+
+    public static boolean hasRole(List<Role> roles, List<String> id) {
+        for (Role role : roles) {
+            if (id.contains(role.getId())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static boolean hasPermission(Member member, List<Permission> permissions) {
