@@ -19,9 +19,18 @@ public class CheckResultEvent extends Event {
         super(true);
 
         this.data = data;
-        this.result = result;
 
         this.type = type;
+        this.result = result;
+    }
+
+    public CheckResultEvent(PlayerData data, CheckResultEnum type) {
+        super(true);
+
+        this.data = data;
+
+        this.type = type;
+        this.result = type.getDefaultResult();
     }
     public boolean getResult() {
         return this.result;

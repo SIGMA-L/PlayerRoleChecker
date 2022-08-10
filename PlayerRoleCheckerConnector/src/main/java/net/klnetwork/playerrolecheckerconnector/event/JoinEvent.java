@@ -40,23 +40,23 @@ public class JoinEvent extends JoinHandler {
 
     public boolean isJoin(PlayerData data) {
         if (data == null) {
-            return callEvent(new CheckResultEvent(null, CheckResultEnum.NOT_REGISTERED, false)).getResult();
+            return callEvent(new CheckResultEvent(null, CheckResultEnum.NOT_REGISTERED)).getResult();
         } else {
             Guild guild = PlayerRoleCheckerConnector.INSTANCE.getJDA().getGuildById(PlayerRoleCheckerConnector.INSTANCE.getConfig().getLong("GuildID"));
 
             if (guild == null) {
                 for (Guild g : PlayerRoleCheckerConnector.INSTANCE.getJDA().getGuilds()) {
                     if (CommonUtils.hasRole(g.retrieveMemberById(data.getDiscordId()).complete().getRoles(), PlayerRoleCheckerConnector.INSTANCE.getConfigManager().getRoleList())) {
-                        return callEvent(new CheckResultEvent(data, CheckResultEnum.SUCCESS, true)).getResult();
+                        return callEvent(new CheckResultEvent(data, CheckResultEnum.SUCCESS)).getResult();
                     }
                 }
 
-                return callEvent(new CheckResultEvent(data, CheckResultEnum.GUILD_IS_INVALID, false)).getResult();
+                return callEvent(new CheckResultEvent(data, CheckResultEnum.GUILD_IS_INVALID)).getResult();
             } else {
                 if (CommonUtils.hasRole(guild.retrieveMemberById(data.getDiscordId()).complete().getRoles(), PlayerRoleCheckerConnector.INSTANCE.getConfigManager().getRoleList())) {
-                    return callEvent(new CheckResultEvent(data, CheckResultEnum.SUCCESS, true)).getResult();
+                    return callEvent(new CheckResultEvent(data, CheckResultEnum.SUCCESS)).getResult();
                 } else {
-                    return callEvent(new CheckResultEvent(data, CheckResultEnum.UNKNOWN, false)).getResult();
+                    return callEvent(new CheckResultEvent(data, CheckResultEnum.UNKNOWN)).getResult();
                 }
             }
         }
@@ -81,7 +81,7 @@ public class JoinEvent extends JoinHandler {
 
     @Override
     public void onErrorCaught(AsyncPlayerPreLoginEvent event, Exception ex) {
-        if (!callEvent(new CheckResultEvent(null, CheckResultEnum.ERROR, false).getResult())) {
+        if (!callEvent(new CheckResultEvent(null, CheckResultEnum.ERROR).getResult())) {
             disallow(event, PlayerRoleCheckerConnector.INSTANCE.getConfig().getStringList("Minecraft.errorCaught"));
 
             if (PlayerRoleCheckerConnector.INSTANCE.getConfigManager().isDebug()) {
