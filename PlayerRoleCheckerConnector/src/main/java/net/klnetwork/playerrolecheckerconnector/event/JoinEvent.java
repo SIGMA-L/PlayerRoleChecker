@@ -12,6 +12,7 @@ import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
 import net.klnetwork.playerrolecheckerconnector.table.LocalSQL;
 import net.klnetwork.playerrolecheckerconnector.table.PlayerDataSQL;
+import org.bukkit.Bukkit;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -58,7 +59,18 @@ public class JoinEvent extends JoinHandler {
 
     @Override
     public void onLoginEvent(PlayerJoinEvent event) {
-        //todo: write code?
+        //WARNING: NOT ASYNC
+        PlayerRoleCheckerConnector.INSTANCE.getConfigManager().getJoinCommand().forEach(command -> {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+        });
+
+        if (PlayerRoleCheckerConnector.INSTANCE.getConfig().getBoolean("Minecraft.joinMessageBoolean")) {
+            Bukkit.getScheduler().runTaskAsynchronously(PlayerRoleCheckerConnector.INSTANCE.getPlugin(), () -> {
+                /* todo: add messages! */
+            });
+
+            event.setJoinMessage(PlayerRoleCheckerConnector.INSTANCE.getConfig().getString("Minecraft.joinMessage"));
+        }
     }
 
     @Override

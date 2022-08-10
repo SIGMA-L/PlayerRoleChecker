@@ -4,6 +4,7 @@ import net.klnetwork.playerrolechecker.api.data.common.PlayerData;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 public class CheckStartEvent extends Event implements Cancellable {
 
@@ -28,7 +29,7 @@ public class CheckStartEvent extends Event implements Cancellable {
         this.isCancelled = cancel;
     }
 
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return HANDLER_LIST;
     }
 

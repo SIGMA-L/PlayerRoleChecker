@@ -32,6 +32,7 @@ public class ConfigValue extends ConfigManager implements CheckerConfigManager {
         return min;
     }
 
+    @Override
     public void setMin(int min) {
         this.min = min;
     }
@@ -41,6 +42,7 @@ public class ConfigValue extends ConfigManager implements CheckerConfigManager {
         return max;
     }
 
+    @Override
     public void setMax(int max) {
         this.max = max;
     }

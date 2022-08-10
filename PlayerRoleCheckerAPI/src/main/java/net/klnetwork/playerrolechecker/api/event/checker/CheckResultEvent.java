@@ -4,6 +4,7 @@ import net.klnetwork.playerrolechecker.api.data.common.PlayerData;
 import net.klnetwork.playerrolechecker.api.enums.CheckResultEnum;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 public class CheckResultEvent extends Event {
 
@@ -30,7 +31,7 @@ public class CheckResultEvent extends Event {
         this.result = result;
     }
 
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return HANDLER_LIST;
     }
 
