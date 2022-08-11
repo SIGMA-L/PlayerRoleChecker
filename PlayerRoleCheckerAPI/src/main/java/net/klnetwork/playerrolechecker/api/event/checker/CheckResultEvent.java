@@ -32,6 +32,7 @@ public class CheckResultEvent extends Event {
         this.type = type;
         this.result = type.getDefaultResult();
     }
+
     public boolean getResult() {
         return this.result;
     }

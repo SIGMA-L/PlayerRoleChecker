@@ -92,6 +92,11 @@ public class CommonUtils {
     }
 
     public static long getXUID(UUID uuid) {
+        //Floodgate not using mostSignificantBits!
+        if (uuid.getMostSignificantBits() != 0) {
+            return 0;
+        }
+
         return uuid.getLeastSignificantBits();
     }
 
