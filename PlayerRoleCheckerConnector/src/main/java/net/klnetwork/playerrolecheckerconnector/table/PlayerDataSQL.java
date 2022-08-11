@@ -33,11 +33,6 @@ public class PlayerDataSQL extends PlayerDataTable {
     }
 
     @Override
-    public void asyncUUID(String discordId, Consumer<PlayerData> uuid) {
-        Bukkit.getScheduler().runTaskAsynchronously(PlayerRoleCheckerConnector.INSTANCE, () -> uuid.accept(getUUID(discordId)));
-    }
-
-    @Override
     public void asyncDiscordId(UUID uuid, Consumer<PlayerData> discordId) {
         asyncDiscordId(uuid.toString(), discordId);
     }
@@ -45,6 +40,21 @@ public class PlayerDataSQL extends PlayerDataTable {
     @Override
     public void asyncDiscordId(String uuid, Consumer<PlayerData> discordId) {
         Bukkit.getScheduler().runTaskAsynchronously(PlayerRoleCheckerConnector.INSTANCE, () -> discordId.accept(getDiscordId(uuid)));
+    }
+
+    @Override
+    public void asyncDiscordId(UUID uuid, boolean bedrock, Consumer<PlayerData> discordId) {
+        asyncDiscordId(uuid.toString(), bedrock, discordId);
+    }
+
+    @Override
+    public void asyncDiscordId(String uuid, boolean bedrock, Consumer<PlayerData> discordId) {
+        Bukkit.getScheduler().runTaskAsynchronously(PlayerRoleCheckerConnector.INSTANCE, () -> discordId.accept(getDiscordId(uuid, bedrock)));
+    }
+
+    @Override
+    public void asyncUUID(String discordId, Consumer<PlayerData> uuid) {
+        Bukkit.getScheduler().runTaskAsynchronously(PlayerRoleCheckerConnector.INSTANCE, () -> uuid.accept(getUUID(discordId)));
     }
 
     @Override
@@ -66,8 +76,36 @@ public class PlayerDataSQL extends PlayerDataTable {
                 return new PlayerData(resultSet.getString(1), resultSet.getString(2), resultSet.getBoolean(3));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            CommonUtils.close(statement);
+        }
+        return null;
+    }
+
+    @Override
+    public PlayerData getDiscordId(UUID uuid, boolean bedrock) {
+        return getDiscordId(uuid.toString(), bedrock);
+    }
+
+    @Override
+    public PlayerData getDiscordId(String uuid, boolean bedrock) {
+        PreparedStatement statement = null;
+
+        try {
+            statement = getConnection().prepareStatement("select * from verifyplayer where uuid = ? and bedrock = ?");
+            statement.setString(1, uuid);
+            statement.setBoolean(2, bedrock);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return new PlayerData(resultSet.getString(1), resultSet.getString(2), resultSet.getBoolean(3));
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         } finally {
             CommonUtils.close(statement);
         }

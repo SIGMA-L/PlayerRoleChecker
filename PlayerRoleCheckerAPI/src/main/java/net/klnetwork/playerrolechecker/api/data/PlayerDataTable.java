@@ -13,11 +13,19 @@ public abstract class PlayerDataTable extends SQLInterface {
 
     public abstract void asyncDiscordId(String uuid, Consumer<PlayerData> discordId);
 
+    public abstract void asyncDiscordId(UUID uuid, boolean bedrock, Consumer<PlayerData> discordId);
+
+    public abstract void asyncDiscordId(String uuid, boolean bedrock, Consumer<PlayerData> discordId);
+
     public abstract void asyncUUID(String discordId, Consumer<PlayerData> uuid);
 
     public abstract PlayerData getDiscordId(UUID uuid);
 
     public abstract PlayerData getDiscordId(String uuid);
+
+    public abstract PlayerData getDiscordId(UUID uuid, boolean bedrock);
+
+    public abstract PlayerData getDiscordId(String uuid, boolean bedrock);
 
     public abstract PlayerData getUUID(String discordId);
 
