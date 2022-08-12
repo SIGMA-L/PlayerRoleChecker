@@ -6,7 +6,6 @@ import net.klnetwork.playerrolechecker.api.data.common.TemporaryData;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import net.klnetwork.playerrolechecker.table.LocalSQL;
 import net.klnetwork.playerrolechecker.util.CodeUtil;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
@@ -18,17 +17,14 @@ public class JoinEvent extends JoinHandler {
         TemporaryData data = LocalSQL.getInstance().getCode(event.getUniqueId());
 
         if (data != null) {
-            String message = String.join("\n", PlayerRoleChecker.INSTANCE.getConfig().getStringList("JoinEvent.already-code"));
-
-            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST, ChatColor.translateAlternateColorCodes('&', message.replaceAll("%code%", String.valueOf(data.getCode()))));
+            disallow(event, String.join("\n", PlayerRoleChecker.INSTANCE.getConfig().getStringList("JoinEvent.already-code")).replaceAll("%code%", data.getCode().toString()));
         } else {
-            final boolean isFloodGateUser = CommonUtils.isFloodgateUser(event.getUniqueId());
+            final Integer code = CodeUtil.generateCode();
 
-            final int code = CodeUtil.generateCode();
-            LocalSQL.getInstance().put(event.getUniqueId(), code, isFloodGateUser);
+            LocalSQL.getInstance().put(event.getUniqueId(), code, CommonUtils.isFloodgateUser(event.getUniqueId()));
 
-            String message = String.join("\n", PlayerRoleChecker.INSTANCE.getConfig().getStringList("JoinEvent.code"));
-            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST, ChatColor.translateAlternateColorCodes('&', message.replaceAll("%code%", String.valueOf(code))));
+            disallow(event, String.join("\n", PlayerRoleChecker.INSTANCE.getConfig().getStringList("JoinEvent.code")).replaceAll("%code%", code.toString()));
+
             run(event.getUniqueId());
         }
     }

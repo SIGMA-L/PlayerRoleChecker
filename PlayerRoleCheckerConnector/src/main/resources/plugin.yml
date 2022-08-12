@@ -5,7 +5,7 @@ prefix: PRCConnector
 authors: [ SIGMA, Kouta1212 ]
 commands:
   joinmode:
-    permission: playerrolechecker.op
+    permission: playerrolechecker.joinmode
     aliases:
       - jm
     description: JoinModeCommand!

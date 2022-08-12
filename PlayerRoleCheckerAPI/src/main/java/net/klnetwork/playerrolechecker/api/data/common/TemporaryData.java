@@ -30,7 +30,7 @@ public class TemporaryData {
         return CommonUtils.getXUID(uuid);
     }
 
-    public int getCode() {
+    public Integer getCode() {
         return code;
     }
 
