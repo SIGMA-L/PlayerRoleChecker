@@ -16,7 +16,6 @@ import net.klnetwork.playerrolecheckerconnector.event.JoinEvent;
 import net.klnetwork.playerrolecheckerconnector.jda.JDA;
 import net.klnetwork.playerrolecheckerconnector.table.LocalSQL;
 import net.klnetwork.playerrolecheckerconnector.table.PlayerDataSQL;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -42,8 +41,6 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
 
         JDA.init();
         commandManager.setJDA(getJDA());
-
-        Bukkit.getPluginManager().registerEvents(new JoinEvent(), this);
 
         getCommand("joinmode").setExecutor(new JoinModeCommand());
         if (getConfig().getBoolean("SQLite.useBypassCommand")) {

@@ -36,17 +36,17 @@
 **※2 DiscordコマンドはPlayerRoleCheckerで登録されています**
 
 
-| マインクラフトコマンド※1             | 説明 | パーミッション |
-|---------------------------| --- | --- |
-| /addbypass {マインクラフトID}    | 除外プレイヤーを追加する | playerrolechecker.addbypass |
-| /removebypass {マインクラフトID} | 除外プレイヤーを削除する | playerrolechecker.removebypass |
-| /joinmode                 | このプラグインの機能をオフにする | playerrolechecker.op |
+| マインクラフトコマンド※1             | 説明               | パーミッション                        |
+|---------------------------|------------------|--------------------------------|
+| /addbypass {マインクラフトID}    | 除外プレイヤーを追加する     | playerrolechecker.addbypass    |
+| /removebypass {マインクラフトID} | 除外プレイヤーを削除する     | playerrolechecker.removebypass |
+| /joinmode                 | このプラグインの機能をオフにする | playerrolechecker.joinmode     |
 
-| Discordコマンド※2                      | 説明 | パーミッション |
-|------------------------------------| --- | --- |
-| {生成された数字}                          | データベースに登録します |  |
+| Discordコマンド※2                      | 説明           | パーミッション                  |
+|------------------------------------|--------------|--------------------------|
+| {生成された数字}                          | データベースに登録します |                          |
 | !remove {マインクラフトID}                | データベースから強制削除 | Permission.ADMINISTRATOR |
-| !forcejoin {マインクラフトID} {DiscordID} | データベースに強制登録 | Permission.ADMINISTRATOR |
+| !forcejoin {マインクラフトID} {DiscordID} | データベースに強制登録  | Permission.ADMINISTRATOR |
 
 ## LICENSE
 
@@ -58,7 +58,6 @@
 APIの導入方法:
 
 ### Maven
-
     <repository>
         <id>jitpack.io</id>
         <url>https://jitpack.io</url>
@@ -71,13 +70,10 @@ APIの導入方法:
 	</dependency>
 
 ### Gradle
-
-    allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
 
     dependencies {
         implementation 'com.github.SIGMA-L.PlayerRoleChecker:PlayerRoleCheckerAPI:v3.0'
