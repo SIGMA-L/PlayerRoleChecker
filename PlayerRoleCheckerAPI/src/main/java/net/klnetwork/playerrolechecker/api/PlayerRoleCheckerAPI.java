@@ -20,7 +20,7 @@ public class PlayerRoleCheckerAPI {
     }
 
     public static ConnectorAPIHook getConnectorAPI() {
-        if (!isHookedConnector()) {
+        if (!pairs.containsKey(HookedAPIType.CONNECTOR) && !isHookedConnector()) {
             init();
         }
 
@@ -34,7 +34,7 @@ public class PlayerRoleCheckerAPI {
     }
 
     public static CheckerAPIHook getCheckerAPI() {
-        if (!isHookedChecker()) {
+        if (!pairs.containsKey(HookedAPIType.CHECKER) && !isHookedChecker()) {
             init();
         }
 

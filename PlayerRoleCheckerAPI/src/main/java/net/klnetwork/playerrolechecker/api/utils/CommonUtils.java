@@ -19,6 +19,10 @@ import java.util.Scanner;
 import java.util.UUID;
 
 public class CommonUtils {
+    
+    @Deprecated
+    public static String GEYSER_API_METHOD = "https://api.geysermc.org/v2/xbox/xuid/";
+
     /**
      * @param name player name
      * @return player uuid
