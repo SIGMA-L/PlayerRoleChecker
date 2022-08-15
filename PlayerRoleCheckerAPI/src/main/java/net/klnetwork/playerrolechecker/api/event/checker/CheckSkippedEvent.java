@@ -15,6 +15,8 @@ public class CheckSkippedEvent extends Event implements Cancellable {
     private SkippedReasonEnum reason;
 
     public CheckSkippedEvent(SkippedReasonEnum reason) {
+        super(true);
+
         this.reason = reason;
     }
 
