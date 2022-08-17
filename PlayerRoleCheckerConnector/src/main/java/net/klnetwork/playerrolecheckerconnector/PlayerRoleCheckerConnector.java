@@ -19,8 +19,6 @@ import net.klnetwork.playerrolecheckerconnector.table.PlayerDataSQL;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.List;
-
 public final class PlayerRoleCheckerConnector extends JavaPlugin implements ConnectorAPIHook {
 
     public static PlayerRoleCheckerConnector INSTANCE;
@@ -56,16 +54,6 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
         if (JDA.INSTANCE != null) {
             JDA.INSTANCE.shutdown();
         }
-    }
-
-    @Deprecated
-    public List<String> getRoleList() {
-        return configManager.getRoleList();
-    }
-
-    @Deprecated
-    public List<String> getCommandList() {
-        return configManager.getJoinCommand();
     }
 
     @Override

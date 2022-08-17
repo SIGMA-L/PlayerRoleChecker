@@ -150,12 +150,26 @@ public class LocalSQL extends CheckerTemporaryTable {
     }
 
     @Override
+    public void drop() {
+        Statement statement = null;
+        try {
+            statement = getConnection().createStatement();
+
+            statement.executeUpdate("drop table if exists waitverify");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            CommonUtils.close(statement);
+        }
+    }
+
+    @Override
     public void create() {
         Statement statement = null;
         try {
-            statement = PlayerDataSQL.getInstance().getConnection().createStatement();
+            drop();
 
-            statement.executeUpdate("drop table if exists waitverify");
+            statement = getConnection().createStatement();
             statement.executeUpdate("create table if not exists waitverify (uuid string, code int, bedrock boolean)");
         } catch (SQLException e) {
             e.printStackTrace();

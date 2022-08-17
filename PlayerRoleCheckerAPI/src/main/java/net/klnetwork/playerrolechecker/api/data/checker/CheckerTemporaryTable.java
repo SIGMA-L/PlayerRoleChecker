@@ -25,5 +25,7 @@ public abstract class CheckerTemporaryTable extends SQLInterface {
 
     public abstract void remove(String uuid, Integer code);
 
+    public abstract void drop();
+
     public abstract void create();
 }
