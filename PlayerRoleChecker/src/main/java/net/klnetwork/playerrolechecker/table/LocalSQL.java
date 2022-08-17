@@ -109,17 +109,27 @@ public class LocalSQL extends CheckerTemporaryTable {
     }
 
     @Override
-    public void put(UUID uuid, Integer code, boolean bedrock) {
-        put(uuid.toString(), code.toString(), bedrock);
+    public void put(String uuid, String code, boolean bedrock) {
+        put(uuid, Integer.parseInt(code), bedrock);
     }
 
     @Override
-    public void put(String uuid, String code, boolean bedrock) {
+    public void put(UUID uuid, Integer code, boolean bedrock) {
+        put(uuid.toString(), code, bedrock);
+    }
+
+    @Override
+    public void put(UUID uuid, String code, boolean bedrock) {
+        put(uuid.toString(), Integer.parseInt(code), bedrock);
+    }
+
+    @Override
+    public void put(String uuid, Integer code, boolean bedrock) {
         PreparedStatement statement = null;
         try {
-            statement = getConnection().prepareStatement("insert into waitverify values (?,?)");
+            statement = getConnection().prepareStatement("insert into waitverify values (?,?,?)");
             statement.setString(1, uuid);
-            statement.setString(2, code);
+            statement.setInt(2, code);
             statement.setBoolean(3, bedrock);
             statement.execute();
         } catch (SQLException throwables) {
