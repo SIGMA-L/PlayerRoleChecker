@@ -45,11 +45,19 @@ public class JoinEvent extends JoinHandler {
             Guild guild = PlayerRoleCheckerConnector.INSTANCE.getJDA().getGuildById(PlayerRoleCheckerConnector.INSTANCE.getConfig().getLong("GuildID"));
 
             if (guild == null) {
-                for (Guild g : PlayerRoleCheckerConnector.INSTANCE.getJDA().getGuilds()) {
+                //new method
+                if (CommonUtils.hasRole(PlayerRoleCheckerConnector.INSTANCE.getJDA().getRoleById(PlayerRoleCheckerConnector.INSTANCE.getConfigManager().getRoleList().get(0))
+                        .getGuild().retrieveMemberById(data.getDiscordId())
+                        .complete().getRoles(), PlayerRoleCheckerConnector.INSTANCE.getConfigManager().getRoleList())) {
+                    return callEvent(new CheckResultEvent(data, CheckResultEnum.SUCCESS)).getResult();
+                }
+
+                //deprecated method! don't use!
+                /*for (Guild g : PlayerRoleCheckerConnector.INSTANCE.getJDA().getGuilds()) {
                     if (CommonUtils.hasRole(g.retrieveMemberById(data.getDiscordId()).complete().getRoles(), PlayerRoleCheckerConnector.INSTANCE.getConfigManager().getRoleList())) {
                         return callEvent(new CheckResultEvent(data, CheckResultEnum.SUCCESS)).getResult();
                     }
-                }
+                }*/
 
                 return callEvent(new CheckResultEvent(data, CheckResultEnum.GUILD_IS_INVALID)).getResult();
             } else {
