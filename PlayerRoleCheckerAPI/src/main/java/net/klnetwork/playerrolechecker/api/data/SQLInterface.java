@@ -2,6 +2,7 @@ package net.klnetwork.playerrolechecker.api.data;
 
 import net.klnetwork.playerrolechecker.api.enums.SQLType;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
+import org.bukkit.plugin.Plugin;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -39,7 +40,48 @@ public abstract class SQLInterface {
         return false;
     }
 
-    public abstract SQLType getType();
+    public abstract Plugin getPlugin();
 
-    public abstract void setType(SQLType type);
+    public abstract String getPath();
+
+    public String getSQLFormat() {
+        if (getPlugin() == null || getPath() == null) {
+            return null;
+        }
+
+        switch (getType()) {
+            case SQLITE:
+            case MYSQL:
+            case CUSTOM: {
+                //todo: impl
+            }
+        }
+
+        //current null
+        return null;
+    }
+
+    public String getPassword() {
+        if (getPlugin() == null || getPath() == null) {
+            return null;
+        }
+
+        return getPlugin().getConfig().getString(getPath() + ".password");
+    }
+
+    public SQLType getType() {
+        if (getPlugin() == null || getPath() == null) {
+            return SQLType.CUSTOM;
+        }
+
+        try {
+            return SQLType.valueOf(getPlugin().getConfig().getString(getPath() + ".type"));
+        } catch (Exception ex) {
+            return SQLType.CUSTOM;
+        }
+    }
+
+    public void setType(SQLType type) {
+        this.type = type;
+    }
 }

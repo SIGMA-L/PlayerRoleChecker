@@ -4,6 +4,7 @@ import net.klnetwork.playerrolechecker.api.data.connector.ConnectorBypassTable;
 import net.klnetwork.playerrolechecker.api.enums.SQLType;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
+import org.bukkit.plugin.Plugin;
 
 import java.sql.*;
 import java.util.UUID;
@@ -134,6 +135,16 @@ public class LocalSQL extends ConnectorBypassTable {
             connection = DriverManager.getConnection("jdbc:sqlite:" + PlayerRoleCheckerConnector.INSTANCE.getConfig().getString("SQLite.SQLiteLocate"));
         }
         return connection;
+    }
+
+    @Override
+    public Plugin getPlugin() {
+        return PlayerRoleCheckerConnector.INSTANCE;
+    }
+
+    @Override
+    public String getPath() {
+        return null;
     }
 
     @Override

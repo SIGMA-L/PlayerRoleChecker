@@ -8,6 +8,7 @@ import net.klnetwork.playerrolechecker.api.data.PlayerDataTable;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.Plugin;
 
 import java.sql.*;
 import java.util.UUID;
@@ -204,7 +205,17 @@ public class PlayerDataSQL extends PlayerDataTable {
         }
         return connection;
     }
-    
+
+    @Override
+    public Plugin getPlugin() {
+        return PlayerRoleChecker.INSTANCE;
+    }
+
+    @Override
+    public String getPath() {
+        return null;
+    }
+
     @Override
     public SQLType getType() {
         return type;

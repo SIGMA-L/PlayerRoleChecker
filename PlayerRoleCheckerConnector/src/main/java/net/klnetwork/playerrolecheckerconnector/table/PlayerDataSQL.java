@@ -7,6 +7,7 @@ import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.Plugin;
 
 import java.sql.*;
 import java.util.UUID;
@@ -204,6 +205,16 @@ public class PlayerDataSQL extends PlayerDataTable {
             connection = DriverManager.getConnection("jdbc:mysql://" + config.getString("MySQL.Server") + ":" + config.getInt("MySQL.Port") + "/" + config.getString("MySQL.Database") + config.getString("MySQL.Option"), config.getString("MySQL.Username"), config.getString("MySQL.Password"));
         }
         return connection;
+    }
+
+    @Override
+    public Plugin getPlugin() {
+        return PlayerRoleCheckerConnector.INSTANCE;
+    }
+
+    @Override
+    public String getPath() {
+        return null;
     }
 
     @Override

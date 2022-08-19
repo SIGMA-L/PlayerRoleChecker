@@ -31,11 +31,7 @@ public class JoinEvent extends JoinHandler {
 
     @Override
     public void onErrorCaught(AsyncPlayerPreLoginEvent event, Exception ex) {
-        Bukkit.getLogger().severe("error detected on LoginEvent");
-
-        Bukkit.getLogger().severe("----------------------------------------");
         ex.printStackTrace();
-        Bukkit.getLogger().severe("----------------------------------------");
     }
 
     public void run(UUID uuid) {
