@@ -71,7 +71,7 @@ public abstract class SQLInterface {
         return getPlugin().getConfig().getString(getPath() + ".password");
     }
 
-    public @NotNull SQLType getType0() {
+    protected @NotNull SQLType getType0() {
         if (getPlugin() == null || getPath() == null) {
             return SQLType.CUSTOM;
         }

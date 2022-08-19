@@ -27,6 +27,10 @@ public class PlayerRoleCheckerAPI {
         return (ConnectorAPIHook) pairs.get(HookedAPIType.CONNECTOR);
     }
 
+    public static ConnectorAPIHook getConnector() {
+        return (ConnectorAPIHook) Bukkit.getPluginManager().getPlugin("PlayerRoleCheckerConnector");
+    }
+
     public static boolean isHookedChecker() {
         final HookedAPIType type = getHookedAPIType();
 
@@ -39,6 +43,10 @@ public class PlayerRoleCheckerAPI {
         }
 
         return (CheckerAPIHook) pairs.get(HookedAPIType.CHECKER);
+    }
+
+    public static CheckerAPIHook getChecker() {
+        return (CheckerAPIHook) Bukkit.getPluginManager().getPlugin("PlayerRoleChecker");
     }
 
     public static HookedAPIType getHookedAPIType() {
