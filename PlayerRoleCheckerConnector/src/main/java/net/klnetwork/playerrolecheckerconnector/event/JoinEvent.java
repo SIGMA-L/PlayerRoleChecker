@@ -52,7 +52,7 @@ public class JoinEvent extends JoinHandler {
                     return callEvent(new CheckResultEvent(data, CheckResultEnum.SUCCESS)).getResult();
                 }
 
-                //deprecated method! don't use!
+                //deprecated! don't use!
                 /*for (Guild g : PlayerRoleCheckerConnector.INSTANCE.getJDA().getGuilds()) {
                     if (CommonUtils.hasRole(g.retrieveMemberById(data.getDiscordId()).complete().getRoles(), PlayerRoleCheckerConnector.INSTANCE.getConfigManager().getRoleList())) {
                         return callEvent(new CheckResultEvent(data, CheckResultEnum.SUCCESS)).getResult();

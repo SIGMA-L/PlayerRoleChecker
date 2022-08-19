@@ -9,6 +9,7 @@ import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
 import java.util.UUID;
@@ -217,7 +218,7 @@ public class PlayerDataSQL extends PlayerDataTable {
     }
 
     @Override
-    public SQLType getType() {
+    public @NotNull SQLType getType() {
         return type;
     }
 

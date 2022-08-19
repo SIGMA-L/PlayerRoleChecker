@@ -3,6 +3,8 @@ package net.klnetwork.playerrolechecker.api.data;
 import net.klnetwork.playerrolechecker.api.enums.SQLType;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -44,7 +46,7 @@ public abstract class SQLInterface {
 
     public abstract String getPath();
 
-    public String getSQLFormat() {
+    public @Nullable String getSQLFormat() {
         if (getPlugin() == null || getPath() == null) {
             return null;
         }
@@ -61,7 +63,7 @@ public abstract class SQLInterface {
         return null;
     }
 
-    public String getPassword() {
+    public @Nullable String getPassword() {
         if (getPlugin() == null || getPath() == null) {
             return null;
         }
@@ -69,7 +71,7 @@ public abstract class SQLInterface {
         return getPlugin().getConfig().getString(getPath() + ".password");
     }
 
-    public SQLType getType() {
+    public @NotNull SQLType getType0() {
         if (getPlugin() == null || getPath() == null) {
             return SQLType.CUSTOM;
         }
@@ -79,6 +81,14 @@ public abstract class SQLInterface {
         } catch (Exception ex) {
             return SQLType.CUSTOM;
         }
+    }
+
+    public @NotNull SQLType getType() {
+        if (type == null) {
+            type = getType0();
+        }
+
+        return type;
     }
 
     public void setType(SQLType type) {

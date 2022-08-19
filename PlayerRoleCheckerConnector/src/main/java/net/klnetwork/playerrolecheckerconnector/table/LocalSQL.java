@@ -5,6 +5,7 @@ import net.klnetwork.playerrolechecker.api.enums.SQLType;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
 import java.util.UUID;
@@ -148,7 +149,7 @@ public class LocalSQL extends ConnectorBypassTable {
     }
 
     @Override
-    public SQLType getType() {
+    public @NotNull SQLType getType() {
         return type;
     }
 

@@ -6,6 +6,7 @@ import net.klnetwork.playerrolechecker.api.data.checker.CheckerTemporaryTable;
 import net.klnetwork.playerrolechecker.api.enums.SQLType;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
 import java.util.UUID;
@@ -208,7 +209,7 @@ public class LocalSQL extends CheckerTemporaryTable {
     }
 
     @Override
-    public SQLType getType() {
+    public @NotNull SQLType getType() {
         return type;
     }
 
