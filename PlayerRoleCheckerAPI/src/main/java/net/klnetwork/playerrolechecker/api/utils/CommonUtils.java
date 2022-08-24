@@ -38,7 +38,7 @@ public class CommonUtils {
     }
 
     public static boolean hasFloodGate() {
-        return Bukkit.getPluginManager().getPlugin("Floodgate") != null;
+        return Bukkit.getPluginManager().getPlugin("floodgate") != null;
     }
 
     public static boolean isFloodgateUser(UUID uuid) {

@@ -1,15 +1,13 @@
 package net.klnetwork.playerrolechecker.table;
 
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
-
+import net.klnetwork.playerrolechecker.api.data.PlayerDataTable;
 import net.klnetwork.playerrolechecker.api.data.common.PlayerData;
 import net.klnetwork.playerrolechecker.api.enums.SQLType;
-import net.klnetwork.playerrolechecker.api.data.PlayerDataTable;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
-import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
 import java.util.UUID;
@@ -215,15 +213,5 @@ public class PlayerDataSQL extends PlayerDataTable {
     @Override
     public String getPath() {
         return null;
-    }
-
-    @Override
-    public @NotNull SQLType getType() {
-        return type;
-    }
-
-    @Override
-    public void setType(SQLType type) {
-        this.type = type;
     }
 }
