@@ -7,6 +7,8 @@ import org.bukkit.plugin.Plugin;
 public class UpdateChecker {
     private final UpdateBuilder builder;
 
+    private boolean releasedNewVersion;
+
     public UpdateChecker(UpdateBuilder builder) {
         if (builder == null) {
             throw new IllegalStateException();
@@ -17,22 +19,17 @@ public class UpdateChecker {
 
     public void init() {
         Bukkit.getScheduler().runTaskTimerAsynchronously(builder.plugin(), () -> {
-
+            this.releasedNewVersion = !isNewerVersion();
         }, 0, builder.checkTicks());
     }
 
     public boolean isNewerVersion() {
         String version = replaceRegex(CommonUtils.getVersion(getOwner(), getRepo()));
 
-        //todo: default check impl
-        String current = replaceRegex(isDefaultCheck() ? null : getPlugin().getDescription().getVersion());
+        String current = replaceRegex(isDefaultCheck() ? getVersion() : getPlugin().getDescription().getVersion());
 
-        if (isSmartVersionCheck()) {
-
-        }
-
-        //temporary
-        return true;
+        return isSmartVersionCheck() ? Double.parseDouble(current) <= Double.parseDouble(version)
+                : version.equalsIgnoreCase(current);
     }
 
     private String replaceRegex(String string) {
@@ -43,8 +40,16 @@ public class UpdateChecker {
         return string.replaceAll(getRegex(), "");
     }
 
+    public boolean isReleasedNewVersion() {
+        return releasedNewVersion;
+    }
+
     public boolean isDefaultCheck() {
         return builder.defaultCheck();
+    }
+
+    public String getVersion() {
+        return builder.version();
     }
 
     public boolean isSmartVersionCheck() {

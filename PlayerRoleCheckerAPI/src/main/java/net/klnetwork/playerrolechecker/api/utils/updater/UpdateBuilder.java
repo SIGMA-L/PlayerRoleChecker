@@ -12,6 +12,7 @@ public class UpdateBuilder {
     private String regex = "^[0-9]";
     private String owner = "SIGMA-L";
     private String repo = "PlayerRoleChecker";
+    private String version = "v4.0";
 
     public static UpdateBuilder getInstance() {
         return new UpdateBuilder();
@@ -57,6 +58,16 @@ public class UpdateBuilder {
 
     public UpdateBuilder repo(String repo) {
         this.repo = repo;
+
+        return this;
+    }
+
+    public String version() {
+        return version;
+    }
+
+    public UpdateBuilder version(String version) {
+        this.version = version;
 
         return this;
     }
