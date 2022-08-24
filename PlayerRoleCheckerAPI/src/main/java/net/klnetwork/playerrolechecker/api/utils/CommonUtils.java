@@ -87,13 +87,7 @@ public class CommonUtils {
         return null;
     }
 
-    public static boolean isNewerVersion() {
-        try {
-            return isNewerVersion("SIGMA-L", "PlayerRoleChecker", PlayerRoleCheckerAPI.getVersion());
-        } catch (Exception e) {
-            return false;
-        }
-    }
+
 
     public static long getXUID(UUID uuid) {
         //Floodgate not using mostSignificantBits!
@@ -104,16 +98,30 @@ public class CommonUtils {
         return uuid.getLeastSignificantBits();
     }
 
-    public static boolean isNewerVersion(String owner, String repo, String version) throws Exception {
-        String url = "https://api.github.com/repos/" + owner + "/" + repo + "/releases/latest";
+    public static boolean isNewerVersion() {
+        return isNewerVersion("SIGMA-L", "PlayerRoleChecker", PlayerRoleCheckerAPI.getVersion());
+    }
 
-        Scanner scanner = new Scanner(new URL(url).openStream());
-        String input = scanner.nextLine();
-        scanner.close();
+    public static boolean isNewerVersion(String owner, String repo, String version) {
+        String ver = getVersion(owner, repo);
 
-        JsonObject object = new Gson().fromJson(input, JsonObject.class);
+        return ver != null && ver.equals(version);
+    }
 
-        return object.get("tag_name").getAsString().equals(version);
+    public static String getVersion(String owner, String repo) {
+        try {
+            String url = "https://api.github.com/repos/" + owner + "/" + repo + "/releases/latest";
+
+            Scanner scanner = new Scanner(new URL(url).openStream());
+            String input = scanner.nextLine();
+            scanner.close();
+
+            JsonObject object = new Gson().fromJson(input, JsonObject.class);
+
+            return object.get("tag_name").getAsString();
+        } catch (Exception ex) {
+            return null;
+        }
     }
 
     public static boolean hasRole(List<Role> roles, List<String> id) {
