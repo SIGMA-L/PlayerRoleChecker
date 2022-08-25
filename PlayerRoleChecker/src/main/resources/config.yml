@@ -88,6 +88,33 @@ JoinCommand:
     message:
       - 'UUID: | %uuid% | false'
       - 'DiscordID: | %discordid% | false'
+  already-registered-bedrock:
+    color: 'RED'
+    title: 'リクエストに失敗しました'
+    description: '理由: すでに登録されているようです'
+    image: '<local_image>'
+    timestamp: true
+    message:
+      - 'XUID: | %xuid% | false'
+      - 'DiscordID: | %discordid% | false'
+  success-register-bedrock:
+    color: 'GREEN'
+    title: 'リクエストに成功しました！'
+    description: '以下のプレイヤーの登録が完了しました'
+    image: '<local_image>'
+    timestamp: true
+    message:
+      - 'XUID: | %xuid% | false'
+      - 'DiscordID: | %discordid% | false'
+  sendmessage-bedrock:
+    color: 'BLACK'
+    title: '登録が完了したようです！'
+    description: ''
+    image: '<local_image>'
+    timestamp: true
+    message:
+      - 'XUID: | %xuid% | false'
+      - 'DiscordID: | %discordid% | false'
 ## RemoveCommand: !remove コマンド
 ## - invalid-name: 不明な名前のエラーメッセージ (%uuid% %discordid% をサポートしていません)
 ## - not-registered: 登録されていないエラーメッセージ (%uuid% %discordid% をサポートしていません)

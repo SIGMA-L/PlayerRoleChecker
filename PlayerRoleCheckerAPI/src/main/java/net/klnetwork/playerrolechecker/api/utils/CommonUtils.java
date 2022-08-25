@@ -12,7 +12,10 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.geysermc.floodgate.api.FloodgateApi;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 import java.util.Scanner;
@@ -23,17 +26,18 @@ public class CommonUtils {
     @Deprecated
     public static String GEYSER_API_METHOD = "https://api.geysermc.org/v2/xbox/xuid/";
 
+    public static String GEYSER_SKIN_API = "https://api.geysermc.org/v2/skin/";
+    public static String MINECRAFT_NAME_API = "https://api.mojang.com/users/profiles/minecraft/";
+    public static String MINECRAFT_SKIN_API = "https://textures.minecraft.net/texture/";
+
     /**
      * @param name player name
      * @return player uuid
      * @throws Exception if player name is Unknown
      */
     public static UUID getUUID(String name) throws Exception {
-        Scanner scanner = new Scanner(new URL("https://api.mojang.com/users/profiles/minecraft/" + name).openStream());
-        String input = scanner.nextLine();
-        scanner.close();
+        JsonObject UUIDObject = new Gson().fromJson(getContent(MINECRAFT_NAME_API + name), JsonObject.class);
 
-        JsonObject UUIDObject = new Gson().fromJson(input, JsonObject.class);
         return UUID.fromString(UUIDObject.get("id").getAsString().replaceFirst("([0-9a-fA-F]{8})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]+)", "$1-$2-$3-$4-$5"));
     }
 
@@ -44,8 +48,9 @@ public class CommonUtils {
     public static boolean isFloodgateUser(UUID uuid) {
         if (hasFloodGate()) return FloodgateApi.getInstance().isFloodgatePlayer(uuid);
         else return false;
-
     }
+
+
 
     public static UUID getFloodgateUserUUID(UUID uuid) {
         return FloodgateApi.getInstance().getPlayer(uuid).getJavaUniqueId();
@@ -53,6 +58,33 @@ public class CommonUtils {
 
     public static String getFloodgateXuid(UUID uuid) {
         return FloodgateApi.getInstance().getPlayer(uuid).getXuid();
+    }
+
+    public static String getSkinId(UUID uuid) {
+        return getSkinId(getFloodgateUserUUID(uuid));
+    }
+
+    public static String getSkinId(String xuid) {
+        JsonObject object = new Gson().fromJson(getContent(GEYSER_SKIN_API + xuid), JsonObject.class);
+
+        return object.get("texture_id").getAsString();
+    }
+
+    public static BufferedImage getHeadSkin(String textureId) {
+        if (textureId == null) {
+            throw new IllegalStateException();
+        }
+
+        BufferedImage skin = getImages(MINECRAFT_SKIN_API + textureId);
+
+        if (skin == null) {
+            throw new IllegalStateException();
+        }
+
+        BufferedImage head = skin.getSubimage(8, 8, 8, 8);
+        skin.flush();
+
+        return head;
     }
 
     /**
@@ -112,16 +144,41 @@ public class CommonUtils {
         try {
             String url = "https://api.github.com/repos/" + owner + "/" + repo + "/releases/latest";
 
-            Scanner scanner = new Scanner(new URL(url).openStream());
-            String input = scanner.nextLine();
-            scanner.close();
-
-            JsonObject object = new Gson().fromJson(input, JsonObject.class);
+            JsonObject object = new Gson().fromJson(getContent(url), JsonObject.class);
 
             return object.get("tag_name").getAsString();
         } catch (Exception ex) {
             return null;
         }
+    }
+
+    public static BufferedImage getImages(String url) {
+        InputStream stream = null;
+        try {
+            stream = new URL(url).openStream();
+
+            return ImageIO.read(stream);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            close(stream);
+        }
+        return null;
+    }
+
+    public static String getContent(String url) {
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(new URL(url).openStream());
+
+            return scanner.nextLine();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            close(scanner);
+        }
+
+        return null;
     }
 
     public static boolean hasRole(List<Role> roles, List<String> id) {

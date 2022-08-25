@@ -19,7 +19,14 @@ public class UpdateChecker {
 
     public void init() {
         Bukkit.getScheduler().runTaskTimerAsynchronously(builder.plugin(), () -> {
-            this.releasedNewVersion = !isNewerVersion();
+            final boolean hasNewVersion = !isNewerVersion();
+
+            //TODO: ALERT TO CONSOLE!
+            if (!releasedNewVersion && hasNewVersion) {
+                getPlugin().getLogger().info("new version found!");
+            }
+
+            this.releasedNewVersion = hasNewVersion;
         }, 0, builder.checkTicks());
     }
 
