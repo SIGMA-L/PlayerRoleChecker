@@ -20,9 +20,24 @@ public class JoinEvent extends Event implements Cancellable {
     private JoinEventType type;
 
     private Message message;
+    private String discordId;
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
     private boolean isCancelled, bedrock;
+
+    public JoinEvent(UUID uuid, String discordId, int code, boolean bedrock, Message message, JoinEventType type) {
+        super(true);
+
+        this.discordId = discordId;
+        this.member = message.getMember();
+        this.uuid = uuid;
+        this.code = code;
+        this.bedrock = bedrock;
+
+        this.message = message;
+        this.type = type;
+    }
+
 
     public JoinEvent(UUID uuid, int code, boolean bedrock, Message message, JoinEventType type) {
         super(true);
@@ -52,6 +67,10 @@ public class JoinEvent extends Event implements Cancellable {
 
     public static HandlerList getHandlerList() {
         return HANDLER_LIST;
+    }
+
+    public String getMemberId() {
+        return discordId != null ? discordId : member.getId();
     }
 
     public Member getMember() {

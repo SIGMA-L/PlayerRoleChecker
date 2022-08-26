@@ -15,6 +15,8 @@ import org.geysermc.floodgate.api.FloodgateApi;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
@@ -42,15 +44,13 @@ public class CommonUtils {
     }
 
     public static boolean hasFloodGate() {
-        return Bukkit.getPluginManager().getPlugin("floodgate") != null;
+        return Bukkit.getPluginManager().isPluginEnabled("floodgate");
     }
 
     public static boolean isFloodgateUser(UUID uuid) {
         if (hasFloodGate()) return FloodgateApi.getInstance().isFloodgatePlayer(uuid);
         else return false;
     }
-
-
 
     public static UUID getFloodgateUserUUID(UUID uuid) {
         return FloodgateApi.getInstance().getPlayer(uuid).getJavaUniqueId();
@@ -70,6 +70,14 @@ public class CommonUtils {
         return object.get("texture_id").getAsString();
     }
 
+    public static BufferedImage getHeadSkin(UUID uuid, boolean f) {
+        return f ? getHeadSkin(uuid) : null;
+    }
+
+    public static BufferedImage getHeadSkin(UUID uuid) {
+        return getHeadSkin(getSkinId(uuid));
+    }
+
     public static BufferedImage getHeadSkin(String textureId) {
         if (textureId == null) {
             throw new IllegalStateException();
@@ -85,6 +93,18 @@ public class CommonUtils {
         skin.flush();
 
         return head;
+    }
+
+    public static byte[] toByteArray(BufferedImage image) {
+        //byteArrayOutStreamはclose()しても意味はない
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try {
+            ImageIO.write(image, "png", out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return out.toByteArray();
     }
 
     /**

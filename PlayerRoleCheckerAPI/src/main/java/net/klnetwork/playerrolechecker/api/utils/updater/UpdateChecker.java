@@ -3,11 +3,13 @@ package net.klnetwork.playerrolechecker.api.utils.updater;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitTask;
 
 public class UpdateChecker {
     private final UpdateBuilder builder;
 
     private boolean releasedNewVersion;
+    private int id = -1;
 
     public UpdateChecker(UpdateBuilder builder) {
         if (builder == null) {
@@ -15,10 +17,14 @@ public class UpdateChecker {
         }
 
         this.builder = builder;
+
+        init();
     }
 
     public void init() {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(builder.plugin(), () -> {
+        stop();
+
+        BukkitTask task = Bukkit.getScheduler().runTaskTimerAsynchronously(builder.plugin(), () -> {
             final boolean hasNewVersion = !isNewerVersion();
 
             //TODO: ALERT TO CONSOLE!
@@ -28,6 +34,8 @@ public class UpdateChecker {
 
             this.releasedNewVersion = hasNewVersion;
         }, 0, builder.checkTicks());
+
+        id = task.getTaskId();
     }
 
     public boolean isNewerVersion() {
@@ -45,6 +53,14 @@ public class UpdateChecker {
         }
 
         return string.replaceAll(getRegex(), "");
+    }
+
+    public void stop() {
+        if (id != -1) {
+            Bukkit.getScheduler().cancelTask(id);
+
+            id = -1;
+        }
     }
 
     public boolean isReleasedNewVersion() {

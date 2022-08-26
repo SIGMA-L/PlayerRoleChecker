@@ -1,5 +1,6 @@
 package net.klnetwork.playerrolechecker.jda.command;
 
+import net.klnetwork.playerrolechecker.PlayerRoleChecker;
 import net.klnetwork.playerrolechecker.api.data.common.PlayerData;
 import net.klnetwork.playerrolechecker.api.data.common.TemporaryData;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandData;
@@ -47,8 +48,11 @@ public class JoinCommand extends CommandMessage {
             PlayerData data = PlayerDataSQL.getInstance().getDiscordId(temp.getUUID());
 
             if (data != null) {
-                if (!callEvent(new JoinEvent(data.getUUID(), temp.getCode(), CommonUtils.isFloodgateUser(data.getUUID()), event.getMessage(), JoinEventType.ALREADY_REGISTERED)).isCancelled()) {
-                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.already-registered", event.getMessage().getTimeCreated(), temp, data.getDiscordId()).build()).queue();
+                JoinEvent call = callEvent(new JoinEvent(data.getUUID(), data.getDiscordId(), temp.getCode(), CommonUtils.isFloodgateUser(data.getUUID()), event.getMessage(), JoinEventType.ALREADY_REGISTERED));
+
+                if (!call.isCancelled()) {
+                    event.reply(DiscordUtil.createEmbedMessage("JoinCommand.already-registered", call.getUUID(), call.getMemberId(), call.isBedrock()),
+                            event.getSkin(call.getUUID(), call.isBedrock() && PlayerRoleChecker.INSTANCE.getConfig().getBoolean("JoinCommand.requestBedrockSkin")));
 
                     //セキュリティー上の問題
                     LocalSQL.getInstance().remove(temp.getUUID(), temp.getCode());
@@ -60,9 +64,13 @@ public class JoinCommand extends CommandMessage {
                     LocalSQL.getInstance().remove(call.getUUID(), call.getCode());
                     PlayerDataSQL.getInstance().put(call.getUUID(), call.getMember().getId(), call.isBedrock());
 
-                    event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.success-register", event.getMessage().getTimeCreated(), call.getUUID(), call.getMember().getId()).build()).queue();
+                    //too big length>>>
+                    event.reply(DiscordUtil.createEmbedMessage("JoinCommand.success-register", call.getUUID(), call.getMember().getId(), call.isBedrock()),
+                            event.getSkin(call.getUUID(), call.isBedrock() && PlayerRoleChecker.INSTANCE.getConfig().getBoolean("JoinCommand.requestBedrockSkin")));
 
-                    DiscordUtil.sendMessageToChannel(DiscordUtil.embedBuilder("JoinCommand.sendmessage", event.getMessage().getTimeCreated(), call.getUUID(), call.getMember().getId()));
+
+                    DiscordUtil.sendMessage(DiscordUtil.createEmbedMessage("JoinCommand.sendmessage", call.getUUID(), call.getMember().getId(), call.isBedrock()),
+                            event.getSkin(call.getUUID(), call.isBedrock() && PlayerRoleChecker.INSTANCE.getConfig().getBoolean("JoinCommand.requestBedrockSkin")));
 
                     DiscordUtil.addRole(event.getGuild(), event.getMember());
                 }

@@ -44,6 +44,7 @@ JoinEvent:
 JoinCommand:
   name: ''
   globalCommand: false
+  requestBedrockSkin: true
   require-permission:
     ## require-permission: のあとに空白でも可能、やってることは変わらない
     - 'UNKNOWN'
@@ -70,6 +71,15 @@ JoinCommand:
     message:
       - 'UUID: | %uuid% | false'
       - 'DiscordID: | %discordid% | false'
+  already-registered-bedrock:
+    color: 'RED'
+    title: 'リクエストに失敗しました'
+    description: '理由: すでに登録されているようです'
+    image: 'attachment://user.png'
+    timestamp: true
+    message:
+      - 'XUID: | %xuid% | false'
+      - 'DiscordID: | %discordid% | false'
   success-register:
     color: 'GREEN'
     title: 'リクエストに成功しました！'
@@ -78,6 +88,15 @@ JoinCommand:
     timestamp: true
     message:
       - 'UUID: | %uuid% | false'
+      - 'DiscordID: | %discordid% | false'
+  success-register-bedrock:
+    color: 'GREEN'
+    title: 'リクエストに成功しました！'
+    description: '以下のプレイヤーの登録が完了しました'
+    image: 'attachment://user.png'
+    timestamp: true
+    message:
+      - 'XUID: | %xuid% | false'
       - 'DiscordID: | %discordid% | false'
   sendmessage:
     color: 'BLACK'
@@ -88,29 +107,11 @@ JoinCommand:
     message:
       - 'UUID: | %uuid% | false'
       - 'DiscordID: | %discordid% | false'
-  already-registered-bedrock:
-    color: 'RED'
-    title: 'リクエストに失敗しました'
-    description: '理由: すでに登録されているようです'
-    image: '<local_image>'
-    timestamp: true
-    message:
-      - 'XUID: | %xuid% | false'
-      - 'DiscordID: | %discordid% | false'
-  success-register-bedrock:
-    color: 'GREEN'
-    title: 'リクエストに成功しました！'
-    description: '以下のプレイヤーの登録が完了しました'
-    image: '<local_image>'
-    timestamp: true
-    message:
-      - 'XUID: | %xuid% | false'
-      - 'DiscordID: | %discordid% | false'
   sendmessage-bedrock:
     color: 'BLACK'
     title: '登録が完了したようです！'
     description: ''
-    image: '<local_image>'
+    image: 'attachment://user.png'
     timestamp: true
     message:
       - 'XUID: | %xuid% | false'
