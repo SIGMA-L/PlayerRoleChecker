@@ -4,19 +4,18 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.utils.FileUpload;
+import net.klnetwork.playerrolechecker.api.data.common.SkinCache;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
-import java.util.UUID;
 
-public class CommandData {
+public class CommandData extends SkinCache {
 
     private final List<String> args;
     private final String commandName;
 
     private final MessageReceivedEvent event;
-    private BufferedImage skin;
 
     public CommandData(String commandName, List<String> args, MessageReceivedEvent event) {
         this.commandName = commandName;
@@ -59,18 +58,6 @@ public class CommandData {
 
     public MessageReceivedEvent getEvent() {
         return event;
-    }
-
-    public BufferedImage getSkin(UUID uuid, boolean f) {
-        if (uuid == null) {
-            return null;
-        }
-
-        if (skin == null) {
-            skin = CommonUtils.getHeadSkin(uuid, f);
-        }
-
-        return skin;
     }
 
     public void reply(MessageEmbed embed, BufferedImage image) {

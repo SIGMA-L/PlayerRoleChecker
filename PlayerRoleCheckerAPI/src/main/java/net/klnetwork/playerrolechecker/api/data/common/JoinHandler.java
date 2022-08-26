@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.List;
 
-public abstract class JoinHandler implements Listener {
+public class JoinHandler implements Listener {
     public void onPreLoginEvent(AsyncPlayerPreLoginEvent event) {}
 
     public void onLoginEvent(PlayerJoinEvent event) {}
