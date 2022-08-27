@@ -7,6 +7,7 @@ import net.klnetwork.playerrolechecker.api.data.connector.ConnectorBypassTable;
 import net.klnetwork.playerrolechecker.api.data.connector.ConnectorCustomDataBase;
 import net.klnetwork.playerrolechecker.api.discord.CommandManager;
 import net.klnetwork.playerrolechecker.api.enums.HookedAPIType;
+import net.klnetwork.playerrolechecker.api.utils.Metrics;
 import net.klnetwork.playerrolecheckerconnector.api.ConfigValue;
 import net.klnetwork.playerrolecheckerconnector.api.CustomDataBaseImpl;
 import net.klnetwork.playerrolecheckerconnector.command.AddBypassCommand;
@@ -26,6 +27,7 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
     private final JoinManager joinManager = new JoinManager(this);
     private final CommandManager commandManager = new CommandManager(null);
     private final ConfigValue configManager = new ConfigValue(this);
+    private final Metrics metrics = new Metrics(this,	16282);
 
     @Override
     public void onEnable() {
@@ -64,6 +66,11 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
     @Override
     public net.dv8tion.jda.api.JDA getJDA() {
         return JDA.INSTANCE;
+    }
+
+    @Override
+    public Metrics getMetrics() {
+        return metrics;
     }
 
     @Override

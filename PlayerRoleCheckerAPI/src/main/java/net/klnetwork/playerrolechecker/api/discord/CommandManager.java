@@ -77,6 +77,7 @@ public class CommandManager extends ListenerAdapter {
 
     public void register(Object obj) {
         if (obj instanceof CommandSlash) {
+            //todo: add to JDA register!
             slashType.add((CommandSlash) obj);
         } else if (obj instanceof CommandMessage) {
             messageType.add((CommandMessage) obj);

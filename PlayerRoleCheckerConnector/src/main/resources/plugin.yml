@@ -3,6 +3,7 @@ version: ${project.version}
 main: net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector
 prefix: PRCConnector
 authors: [ SIGMA, Kouta1212 ]
+api-version: 1.13
 commands:
   joinmode:
     permission: playerrolechecker.joinmode

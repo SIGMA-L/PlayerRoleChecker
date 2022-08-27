@@ -10,6 +10,7 @@ import net.klnetwork.playerrolechecker.api.data.checker.CheckerCustomDataBase;
 import net.klnetwork.playerrolechecker.api.data.checker.CheckerTemporaryTable;
 import net.klnetwork.playerrolechecker.api.discord.CommandManager;
 import net.klnetwork.playerrolechecker.api.enums.HookedAPIType;
+import net.klnetwork.playerrolechecker.api.utils.Metrics;
 import net.klnetwork.playerrolechecker.event.JoinEvent;
 import net.klnetwork.playerrolechecker.jda.JDA;
 import net.klnetwork.playerrolechecker.jda.command.ForceJoinCommand;
@@ -27,6 +28,8 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
     private final JoinManager joinManager = new JoinManager(this);
     private final CommandManager commandManager = new CommandManager(null);
     private final ConfigValue configManger = new ConfigValue(this);
+
+    private final Metrics metrics = new Metrics(this, 16281);
 
     @Override
     public void onEnable() {
@@ -61,6 +64,11 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
     @Override
     public net.dv8tion.jda.api.JDA getJDA() {
         return JDA.INSTANCE;
+    }
+
+    @Override
+    public Metrics getMetrics() {
+        return metrics;
     }
 
     @Override

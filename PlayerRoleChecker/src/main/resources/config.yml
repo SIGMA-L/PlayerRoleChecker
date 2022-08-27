@@ -1,7 +1,6 @@
 DataBase:
   TemporaryTable:
     Location: 'data.db'
-    useBypassCommand: true
     type: SQLITE
   PlayerDataTable:
     Server: 'localhost'
