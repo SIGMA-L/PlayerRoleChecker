@@ -16,6 +16,9 @@ public class ConfigValue extends ConfigManager implements ConnectorConfigManager
     @ConfigKey(key = "Minecraft.defaultJoinMode")
     private boolean joinMode = true;
 
+    @ConfigKey(key = "Minecraft.whitelistSkip")
+    private boolean whitelistSkipped = true;
+
     @ConfigKey(key = "Discord.RoleID")
     private List<String> roleList = new ArrayList<>();
 
@@ -33,6 +36,14 @@ public class ConfigValue extends ConfigManager implements ConnectorConfigManager
     @Override
     public void setJoinMode(boolean joinMode) {
         this.joinMode = joinMode;
+    }
+
+    public boolean isWhitelistSkipped() {
+        return whitelistSkipped;
+    }
+
+    public void setWhitelistSkipped(boolean whitelistSkipped) {
+        this.whitelistSkipped = whitelistSkipped;
     }
 
     @Override

@@ -19,6 +19,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class JoinEvent extends JoinHandler {
     @Override
     public void onPreLoginEvent(AsyncPlayerPreLoginEvent event) {
+        if (PlayerRoleCheckerConnector.INSTANCE.getConfigManager().isWhitelistSkipped()
+                && Bukkit.getWhitelistedPlayers().stream().anyMatch(player -> event.getUniqueId().equals(player.getUniqueId()))) {
+            return;
+        }
+
         if (!PlayerRoleCheckerConnector.INSTANCE.getConfigManager().isJoinMode()
                 && !callEvent(new CheckSkippedEvent(SkippedReasonEnum.SKIP_MODE)).isCancelled()) {
             return;

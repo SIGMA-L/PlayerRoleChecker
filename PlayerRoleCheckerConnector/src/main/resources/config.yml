@@ -33,6 +33,7 @@ Discord:
 ## %role% - role
 Minecraft:
   debug: false
+  whitelistSkip: true
   defaultJoinMode: true
   kickMessage:
     - '&6あなたには参加権限がありません！'
