@@ -131,7 +131,7 @@ public class LocalSQL extends ConnectorBypassTable {
     @Override
     public Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
-            connection = DriverManager.getConnection("jdbc:sqlite:" + PlayerRoleCheckerConnector.INSTANCE.getConfig().getString("SQLite.SQLiteLocate"));
+            this.connection =  CommonUtils.createConnection(getSQLFormat(), getUser(), getPassword());
         }
         return connection;
     }
@@ -143,6 +143,6 @@ public class LocalSQL extends ConnectorBypassTable {
 
     @Override
     public String getPath() {
-        return null;
+        return "DataBase.BypassTable";
     }
 }

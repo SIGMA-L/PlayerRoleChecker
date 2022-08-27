@@ -33,6 +33,9 @@ public class DiscordUtil {
         action.queue();
     }
 
+    public static void addRole(Member member) {
+        member.getGuild().addRoleToMember(member, member.getGuild().getRoleById(PlayerRoleChecker.INSTANCE.getConfig().getLong("Discord.addToRole")));
+    }
 
     public static void addRole(Guild guild, Member member) {
         try {

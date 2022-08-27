@@ -41,7 +41,7 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
         commandManager.setJDA(getJDA());
 
         getCommand("joinmode").setExecutor(new JoinModeCommand());
-        if (getConfig().getBoolean("SQLite.useBypassCommand")) {
+        if (getConfig().getBoolean("DataBase.BypassTable.useBypassCommand")) {
             LocalSQL.getInstance().create();
 
             getCommand("addbypass").setExecutor(new AddBypassCommand());

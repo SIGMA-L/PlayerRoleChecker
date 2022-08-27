@@ -3,6 +3,7 @@ package net.klnetwork.playerrolechecker.api.discord.data;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
 import net.dv8tion.jda.api.utils.FileUpload;
 import net.klnetwork.playerrolechecker.api.data.common.SkinCache;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
@@ -61,9 +62,13 @@ public class CommandData extends SkinCache {
     }
 
     public void reply(MessageEmbed embed, BufferedImage image) {
-        event.getMessage().replyEmbeds(embed)
-                .addFiles(FileUpload.fromData(CommonUtils.toByteArray(image), "user.png"))
-                .queue();
+        MessageCreateAction action = event.getMessage().replyEmbeds(embed);
+
+        if (image != null) {
+            action.addFiles(FileUpload.fromData(CommonUtils.toByteArray(image), "user.png"));
+        }
+
+        action.queue();
     }
 
 }

@@ -51,16 +51,51 @@ public abstract class SQLInterface {
             return null;
         }
 
-        switch (getType()) {
-            case SQLITE:
-            case MYSQL:
+        SQLType type = getType();
+
+        String format = null;
+
+        switch (type) {
+            case SQLITE: {
+                format = getPlugin().getConfig().getString(getPath() + ".Location");
+                break;
+            }
+            case MYSQL: {
+                format = String.format("%s:%s/%s%s"
+                        , getPlugin().getConfig().getString(getPath() + ".Server")
+                        , getPlugin().getConfig().getString(getPath() + ".Port")
+                        , getPlugin().getConfig().getString(getPath() + ".Database")
+                        , getPlugin().getConfig().getString(getPath() + ".Option"));
+                break;
+            }
             case CUSTOM: {
-                //todo: impl
+                format = getPlugin().getConfig().getString(getPath() + ".Format");
+                break;
             }
         }
 
-        //current null
-        return null;
+        return type.getType() + format;
+
+        //BypassTable:
+        //    Location: 'bypass.db'
+        //    useBypassCommand: true
+        //    type: SQLITE
+        //  PlayerDataTable:
+        //    Server: 'localhost'
+        //    Port: 3306
+        //    Database: 'playerrolechecker'
+        //    Username: 'playerrolecheckeruser'
+        //    Password: 'playerrolecheckerpass'
+        //    Option: '?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=latin1&autoReconnect=true'
+        //    type: MYSQL
+    }
+
+    public @Nullable String getUser() {
+        if (getPlugin() == null || getPath() == null) {
+            return null;
+        }
+
+        return getPlugin().getConfig().getString(getPath() + ".User");
     }
 
     public @Nullable String getPassword() {
@@ -68,7 +103,7 @@ public abstract class SQLInterface {
             return null;
         }
 
-        return getPlugin().getConfig().getString(getPath() + ".password");
+        return getPlugin().getConfig().getString(getPath() + ".Password");
     }
 
     protected @NotNull SQLType getType0() {

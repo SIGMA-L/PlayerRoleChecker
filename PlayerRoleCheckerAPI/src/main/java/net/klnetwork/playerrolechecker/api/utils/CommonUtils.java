@@ -19,6 +19,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
@@ -95,6 +98,17 @@ public class CommonUtils {
         return head;
     }
 
+    public static Connection createConnection(String url, String user, String password) throws SQLException {
+        if (url == null) {
+            throw new IllegalStateException();
+        } else if (user == null && password == null) {
+            return DriverManager.getConnection(url);
+        } else if (password != null) {
+            return DriverManager.getConnection(url, user, password);
+        } else {
+            throw new IllegalStateException();
+        }
+    }
     public static byte[] toByteArray(BufferedImage image) {
         //byteArrayOutStreamはclose()しても意味はない
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -138,8 +152,6 @@ public class CommonUtils {
 
         return null;
     }
-
-
 
     public static long getXUID(UUID uuid) {
         //Floodgate not using mostSignificantBits!
