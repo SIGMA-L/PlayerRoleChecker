@@ -1,4 +1,3 @@
-## この方式になる予定、現在作成中
 DataBase:
   BypassTable:
     Location: 'bypass.db'

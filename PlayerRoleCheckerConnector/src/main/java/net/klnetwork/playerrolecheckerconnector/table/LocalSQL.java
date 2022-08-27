@@ -130,7 +130,7 @@ public class LocalSQL extends ConnectorBypassTable {
 
     @Override
     public Connection getConnection() throws SQLException {
-        if (connection == null || connection.isClosed()) {
+        if (connection == null || connection.isClosed() || isConnectionDead()) {
             this.connection =  CommonUtils.createConnection(getSQLFormat(), getUser(), getPassword());
         }
         return connection;

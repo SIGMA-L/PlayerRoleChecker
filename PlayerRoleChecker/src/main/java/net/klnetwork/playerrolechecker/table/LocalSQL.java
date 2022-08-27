@@ -191,8 +191,8 @@ public class LocalSQL extends CheckerTemporaryTable {
 
     @Override
     public Connection getConnection() throws SQLException {
-        if (connection == null || connection.isClosed()) {
-            connection = DriverManager.getConnection("jdbc:sqlite:" + PlayerRoleChecker.INSTANCE.getConfig().getString("SQLite.SQLiteLocate"));
+        if (connection == null || connection.isClosed() || isConnectionDead()) {
+            this.connection =  CommonUtils.createConnection(getSQLFormat(), getUser(), getPassword());
         }
         return connection;
     }
@@ -204,6 +204,6 @@ public class LocalSQL extends CheckerTemporaryTable {
 
     @Override
     public String getPath() {
-        return null;
+        return "DataBase.TemporaryTable";
     }
 }

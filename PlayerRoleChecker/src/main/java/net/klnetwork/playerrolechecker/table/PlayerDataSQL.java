@@ -6,7 +6,6 @@ import net.klnetwork.playerrolechecker.api.data.common.PlayerData;
 import net.klnetwork.playerrolechecker.api.enums.SQLType;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
 import java.sql.*;
@@ -198,9 +197,7 @@ public class PlayerDataSQL extends PlayerDataTable {
     @Override
     public Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed() || isConnectionDead()) {
-            FileConfiguration config = PlayerRoleChecker.INSTANCE.getConfig();
-
-            connection = DriverManager.getConnection("jdbc:mysql://" + config.getString("MySQL.Server") + ":" + config.getInt("MySQL.Port") + "/" + config.getString("MySQL.Database") + config.getString("MySQL.Option"), config.getString("MySQL.Username"), config.getString("MySQL.Password"));
+            this.connection =  CommonUtils.createConnection(getSQLFormat(), getUser(), getPassword());
         }
         return connection;
     }
@@ -212,6 +209,6 @@ public class PlayerDataSQL extends PlayerDataTable {
 
     @Override
     public String getPath() {
-        return null;
+        return "DataBase.PlayerDataTable";
     }
 }

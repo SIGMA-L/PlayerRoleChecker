@@ -1,16 +1,16 @@
-SQLite:
-  SQLiteLocate: data.db
-
-## SpigotにあるMySQLに頼ることになるので
-## バージョンによっては暗号化処理をlatin1にすることをおすすめします
-## 今後のバージョンで内部のMySQLに頼る可能性がります
-MySQL:
-  Server: 'localhost'
-  Port: 3306
-  Database: 'playerrolechecker'
-  Username: 'playerrolecheckeruser'
-  Password: 'playerrolecheckerpass'
-  Option: '?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=latin1&autoReconnect=true'
+DataBase:
+  TemporaryTable:
+    Location: 'data.db'
+    useBypassCommand: true
+    type: SQLITE
+  PlayerDataTable:
+    Server: 'localhost'
+    Port: 3306
+    Database: 'playerrolechecker'
+    Username: 'playerrolecheckeruser'
+    Password: 'playerrolecheckerpass'
+    Option: '?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=latin1&autoReconnect=true'
+    type: MYSQL
 ## DiscordToken: DiscordBotのトークン
 ## AdminChannel: (チャンネルID) アドミンチャンネル(必要ではない)
 ## ChannelID: チャンネルID(必要ないがほぼ必須)
