@@ -32,11 +32,13 @@ public abstract class SQLInterface {
     }
 
     public boolean isConnectionDead() throws SQLException {
-        final long now = System.currentTimeMillis();
+        if (getType() != SQLType.SQLITE) {
+            final long now = System.currentTimeMillis();
 
-        if (CommonUtils.checkIsValid(lastConnection, now)) {
-            lastConnection = now;
-            return !connection.isValid(1);
+            if (CommonUtils.checkIsValid(lastConnection, now)) {
+                lastConnection = now;
+                return !connection.isValid(1);
+            }
         }
 
         return false;
@@ -45,6 +47,16 @@ public abstract class SQLInterface {
     public abstract Plugin getPlugin();
 
     public abstract String getPath();
+
+    public void checkClass() {
+        SQLType type = getType();
+
+        if (type == SQLType.SQLITE) {
+            CommonUtils.checkClass("org.sqlite.JDBC");
+        } else if (type == SQLType.MYSQL) {
+
+        }
+    }
 
     public @Nullable String getSQLFormat() {
         if (getPlugin() == null || getPath() == null) {

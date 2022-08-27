@@ -25,11 +25,11 @@ public class ConfigManager {
                     field.set(this, plugin.getConfig().getStringList(config.key()));
                 } else if (type.isAssignableFrom(String.class)) {
                     field.set(this, plugin.getConfig().getString(config.key()));
-                } else if (type.isAssignableFrom(Integer.class)) {
+                } else if (type.isAssignableFrom(Integer.class) || type.isAssignableFrom(int.class)) {
                     field.set(this, plugin.getConfig().getInt(config.key()));
-                } else if (type.isAssignableFrom(Double.class)) {
+                } else if (type.isAssignableFrom(Double.class) || type.isAssignableFrom(double.class)) {
                     field.set(this, plugin.getConfig().getDouble(config.key()));
-                } else if (type.isAssignableFrom(Boolean.class)) {
+                } else if (type.isAssignableFrom(Boolean.class) || type.isAssignableFrom(boolean.class)) {
                     field.set(this, plugin.getConfig().getBoolean(config.key()));
                 } else if (type.isAssignableFrom(Color.class)) {
                     field.set(this, plugin.getConfig().getColor(config.key()));

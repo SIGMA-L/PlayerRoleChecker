@@ -40,6 +40,7 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
         PlayerDataSQL.getInstance().create();
         LocalSQL.getInstance().create();
 
+        joinManager.init();
         joinManager.register(new JoinEvent());
 
         JDA.init();

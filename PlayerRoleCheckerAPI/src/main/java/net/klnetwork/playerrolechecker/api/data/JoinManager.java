@@ -13,8 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JoinManager implements Listener {
+
+    private final Plugin plugin;
+
     public JoinManager(Plugin plugin) {
-        Bukkit.getPluginManager().registerEvents(this, plugin);
+        this.plugin = plugin;
     }
 
     private List<JoinHandler> handlers = new ArrayList<>();
@@ -54,5 +57,13 @@ public class JoinManager implements Listener {
 
     public void setHandlers(List<JoinHandler> handlers) {
         this.handlers = handlers;
+    }
+
+    public Plugin getPlugin() {
+        return plugin;
+    }
+
+    public void init() {
+        Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 }

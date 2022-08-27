@@ -109,6 +109,15 @@ public class CommonUtils {
             throw new IllegalStateException();
         }
     }
+
+    public static void checkClass(String name) {
+        try {
+            Class.forName(name);
+        } catch (Exception ex) {
+            /* ignored */
+        }
+    }
+
     public static byte[] toByteArray(BufferedImage image) {
         //byteArrayOutStreamはclose()しても意味はない
         ByteArrayOutputStream out = new ByteArrayOutputStream();

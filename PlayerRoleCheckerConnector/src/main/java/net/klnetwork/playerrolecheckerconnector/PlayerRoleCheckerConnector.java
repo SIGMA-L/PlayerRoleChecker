@@ -37,9 +37,11 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
 
         PlayerDataSQL.getInstance().create();
 
+        joinManager.init();
         joinManager.register(new JoinEvent());
 
         JDA.init();
+
         commandManager.setJDA(getJDA());
 
         getCommand("joinmode").setExecutor(new JoinModeCommand());

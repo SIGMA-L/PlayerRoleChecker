@@ -33,7 +33,9 @@ Discord:
 ## %role% - role
 Minecraft:
   debug: false
+  ## whitelistSkip: マインクラフトのホワイトリストでスキップするか
   whitelistSkip: true
+  ## defaultJoinMode: 初期の参加可能モード
   defaultJoinMode: true
   kickMessage:
     - '&6あなたには参加権限がありません！'
