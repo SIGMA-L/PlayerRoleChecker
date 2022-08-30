@@ -10,6 +10,7 @@ DataBase:
     Password: 'playerrolecheckerpass'
     Option: '?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=latin1&autoReconnect=true'
     type: MYSQL
+
 ## DiscordToken: DiscordBotのトークン
 ## AdminChannel: (チャンネルID) アドミンチャンネル(必要ではない)
 ## ChannelID: チャンネルID(必要ないがほぼ必須)
@@ -181,6 +182,7 @@ ForceJoinCommand:
     message:
       - 'UUID: | %uuid% | false'
       - 'DiscordID: | %discordid% | false'
+
 UpdateAlert:
   enabled: true
   op-player-alert: true
