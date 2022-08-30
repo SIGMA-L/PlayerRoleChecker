@@ -7,6 +7,10 @@ public interface ConnectorConfigManager {
 
     void setJoinMode(boolean joinMode);
 
+    boolean isWhitelistSkipped();
+
+    void setWhitelistSkipped(boolean skipped);
+
     List<String> getRoleList();
 
     void setRoleList(List<String> roleList);

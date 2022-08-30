@@ -38,10 +38,12 @@ public class ConfigValue extends ConfigManager implements ConnectorConfigManager
         this.joinMode = joinMode;
     }
 
+    @Override
     public boolean isWhitelistSkipped() {
         return whitelistSkipped;
     }
 
+    @Override
     public void setWhitelistSkipped(boolean whitelistSkipped) {
         this.whitelistSkipped = whitelistSkipped;
     }

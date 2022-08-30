@@ -111,10 +111,12 @@ public class CommonUtils {
     }
 
     public static void checkClass(String name) {
-        try {
-            Class.forName(name);
-        } catch (Exception ex) {
-            /* ignored */
+        if (name != null) {
+            try {
+                Class.forName(name);
+            } catch (Exception ex) {
+                /* ignored */
+            }
         }
     }
 
@@ -260,7 +262,7 @@ public class CommonUtils {
 
     public static SQLType getSQLType(String type) {
         try {
-            return SQLType.valueOf(type);
+            return SQLType.valueOf(type.toUpperCase());
         } catch (Exception ex) {
             return SQLType.CUSTOM;
         }

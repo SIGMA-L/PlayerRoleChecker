@@ -20,7 +20,8 @@ public class JoinEvent extends JoinHandler {
     @Override
     public void onPreLoginEvent(AsyncPlayerPreLoginEvent event) {
         if (PlayerRoleCheckerConnector.INSTANCE.getConfigManager().isWhitelistSkipped()
-                && Bukkit.getWhitelistedPlayers().stream().anyMatch(player -> event.getUniqueId().equals(player.getUniqueId()))) {
+                && Bukkit.getWhitelistedPlayers().stream().anyMatch(player -> event.getUniqueId().equals(player.getUniqueId()))
+                && !callEvent(new CheckSkippedEvent(SkippedReasonEnum.WHITELIST).isCancelled())) {
             return;
         }
 
@@ -67,9 +68,9 @@ public class JoinEvent extends JoinHandler {
                 return callEvent(new CheckResultEvent(data, CheckResultEnum.GUILD_IS_INVALID)).getResult();
             } else {
                 if (CommonUtils.hasRole(guild.retrieveMemberById(data.getDiscordId()).complete().getRoles(), PlayerRoleCheckerConnector.INSTANCE.getConfigManager().getRoleList())) {
-                    return callEvent(new CheckResultEvent(data, CheckResultEnum.SUCCESS)).getResult();
+                    return callEvent(new CheckResultEvent(guild, data, CheckResultEnum.SUCCESS)).getResult();
                 } else {
-                    return callEvent(new CheckResultEvent(data, CheckResultEnum.UNKNOWN)).getResult();
+                    return callEvent(new CheckResultEvent(guild, data, CheckResultEnum.UNKNOWN)).getResult();
                 }
             }
         }

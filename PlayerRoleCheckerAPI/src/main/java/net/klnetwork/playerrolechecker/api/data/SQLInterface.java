@@ -54,7 +54,9 @@ public abstract class SQLInterface {
         if (type == SQLType.SQLITE) {
             CommonUtils.checkClass("org.sqlite.JDBC");
         } else if (type == SQLType.MYSQL) {
-
+            CommonUtils.checkClass("com.mysql.jdbc.Driver");
+        } else if (getPlugin() != null && getPath() != null) {
+            CommonUtils.checkClass(getPlugin().getConfig().getString(getPath() + ".checkClass"));
         }
     }
 
@@ -123,11 +125,7 @@ public abstract class SQLInterface {
             return SQLType.CUSTOM;
         }
 
-        try {
-            return SQLType.valueOf(getPlugin().getConfig().getString(getPath() + ".type"));
-        } catch (Exception ex) {
-            return SQLType.CUSTOM;
-        }
+        return CommonUtils.getSQLType(getPlugin().getConfig().getString(getPath() + ".type"));
     }
 
     public @NotNull SQLType getType() {
