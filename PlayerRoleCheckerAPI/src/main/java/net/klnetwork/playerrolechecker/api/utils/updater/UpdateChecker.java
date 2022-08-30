@@ -29,7 +29,6 @@ public class UpdateChecker {
 
             //TODO: ALERT TO CONSOLE!
             if (!releasedNewVersion && hasNewVersion) {
-                getPlugin().getLogger().info("PlayerRoleChecker Update Founded!");
             }
 
             this.releasedNewVersion = hasNewVersion;

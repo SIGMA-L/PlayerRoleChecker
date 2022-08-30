@@ -46,7 +46,7 @@
                     <relocations>
                         <relocation>
                             <pattern>com.mysql.</pattern>
-                            <shadedPattern>net.klnetwork.playerrolechecker.sql.</shadedPattern>
+                            <shadedPattern>net.klnetwork.playerrolecheckerconnector.sql.</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
