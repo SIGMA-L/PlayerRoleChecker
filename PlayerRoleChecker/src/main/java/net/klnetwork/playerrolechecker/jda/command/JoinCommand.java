@@ -71,7 +71,7 @@ public class JoinCommand extends CommandMessage {
                     DiscordUtil.sendMessage(DiscordUtil.createEmbedMessage("JoinCommand.sendmessage", call.getUUID(), call.getMember().getId(), call.isBedrock()),
                             event.getSkin(call.getUUID(), call.isBedrock() && PlayerRoleChecker.INSTANCE.getConfig().getBoolean("JoinCommand.requestBedrockSkin")));
 
-                    DiscordUtil.addRole(event.getGuild(), event.getMember());
+                    DiscordUtil.addRole(event.getMember());
                 }
             }
         }

@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
 import net.dv8tion.jda.api.utils.FileUpload;
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
@@ -33,16 +34,30 @@ public class DiscordUtil {
         action.queue();
     }
 
-    public static void addRole(Member member) {
-        member.getGuild().addRoleToMember(member, member.getGuild().getRoleById(PlayerRoleChecker.INSTANCE.getConfig().getLong("Discord.addToRole")));
+    public static Role getRole() {
+        final long id = PlayerRoleChecker.INSTANCE.getConfig().getLong("Discord.addToRole");
+
+        if (id == 0L) {
+            return null;
+        }
+
+        return PlayerRoleChecker.INSTANCE.getJDA().getRoleById(id);
     }
 
-    public static void addRole(Guild guild, Member member) {
-        try {
-            guild.addRoleToMember(member, guild.getRoleById(PlayerRoleChecker.INSTANCE.getConfig().getLong("Discord.addToRole")))
-                    .queue();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+    public static void addRole(Member member) {
+        final Role role = getRole();
+
+        if (role != null) {
+            member.getGuild().addRoleToMember(member, role).queue();
+        }
+    }
+
+
+    public static void removeRole(Member member) {
+        final Role role = getRole();
+
+        if (role != null) {
+            member.getGuild().removeRoleFromMember(member, role).queue();
         }
     }
 

@@ -3,7 +3,6 @@ package net.klnetwork.playerrolechecker.table;
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
 import net.klnetwork.playerrolechecker.api.data.checker.CheckerTemporaryTable;
 import net.klnetwork.playerrolechecker.api.data.common.TemporaryData;
-import net.klnetwork.playerrolechecker.api.enums.SQLType;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import org.bukkit.plugin.Plugin;
 
@@ -11,8 +10,6 @@ import java.sql.*;
 import java.util.UUID;
 
 public class LocalSQL extends CheckerTemporaryTable {
-
-    private SQLType type;
 
     private static CheckerTemporaryTable table;
 

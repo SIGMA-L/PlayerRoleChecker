@@ -57,7 +57,7 @@ public class ForceJoinCommand extends CommandMessage {
 
                     if (member != null) {
                         //todo: recode!
-                        DiscordUtil.addRole(call.getGuild(), member);
+                        DiscordUtil.addRole(member);
                     }
                 }
             }

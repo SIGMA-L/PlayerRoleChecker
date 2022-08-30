@@ -89,19 +89,6 @@ public abstract class SQLInterface {
         }
 
         return type.getType() + format;
-
-        //BypassTable:
-        //    Location: 'bypass.db'
-        //    useBypassCommand: true
-        //    type: SQLITE
-        //  PlayerDataTable:
-        //    Server: 'localhost'
-        //    Port: 3306
-        //    Database: 'playerrolechecker'
-        //    Username: 'playerrolecheckeruser'
-        //    Password: 'playerrolecheckerpass'
-        //    Option: '?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=latin1&autoReconnect=true'
-        //    type: MYSQL
     }
 
     public @Nullable String getUser() {

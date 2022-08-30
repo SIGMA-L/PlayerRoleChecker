@@ -63,7 +63,7 @@ public class CheckResultEvent extends Event {
         this.guild = guild;
     }
 
-    public JDA getJDA() {
+    public @Nullable JDA getJDA() {
         return guild.getJDA();
     }
 
