@@ -63,5 +63,11 @@
             <artifactId>PlayerRoleCheckerAPI</artifactId>
             <version>4.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.19-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>
