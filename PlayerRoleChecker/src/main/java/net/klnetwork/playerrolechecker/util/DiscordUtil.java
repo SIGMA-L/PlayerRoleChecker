@@ -1,7 +1,6 @@
 package net.klnetwork.playerrolechecker.util;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.Role;
@@ -52,21 +51,11 @@ public class DiscordUtil {
         }
     }
 
-
     public static void removeRole(Member member) {
         final Role role = getRole();
 
         if (role != null) {
             member.getGuild().removeRoleFromMember(member, role).queue();
-        }
-    }
-
-    public static void removeRole(Guild guild, Member member) {
-        try {
-            guild.addRoleToMember(member, guild.getRoleById(PlayerRoleChecker.INSTANCE.getConfig().getLong("Discord.addToRole")))
-                    .queue();
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
     }
 

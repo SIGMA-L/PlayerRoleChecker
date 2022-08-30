@@ -35,6 +35,20 @@
                 <version>3.2.4</version>
                 <configuration>
                     <minimizeJar>true</minimizeJar>
+                    <filters>
+                        <filter>
+                            <artifact>mysql:mysql-connector-java</artifact>
+                            <includes>
+                                <include>**</include>
+                            </includes>
+                        </filter>
+                    </filters>
+                    <relocations>
+                        <relocation>
+                            <pattern>com.mysql.</pattern>
+                            <shadedPattern>net.klnetwork.playerrolechecker.sql.</shadedPattern>
+                        </relocation>
+                    </relocations>
                 </configuration>
                 <executions>
                     <execution>
@@ -68,6 +82,11 @@
             <artifactId>spigot-api</artifactId>
             <version>1.19-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.30</version>
         </dependency>
     </dependencies>
 </project>
