@@ -17,10 +17,7 @@ import org.bukkit.plugin.Plugin;
 import java.util.concurrent.TimeUnit;
 
 @Path("v2/get/{body}")
-public class AsyncGetUUID extends CodeAPICanRegister {
-    public AsyncGetUUID(Plugin plugin) {
-        super(plugin);
-    }
+public class AsyncGetUUID implements CodeAPICanRegister {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
@@ -45,7 +42,7 @@ public class AsyncGetUUID extends CodeAPICanRegister {
     }
 
     @Override
-    public boolean canRegister() {
+    public boolean canRegister(Plugin plugin) {
         return plugin.getConfig().getBoolean("Server.v2.get");
     }
 }

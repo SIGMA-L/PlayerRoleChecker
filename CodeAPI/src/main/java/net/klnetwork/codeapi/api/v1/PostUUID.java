@@ -12,10 +12,7 @@ import net.klnetwork.playerrolechecker.api.data.common.TemporaryData;
 import org.bukkit.plugin.Plugin;
 
 @Path("/v1/post/{body}")
-public class PostUUID extends CodeAPICanRegister {
-    public PostUUID(Plugin plugin) {
-        super(plugin);
-    }
+public class PostUUID implements CodeAPICanRegister {
 
     @POST
     @Produces(MediaType.TEXT_PLAIN)
@@ -35,7 +32,7 @@ public class PostUUID extends CodeAPICanRegister {
     }
 
     @Override
-    public boolean canRegister() {
+    public boolean canRegister(Plugin plugin) {
         return plugin.getConfig().getBoolean("Server.v1.post");
     }
 }
