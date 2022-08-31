@@ -44,14 +44,6 @@ Minecraft:
   errorCaught:
     - '&cエラーを確認しました！'
     - '&c管理者に報告してください！'
-  joinMessage: '&a%name%&fが入室しました'
-  joinMessageBoolean: true
-  message:
-    - '&a-----------------情報------------------'
-    - 'MinecraftName: %name%'
-    - 'DiscordID: %discordid%'
-    - 'DiscordRole: %role%'
-    - '&a--------------------------------------'
 
 UpdateAlert:
   enabled: true

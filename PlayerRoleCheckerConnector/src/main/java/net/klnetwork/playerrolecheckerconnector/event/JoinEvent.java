@@ -81,16 +81,10 @@ public class JoinEvent extends JoinHandler {
     public void onLoginEvent(PlayerJoinEvent event) {
         //WARNING: NOT ASYNC
         PlayerRoleCheckerConnector.INSTANCE.getConfigManager().getJoinCommand().forEach(command -> {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command
+                    .replaceAll("%name%", event.getPlayer().getName())
+                    .replaceAll("%uuid%", event.getPlayer().getUniqueId().toString()));
         });
-
-        if (PlayerRoleCheckerConnector.INSTANCE.getConfig().getBoolean("Minecraft.joinMessageBoolean")) {
-            Bukkit.getScheduler().runTaskAsynchronously(PlayerRoleCheckerConnector.INSTANCE.getPlugin(), () -> {
-                /* todo: add messages! */
-            });
-
-            event.setJoinMessage(PlayerRoleCheckerConnector.INSTANCE.getConfig().getString("Minecraft.joinMessage"));
-        }
     }
 
     @Override
