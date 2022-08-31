@@ -14,9 +14,7 @@ public class PlayerRoleCheckerAPI {
     private static final Map<HookedAPIType, APIHook> pairs = new HashMap<>();
 
     public static boolean isHookedConnector() {
-        final HookedAPIType type = getHookedAPIType();
-
-        return type == HookedAPIType.BOTH || type == HookedAPIType.CONNECTOR;
+        return getHookedAPIType().contains(HookedAPIType.CONNECTOR);
     }
 
     public static ConnectorAPIHook getConnectorAPI() {
@@ -32,9 +30,7 @@ public class PlayerRoleCheckerAPI {
     }
 
     public static boolean isHookedChecker() {
-        final HookedAPIType type = getHookedAPIType();
-
-        return type == HookedAPIType.BOTH || type == HookedAPIType.CHECKER;
+        return getHookedAPIType().contains(HookedAPIType.CHECKER);
     }
 
     public static CheckerAPIHook getCheckerAPI() {
@@ -49,25 +45,20 @@ public class PlayerRoleCheckerAPI {
         return (CheckerAPIHook) Bukkit.getPluginManager().getPlugin("PlayerRoleChecker");
     }
 
-    public static HookedAPIType getHookedAPIType() {
+    public static boolean isHookedCodeAPI() {
+        return getHookedAPIType().contains(HookedAPIType.CODEAPI);
+    }
+
+    public static List<HookedAPIType> getHookedAPIType() {
         if (pairs.isEmpty()) {
             init();
         }
 
-        return getAPIType();
+        return new ArrayList<>(getAPIType());
     }
 
-    private static HookedAPIType getAPIType() {
-        List<HookedAPIType> requireType = new ArrayList<>(Arrays.asList(HookedAPIType.CHECKER, HookedAPIType.CONNECTOR));
-        pairs.keySet().forEach(requireType::remove);
-
-        if (requireType.size() == 0) {
-            return HookedAPIType.BOTH;
-        } else if (requireType.size() == 1) {
-            return requireType.get(0);
-        } else {
-            return HookedAPIType.NONE;
-        }
+    private static Set<HookedAPIType> getAPIType() {
+        return pairs.keySet();
     }
 
     public static void init() {

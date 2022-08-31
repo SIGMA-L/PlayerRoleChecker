@@ -1,4 +1,4 @@
-package net.klnetwork.codeapi.API;
+package net.klnetwork.codeapi.api;
 
 
 

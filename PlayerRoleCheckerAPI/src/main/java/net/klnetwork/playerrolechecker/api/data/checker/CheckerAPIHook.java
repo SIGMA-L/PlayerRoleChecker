@@ -1,8 +1,8 @@
 package net.klnetwork.playerrolechecker.api.data.checker;
 
-import net.klnetwork.playerrolechecker.api.data.APIHook;
+import net.klnetwork.playerrolechecker.api.data.APIHookCustom;
 
-public interface CheckerAPIHook extends APIHook {
+public interface CheckerAPIHook extends APIHookCustom {
     CheckerTemporaryTable getTemporary();
 
     void setTemporary(CheckerTemporaryTable table);

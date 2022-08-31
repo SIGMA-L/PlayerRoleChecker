@@ -1,6 +1,6 @@
 package net.klnetwork.codeapi.Events;
 
-import net.klnetwork.codeapi.API.CodeUtil;
+import net.klnetwork.codeapi.api.CodeUtil;
 import net.klnetwork.codeapi.CodeAPI;
 import net.klnetwork.codeapi.Util.SQLiteUtil;
 import net.klnetwork.codeapi.Util.Timer;

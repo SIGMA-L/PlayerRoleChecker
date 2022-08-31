@@ -1,4 +1,4 @@
-package net.klnetwork.codeapi.API;
+package net.klnetwork.codeapi.api;
 
 import net.klnetwork.codeapi.CodeAPI;
 import org.glassfish.grizzly.http.server.HttpServer;

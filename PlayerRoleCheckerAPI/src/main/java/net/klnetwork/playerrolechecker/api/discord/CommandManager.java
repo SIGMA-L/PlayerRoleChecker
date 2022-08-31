@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandData;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandMessage;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandSlash;
@@ -78,6 +79,10 @@ public class CommandManager extends ListenerAdapter {
     public void register(Object obj) {
         if (obj instanceof CommandSlash) {
             //todo: add to JDA register!
+            getJDA().upsertCommand("a", "a")
+                    //customizable description???
+                    .addOption(OptionType.STRING, "name", "ok");
+
             slashType.add((CommandSlash) obj);
         } else if (obj instanceof CommandMessage) {
             messageType.add((CommandMessage) obj);

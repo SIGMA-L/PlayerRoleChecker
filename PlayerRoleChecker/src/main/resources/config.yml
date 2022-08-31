@@ -29,6 +29,7 @@ CodeLimit:
 ## - already-code: すでに発行されている場合のkickメッセージ
 ## - code: 発行された場合のkickメッセージ
 JoinEvent:
+  verifiedPlayerIgnore: false
   deleteSecond: 300
   already-code:
     - '&c(発行済み) あなたのコードは'

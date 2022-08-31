@@ -27,6 +27,10 @@ public abstract class PlayerDataTable extends SQLInterface {
 
     public abstract PlayerData getDiscordId(String uuid, boolean bedrock);
 
+    public abstract boolean hasData(UUID uuid, boolean bedrock);
+
+    public abstract boolean hasData(String uuid, boolean bedrock);
+
     public abstract PlayerData getUUID(String discordId);
 
     public abstract void put(UUID uuid, String discordId, boolean bedrock);

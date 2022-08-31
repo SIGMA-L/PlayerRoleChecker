@@ -1,11 +1,10 @@
-package net.klnetwork.codeapi.API;
+package net.klnetwork.codeapi.api;
 
 import net.klnetwork.codeapi.Util.SQLiteUtil;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.sql.SQLInput;
 
 @Path("api")
 public class WebAPI {

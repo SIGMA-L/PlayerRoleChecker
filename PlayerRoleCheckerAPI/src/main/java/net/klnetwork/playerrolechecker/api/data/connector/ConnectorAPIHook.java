@@ -1,8 +1,8 @@
 package net.klnetwork.playerrolechecker.api.data.connector;
 
-import net.klnetwork.playerrolechecker.api.data.APIHook;
+import net.klnetwork.playerrolechecker.api.data.APIHookCustom;
 
-public interface ConnectorAPIHook extends APIHook {
+public interface ConnectorAPIHook extends APIHookCustom {
     ConnectorBypassTable getBypass();
 
     void setBypass(ConnectorBypassTable table);

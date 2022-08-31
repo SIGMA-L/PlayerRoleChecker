@@ -16,6 +16,8 @@ public class ConfigValue extends ConfigManager implements CheckerConfigManager {
     private int min;
     @ConfigKey(key = "CodeLimit.max")
     private int max;
+    @ConfigKey(key = "JoinEvent.verifiedPlayerIgnore")
+    private boolean verifiedPlayerIgnore = false;
 
     @Override
     public int getDeleteSecond() {
@@ -45,5 +47,15 @@ public class ConfigValue extends ConfigManager implements CheckerConfigManager {
     @Override
     public void setMax(int max) {
         this.max = max;
+    }
+
+    @Override
+    public boolean isVerifiedPlayerIgnore() {
+        return verifiedPlayerIgnore;
+    }
+
+    @Override
+    public void setVerifiedPlayerIgnore(boolean verifiedPlayerIgnore) {
+        this.verifiedPlayerIgnore = verifiedPlayerIgnore;
     }
 }

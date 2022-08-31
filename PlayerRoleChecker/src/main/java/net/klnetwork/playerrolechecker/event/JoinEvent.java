@@ -5,6 +5,7 @@ import net.klnetwork.playerrolechecker.api.data.common.JoinHandler;
 import net.klnetwork.playerrolechecker.api.data.common.TemporaryData;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import net.klnetwork.playerrolechecker.table.LocalSQL;
+import net.klnetwork.playerrolechecker.table.PlayerDataSQL;
 import net.klnetwork.playerrolechecker.util.CodeUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
@@ -14,6 +15,11 @@ import java.util.UUID;
 public class JoinEvent extends JoinHandler {
     @Override
     public void onPreLoginEvent(AsyncPlayerPreLoginEvent event) {
+        if (PlayerRoleChecker.INSTANCE.getConfigManager().isVerifiedPlayerIgnore()
+            && PlayerDataSQL.getInstance().hasData(event.getUniqueId(), CommonUtils.isFloodgateUser(event.getUniqueId()))) {
+            return;
+        }
+
         TemporaryData data = LocalSQL.getInstance().getCode(event.getUniqueId());
 
         if (data != null) {

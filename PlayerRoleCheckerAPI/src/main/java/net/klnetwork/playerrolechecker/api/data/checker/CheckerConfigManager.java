@@ -12,4 +12,8 @@ public interface CheckerConfigManager {
     int getMin();
 
     void setMin(int min);
+
+    boolean isVerifiedPlayerIgnore();
+
+    void setVerifiedPlayerIgnore(boolean verifiedPlayerIgnore);
 }

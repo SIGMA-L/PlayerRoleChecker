@@ -5,7 +5,6 @@ import net.klnetwork.playerrolechecker.api.CustomDataBaseImpl;
 import net.klnetwork.playerrolechecker.api.data.JoinManager;
 import net.klnetwork.playerrolechecker.api.data.PlayerDataTable;
 import net.klnetwork.playerrolechecker.api.data.checker.CheckerAPIHook;
-import net.klnetwork.playerrolechecker.api.data.checker.CheckerConfigManager;
 import net.klnetwork.playerrolechecker.api.data.checker.CheckerCustomDataBase;
 import net.klnetwork.playerrolechecker.api.data.checker.CheckerTemporaryTable;
 import net.klnetwork.playerrolechecker.api.discord.CommandManager;
@@ -93,7 +92,7 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
     }
 
     @Override
-    public CheckerConfigManager getConfigManager() {
+    public ConfigValue getConfigManager() {
         return configManger;
     }
 

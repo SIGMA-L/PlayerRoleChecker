@@ -112,6 +112,29 @@ public class PlayerDataSQL extends PlayerDataTable {
     }
 
     @Override
+    public boolean hasData(UUID uuid, boolean bedrock) {
+        return hasData(uuid.toString(), bedrock);
+    }
+
+    @Override
+    public boolean hasData(String uuid, boolean bedrock) {
+        PreparedStatement statement = null;
+
+        try {
+            statement = getConnection().prepareStatement("select * from verifyplayer where uuid = ? and bedrock = ?");
+            statement.setString(1, uuid);
+            statement.setBoolean(2, bedrock);
+
+            return statement.executeQuery().next();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            CommonUtils.close(statement);
+        }
+        return false;
+    }
+
+    @Override
     public PlayerData getUUID(String discordId) {
         PreparedStatement statement = null;
 

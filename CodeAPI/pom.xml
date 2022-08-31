@@ -99,5 +99,10 @@
             <groupId>org.glassfish.jersey.inject</groupId>
             <artifactId>jersey-hk2</artifactId>
         </dependency>
+        <dependency>
+            <groupId>net.klnetwork.playerrolechecker</groupId>
+            <artifactId>PlayerRoleCheckerAPI</artifactId>
+            <version>4.0</version>
+        </dependency>
     </dependencies>
 </project>
