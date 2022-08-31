@@ -39,7 +39,7 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
             .version(this.getConfig().getString("UpdateAlert.version").replaceAll("%hook_version%", this.getDescription().getVersion()))
             .consoleAlert(this.getConfig().getBoolean("UpdateAlert.console-alert"))
             .opPlayerAlert(this.getConfig().getBoolean("UpdateAlert.op-player-alert"))
-            .opPlayerAlert(this.getConfig().getBoolean("UpdateAlert.enabled"))
+            .enabled(this.getConfig().getBoolean("UpdateAlert.enabled"))
             .defaultCheck(true)
             .smartVersionCheck(true)
             .start();
