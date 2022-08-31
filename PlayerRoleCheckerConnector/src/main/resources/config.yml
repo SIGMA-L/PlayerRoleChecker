@@ -1,17 +1,17 @@
-## useBypassCommand: bypassコマンドが使えるかどうか、使わない場合SQLiteは使用されません。
-SQLite:
-  SQLiteLocate: bypass.db
-  useBypassCommand: true
+DataBase:
+  BypassTable:
+    location: 'bypass.db'
+    useBypassCommand: true
+    type: SQLITE
+  PlayerDataTable:
+    server: 'localhost'
+    port: 3306
+    database: 'playerrolechecker'
+    username: 'playerrolecheckeruser'
+    password: 'playerrolecheckerpass'
+    option: '?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=latin1&autoReconnect=true'
+    type: MYSQL
 
-## MYSQLがこの中に入っていないのでSpigotのSQLに頼ることになります なので古いspigotは暗号化をlatin1に変更する必要があります
-MySQL:
-  Server: 'localhost'
-  Port: 3306
-  Database: 'playerrolechecker'
-  Username: 'playerrolecheckeruser'
-  Password: 'playerrolecheckerpass'
-  Option: '?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=latin1&autoReconnect=true'
-  UseSQLDebug: false
 ## JoinCommand: プレイヤーが参加したときにコマンドを打ちます
 ## %name% - プレイヤー名
 ## %uuid% - UUID
@@ -33,12 +33,17 @@ Discord:
 ## %discordid% - discordID
 ## %role% - role
 Minecraft:
+  debug: false
+  ## whitelistSkip: マインクラフトのホワイトリストでスキップするか
+  whitelistSkip: true
+  ## defaultJoinMode: 初期の参加可能モード
+  defaultJoinMode: true
   kickMessage:
     - '&6あなたには参加権限がありません！'
     - '&bDiscordを確認してみてみるか、管理者に報告してください。'
   errorCaught:
     - '&cエラーを確認しました！'
-    - '&b管理者に報告してください！'
+    - '&c管理者に報告してください！'
   joinMessage: '&a%name%&fが入室しました'
   joinMessageBoolean: true
   message:
@@ -47,3 +52,18 @@ Minecraft:
     - 'DiscordID: %discordid%'
     - 'DiscordRole: %role%'
     - '&a--------------------------------------'
+
+UpdateAlert:
+  enabled: true
+  op-player-alert: true
+  console-alert: true
+  checkTicks: 1728000
+  version: '%hook_version%'
+  messages:
+    - '&a&l--------------------------------------'
+    - '&e- [PRC] 新しいバージョンが見つかりました！'
+    - '&e- Plugin Version: %version%'
+    - '&e- Github Version: %release_version%'
+    - ''
+    - '&e- link: https://github.com/SIGMA-L/PlayerRoleChecker/releases/latest/'
+    - '&a&l--------------------------------------'

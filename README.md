@@ -36,17 +36,17 @@
 **※2 DiscordコマンドはPlayerRoleCheckerで登録されています**
 
 
-| マインクラフトコマンド※1             | 説明 | パーミッション |
-|---------------------------| --- | --- |
-| /addbypass {マインクラフトID}    | 除外プレイヤーを追加する | playerrolechecker.addbypass |
-| /removebypass {マインクラフトID} | 除外プレイヤーを削除する | playerrolechecker.removebypass |
-| /joinmode                 | このプラグインの機能をオフにする | playerrolechecker.op |
+| マインクラフトコマンド※1             | 説明               | パーミッション                        |
+|---------------------------|------------------|--------------------------------|
+| /addbypass {マインクラフトID}    | 除外プレイヤーを追加する     | playerrolechecker.addbypass    |
+| /removebypass {マインクラフトID} | 除外プレイヤーを削除する     | playerrolechecker.removebypass |
+| /joinmode                 | このプラグインの機能をオフにする | playerrolechecker.joinmode     |
 
-| Discordコマンド※2                      | 説明 | パーミッション |
-|------------------------------------| --- | --- |
-| {生成された数字}                          | データベースに登録します |  |
+| Discordコマンド※2                      | 説明           | パーミッション                  |
+|------------------------------------|--------------|--------------------------|
+| {生成された数字}                          | データベースに登録します |                          |
 | !remove {マインクラフトID}                | データベースから強制削除 | Permission.ADMINISTRATOR |
-| !forcejoin {マインクラフトID} {DiscordID} | データベースに強制登録 | Permission.ADMINISTRATOR |
+| !forcejoin {マインクラフトID} {DiscordID} | データベースに強制登録  | Permission.ADMINISTRATOR |
 
 ## LICENSE
 
@@ -58,7 +58,6 @@
 APIの導入方法:
 
 ### Maven
-
     <repository>
         <id>jitpack.io</id>
         <url>https://jitpack.io</url>
@@ -71,13 +70,10 @@ APIの導入方法:
 	</dependency>
 
 ### Gradle
-
-    allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
 
     dependencies {
         implementation 'com.github.SIGMA-L.PlayerRoleChecker:PlayerRoleCheckerAPI:v3.0'
@@ -99,7 +95,10 @@ APIを実装して使えるイベント:
 
 ```
 値 UUID が返ってきます
+http://localhost:8080/v2/get/1212
+- {"type":"error","uuid":null,"code":null,"bedrock":null}
+- {"type":"success","uuid":"069a79f4-44e9-4726-a5be-fca90e38aaf5","code":1212,"bedrock":false}
 
-http://localhost:8080/api/get/?code=codehere
-http://localhost:8080/api/post/?code=codehere
+- http://localhost:8080/v2/get/code
+- http://localhost:8080/v2/post/code
 ```

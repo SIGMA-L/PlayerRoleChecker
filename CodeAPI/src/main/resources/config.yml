@@ -1,4 +1,41 @@
-SQLite:
-  SQLiteLocate: codeapi.db
-RemoveSecond: 500
-URL: 'http://localhost:8080/'
+SQL:
+  location: codeapi.db
+  type: SQLITE
+## JoinEvent: マインクラフトユーザーがコードを発行したときのメッセージ
+## - deleteSecond: 削除する時間 (秒)
+## - already-code: すでに発行されている場合のkickメッセージ
+## - code: 発行された場合のkickメッセージ
+JoinEvent:
+  limit:
+    min: 1000
+    max: 9999
+  deleteSecond: 300
+  already-code:
+    - '&c(発行済み) あなたのコードは'
+    - '「%code%」 です (発行されてから) 5分以内に認証してください'
+  code:
+    - '&cあなたのコードは'
+    - '「%code%」 です 5分以内に認証してください'
+Server:
+  url: 'http://localhost:8080/'
+  v1:
+    get: false
+    post: false
+  v2:
+    get: true
+    post: true
+
+UpdateAlert:
+  enabled: true
+  op-player-alert: true
+  console-alert: true
+  checkTicks: 1728000
+  version: '%hook_version%'
+  messages:
+    - '&a&l--------------------------------------'
+    - '&e- [PRC] 新しいバージョンが見つかりました！'
+    - '&e- Plugin Version: %version%'
+    - '&e- Github Version: %release_version%'
+    - ''
+    - '&e- link: https://github.com/SIGMA-L/PlayerRoleChecker/releases/latest/'
+    - '&a&l--------------------------------------'

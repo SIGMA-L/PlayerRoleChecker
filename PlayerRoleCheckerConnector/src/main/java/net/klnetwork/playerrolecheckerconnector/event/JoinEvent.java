@@ -1,62 +1,107 @@
 package net.klnetwork.playerrolecheckerconnector.event;
 
-import net.dv8tion.jda.api.entities.Role;
-import net.klnetwork.playerrolecheckerconnector.command.JoinModeCommand;
+import net.dv8tion.jda.api.entities.Guild;
+import net.klnetwork.playerrolechecker.api.data.common.JoinHandler;
+import net.klnetwork.playerrolechecker.api.data.common.PlayerData;
+import net.klnetwork.playerrolechecker.api.enums.CheckResultEnum;
+import net.klnetwork.playerrolechecker.api.enums.SkippedReasonEnum;
+import net.klnetwork.playerrolechecker.api.event.checker.CheckResultEvent;
+import net.klnetwork.playerrolechecker.api.event.checker.CheckSkippedEvent;
+import net.klnetwork.playerrolechecker.api.event.checker.CheckStartEvent;
+import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
-import net.klnetwork.playerrolecheckerconnector.table.Bypass;
-import net.klnetwork.playerrolecheckerconnector.table.PlayerData;
-import net.klnetwork.playerrolecheckerconnector.util.OtherUtil;
+import net.klnetwork.playerrolecheckerconnector.table.LocalSQL;
+import net.klnetwork.playerrolecheckerconnector.table.PlayerDataSQL;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import java.util.List;
-
-public class JoinEvent implements Listener {
-
-    @EventHandler
-    public void onAsyncPreLoginEvent(AsyncPlayerPreLoginEvent e) {
-        if (!JoinModeCommand.joinMode) return;
-
-        //SQLiteUtilはファイル管理であるため、非同期である必要はありません(位置的にここに必要)
-        if (PlayerRoleCheckerConnector.INSTANCE.getConfig().getBoolean("SQLite.useBypassCommand") && (Bypass.getInstance().getUUID(e.getUniqueId().toString()) != null || Bypass.getInstance().getUUID(e.getName().toLowerCase()) != null)) {
+public class JoinEvent extends JoinHandler {
+    @Override
+    public void onPreLoginEvent(AsyncPlayerPreLoginEvent event) {
+        if (PlayerRoleCheckerConnector.INSTANCE.getConfigManager().isWhitelistSkipped()
+                && Bukkit.getWhitelistedPlayers().stream().anyMatch(player -> event.getUniqueId().equals(player.getUniqueId()))
+                && !callEvent(new CheckSkippedEvent(SkippedReasonEnum.WHITELIST).isCancelled())) {
             return;
         }
 
-        try {
-            if (!OtherUtil.hasRole(e.getUniqueId())) {
-                String kickMessage = String.join("\n", PlayerRoleCheckerConnector.INSTANCE.getConfig().getStringList("Minecraft.kickMessage"));
+        if (!PlayerRoleCheckerConnector.INSTANCE.getConfigManager().isJoinMode()
+                && !callEvent(new CheckSkippedEvent(SkippedReasonEnum.SKIP_MODE)).isCancelled()) {
+            return;
+        }
 
-                e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST, ChatColor.translateAlternateColorCodes('&', kickMessage));
-            }
-        } catch (Exception ex) {
-            String errorCaught = String.join("\n", PlayerRoleCheckerConnector.INSTANCE.getConfig().getStringList("Minecraft.errorCaught"));
+        /* todo: recode localSQL */
+        if (LocalSQL.getInstance().isCreated()
+                && LocalSQL.getInstance().hasUUID(event.getUniqueId())
+                && !callEvent(new CheckSkippedEvent(SkippedReasonEnum.BYPASS)).isCancelled()) {
+            return;
+        }
 
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST, ChatColor.translateAlternateColorCodes('&', errorCaught));
+        PlayerData data = PlayerDataSQL.getInstance().getDiscordId(event.getUniqueId(), CommonUtils.isFloodgateUser(event.getUniqueId()));
+
+        if (!callEvent(new CheckStartEvent(data)).isCancelled() && isJoin(data)) {
+            disallow(event, PlayerRoleCheckerConnector.INSTANCE.getConfig().getStringList("Minecraft.kickMessage"));
         }
     }
 
-    @EventHandler
-    public void onPlayerJoinEvent(PlayerJoinEvent e) {
-        PlayerRoleCheckerConnector.INSTANCE.getCommandList().forEach(string -> Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), OtherUtil.replaceString(string, e.getPlayer())));
+    public boolean isJoin(PlayerData data) {
+        if (data == null) {
+            return callEvent(new CheckResultEvent(null, CheckResultEnum.NOT_REGISTERED)).getResult();
+        } else {
+            Guild guild = PlayerRoleCheckerConnector.INSTANCE.getJDA().getGuildById(PlayerRoleCheckerConnector.INSTANCE.getConfig().getLong("GuildID"));
 
-        PlayerData.getInstance().asyncDiscordId(e.getPlayer().getUniqueId(), discordId -> {
-            if (discordId != null) {
+            if (guild == null) {
+                //new method
+                if (CommonUtils.hasRole(PlayerRoleCheckerConnector.INSTANCE.getJDA().getRoleById(PlayerRoleCheckerConnector.INSTANCE.getConfigManager().getRoleList().get(0))
+                        .getGuild().retrieveMemberById(data.getDiscordId())
+                        .complete().getRoles(), PlayerRoleCheckerConnector.INSTANCE.getConfigManager().getRoleList())) {
+                    return callEvent(new CheckResultEvent(data, CheckResultEnum.SUCCESS)).getResult();
+                }
 
-                List<Role> roles = OtherUtil.getRolesById(discordId);
+                //deprecated! don't use!
+                /*for (Guild g : PlayerRoleCheckerConnector.INSTANCE.getJDA().getGuilds()) {
+                    if (CommonUtils.hasRole(g.retrieveMemberById(data.getDiscordId()).complete().getRoles(), PlayerRoleCheckerConnector.INSTANCE.getConfigManager().getRoleList())) {
+                        return callEvent(new CheckResultEvent(data, CheckResultEnum.SUCCESS)).getResult();
+                    }
+                }*/
 
-                if (roles != null) {
-
-                    StringBuilder stringBuilder = new StringBuilder();
-
-                    roles.forEach(role -> stringBuilder.append(role.getName()).append(" "));
-
-                    PlayerRoleCheckerConnector.INSTANCE.getConfig().getStringList("Minecraft.message").forEach(string -> e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', OtherUtil.replaceDiscord(string, discordId, e.getPlayer()).replaceAll("%role%", String.valueOf(stringBuilder)))));
+                return callEvent(new CheckResultEvent(data, CheckResultEnum.GUILD_IS_INVALID)).getResult();
+            } else {
+                if (CommonUtils.hasRole(guild.retrieveMemberById(data.getDiscordId()).complete().getRoles(), PlayerRoleCheckerConnector.INSTANCE.getConfigManager().getRoleList())) {
+                    return callEvent(new CheckResultEvent(guild, data, CheckResultEnum.SUCCESS)).getResult();
+                } else {
+                    return callEvent(new CheckResultEvent(guild, data, CheckResultEnum.UNKNOWN)).getResult();
                 }
             }
+        }
+    }
+
+
+    @Override
+    public void onLoginEvent(PlayerJoinEvent event) {
+        //WARNING: NOT ASYNC
+        PlayerRoleCheckerConnector.INSTANCE.getConfigManager().getJoinCommand().forEach(command -> {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
         });
+
+        if (PlayerRoleCheckerConnector.INSTANCE.getConfig().getBoolean("Minecraft.joinMessageBoolean")) {
+            Bukkit.getScheduler().runTaskAsynchronously(PlayerRoleCheckerConnector.INSTANCE.getPlugin(), () -> {
+                /* todo: add messages! */
+            });
+
+            event.setJoinMessage(PlayerRoleCheckerConnector.INSTANCE.getConfig().getString("Minecraft.joinMessage"));
+        }
+    }
+
+    @Override
+    public void onErrorCaught(AsyncPlayerPreLoginEvent event, Exception ex) {
+        if (!callEvent(new CheckResultEvent(null, CheckResultEnum.ERROR).getResult())) {
+            disallow(event, PlayerRoleCheckerConnector.INSTANCE.getConfig().getStringList("Minecraft.errorCaught"));
+
+            if (PlayerRoleCheckerConnector.INSTANCE.getConfigManager().isDebug()) {
+                /* print error */
+                ex.printStackTrace();
+            }
+        }
     }
 }

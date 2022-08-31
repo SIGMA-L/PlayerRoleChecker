@@ -1,20 +1,25 @@
 package net.klnetwork.playerrolechecker.api.data.connector;
 
-import java.sql.*;
+import net.klnetwork.playerrolechecker.api.data.SQLInterface;
+
 import java.util.UUID;
 
-public interface ConnectorBypassTable {
-    String getUUID(UUID uuid);
+public abstract class ConnectorBypassTable extends SQLInterface {
+    public abstract boolean hasUUID(UUID uuid);
 
-    String getUUID(String uuid);
+    public abstract boolean hasUUID(String uuid);
 
-    void put(String uuid);
+    public abstract String getUUID(UUID uuid);
 
-    void remove(UUID uuid);
+    public abstract String getUUID(String uuid);
 
-    void remove(String uuid);
+    public abstract void put(String uuid);
 
-    Connection getConnection() throws SQLException;
+    public abstract void remove(UUID uuid);
 
-    void setConnection(Connection connection);
+    public abstract void remove(String uuid);
+
+    public abstract boolean isCreated();
+
+    public abstract void create();
 }

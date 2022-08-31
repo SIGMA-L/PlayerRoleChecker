@@ -1,14 +1,16 @@
-SQLite:
-  SQLiteLocate: data.db
+DataBase:
+  TemporaryTable:
+    location: 'data.db'
+    type: SQLITE
+  PlayerDataTable:
+    server: 'localhost'
+    port: 3306
+    database: 'playerrolechecker'
+    username: 'playerrolecheckeruser'
+    password: 'playerrolecheckerpass'
+    option: '?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=latin1&autoReconnect=true'
+    type: MYSQL
 
-## MYSQLがこの中に入っていないのでSpigotのSQLに頼ることになります なので古いspigotは暗号化をlatin1に変更する必要があります
-MySQL:
-  Server: 'localhost'
-  Port: 3306
-  Database: 'playerrolechecker'
-  Username: 'playerrolecheckeruser'
-  Password: 'playerrolecheckerpass'
-  Option: '?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=latin1&autoReconnect=true'
 ## DiscordToken: DiscordBotのトークン
 ## AdminChannel: (チャンネルID) アドミンチャンネル(必要ではない)
 ## ChannelID: チャンネルID(必要ないがほぼ必須)
@@ -19,15 +21,18 @@ Discord:
   AdminChannel:
   ChannelID:
   addToRole:
-  limitCommand: false
-CodeLimit:
-  min: 1000
-  max: 9999
 ## Message: 色々なメッセージをカスタマイズできます
 ## JoinEvent: マインクラフトユーザーがコードを発行したときのメッセージ
+## - verifiedPlayerIgnore: 登録されているプレイヤーを無視します
+## - deleteSecond: 削除する時間 (秒)
 ## - already-code: すでに発行されている場合のkickメッセージ
 ## - code: 発行された場合のkickメッセージ
 JoinEvent:
+  limit:
+    min: 1000
+    max: 9999
+  verifiedPlayerIgnore: false
+  deleteSecond: 300
   already-code:
     - '&c(発行済み) あなたのコードは'
     - '「%code%」 です (発行されてから) 5分以内に認証してください'
@@ -39,8 +44,13 @@ JoinEvent:
 ## - invalid-number: 不明な数字のエラーメッセージ (%uuid% %discordid% をサポートしていません)
 ## - already-registered: すでに登録されていますのエラーメッセージ (%uuid% %discordid% をサポートしています)
 ## - success-register: 登録が完了されたメッセージ (%uuid %discordid% をサポートしています)
-## - length-big: length <= 2 の時に出るエラーメッセージ (%uuid% %discordid% をサポートしていません)
 JoinCommand:
+  name: ''
+  globalCommand: false
+  requestBedrockSkin: true
+  require-permission:
+    ## require-permission: のあとに空白でも可能、やってることは変わらない
+    - 'UNKNOWN'
   not-number:
     color: 'RED'
     title: 'リクエストに失敗しました'
@@ -64,6 +74,15 @@ JoinCommand:
     message:
       - 'UUID: | %uuid% | false'
       - 'DiscordID: | %discordid% | false'
+  already-registered-bedrock:
+    color: 'RED'
+    title: 'リクエストに失敗しました'
+    description: '理由: すでに登録されているようです'
+    image: 'attachment://user.png'
+    timestamp: true
+    message:
+      - 'XUID: | %xuid% | false'
+      - 'DiscordID: | %discordid% | false'
   success-register:
     color: 'GREEN'
     title: 'リクエストに成功しました！'
@@ -72,6 +91,15 @@ JoinCommand:
     timestamp: true
     message:
       - 'UUID: | %uuid% | false'
+      - 'DiscordID: | %discordid% | false'
+  success-register-bedrock:
+    color: 'GREEN'
+    title: 'リクエストに成功しました！'
+    description: '以下のプレイヤーの登録が完了しました'
+    image: 'attachment://user.png'
+    timestamp: true
+    message:
+      - 'XUID: | %xuid% | false'
       - 'DiscordID: | %discordid% | false'
   sendmessage:
     color: 'BLACK'
@@ -82,18 +110,24 @@ JoinCommand:
     message:
       - 'UUID: | %uuid% | false'
       - 'DiscordID: | %discordid% | false'
-  length-big:
-    color: 'RED'
-    title: 'リクエストに失敗しました'
-    description: '理由: length <= 2'
-    image:
+  sendmessage-bedrock:
+    color: 'BLACK'
+    title: '登録が完了したようです！'
+    description: ''
+    image: 'attachment://user.png'
     timestamp: true
     message:
+      - 'XUID: | %xuid% | false'
+      - 'DiscordID: | %discordid% | false'
 ## RemoveCommand: !remove コマンド
 ## - invalid-name: 不明な名前のエラーメッセージ (%uuid% %discordid% をサポートしていません)
 ## - not-registered: 登録されていないエラーメッセージ (%uuid% %discordid% をサポートしていません)
 ## - success-remove: 削除に完了したメッセージ (%uuid %discordid% をサポートしています)
 RemoveCommand:
+  name: '!remove'
+  globalCommand: true
+  require-permission:
+    - 'ADMINISTRATOR'
   invalid-name:
     color: 'RED'
     title: 'リクエストに失敗しました'
@@ -122,6 +156,10 @@ RemoveCommand:
 ## - already-registered すでに登録されているエラーメッセージ (%uuid% %discordid% をサポートしています)
 ## - success-register: 登録が完了したメッセージ (%uuid %discordid% をサポートしています)
 ForceJoinCommand:
+  name: '!forcejoin'
+  globalCommand: true
+  require-permission:
+    - 'ADMINISTRATOR'
   invalid-name:
     color: 'RED'
     title: 'リクエストに失敗しました'
@@ -147,3 +185,18 @@ ForceJoinCommand:
     message:
       - 'UUID: | %uuid% | false'
       - 'DiscordID: | %discordid% | false'
+
+UpdateAlert:
+  enabled: true
+  op-player-alert: true
+  console-alert: true
+  checkTicks: 1728000
+  version: '%hook_version%'
+  messages:
+    - '&a&l--------------------------------------'
+    - '&e- [PRC] 新しいバージョンが見つかりました！'
+    - '&e- Plugin Version: %version%'
+    - '&e- Github Version: %release_version%'
+    - ''
+    - '&e- link: https://github.com/SIGMA-L/PlayerRoleChecker/releases/latest/'
+    - '&a&l--------------------------------------'

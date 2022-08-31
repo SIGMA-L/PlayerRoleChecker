@@ -1,39 +1,55 @@
 package net.klnetwork.playerrolechecker.api.data;
 
-import java.sql.Connection;
+import net.klnetwork.playerrolechecker.api.data.common.PlayerData;
+import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
+
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-public interface PlayerDataTable {
-    void asyncDiscordId(UUID uuid, Consumer<String> discordId);
+public abstract class PlayerDataTable extends SQLInterface {
+    public abstract void asyncDiscordId(UUID uuid, Consumer<PlayerData> discordId);
 
-    void asyncDiscordId(String uuid, Consumer<String> discordId);
+    public abstract void asyncDiscordId(String uuid, Consumer<PlayerData> discordId);
 
-    void asyncUUID(String discordId, Consumer<String> uuid);
+    public abstract void asyncDiscordId(UUID uuid, boolean bedrock, Consumer<PlayerData> discordId);
 
-    String getDiscordId(UUID uuid);
+    public abstract void asyncDiscordId(String uuid, boolean bedrock, Consumer<PlayerData> discordId);
 
-    String getDiscordId(String uuid);
+    public abstract void asyncUUID(String discordId, Consumer<PlayerData> uuid);
 
-    String getUUID(String discordId);
+    public abstract PlayerData getDiscordId(UUID uuid);
 
-    void put(UUID uuid, String discordId);
+    public abstract PlayerData getDiscordId(String uuid);
 
-    void put(String uuid, String discordId);
+    public abstract PlayerData getDiscordId(UUID uuid, boolean bedrock);
 
-    void remove(UUID uuid, String discordId);
+    public abstract PlayerData getDiscordId(String uuid, boolean bedrock);
 
-    void remove(String uuid, String discordId);
+    public abstract boolean hasData(UUID uuid, boolean bedrock);
 
-    Connection getConnection() throws SQLException;
+    public abstract boolean hasData(String uuid, boolean bedrock);
 
-    void setConnection(Connection connection);
+    public abstract PlayerData getUUID(String discordId);
 
-    long getLastConnection();
+    public abstract void put(UUID uuid, String discordId, boolean bedrock);
 
-    void setLastConnection(long lastConnection);
+    public abstract void put(String uuid, String discordId, boolean bedrock);
 
-    /* ToDo: Recode */
-    boolean isConnectionDead() throws SQLException;
+    public abstract void remove(UUID uuid, String discordId);
+
+    public abstract void remove(String uuid, String discordId);
+
+    public void alter() {
+        Statement statement = null;
+        try {
+            statement = getConnection().createStatement();
+            statement.executeUpdate("ALTER TABLE verifyplayer ADD bedrock boolean DEFAULT FALSE");
+        } catch (SQLException ex) {
+            /* ignored */
+        } finally {
+            CommonUtils.close(statement);
+        }
+    }
 }
