@@ -6,8 +6,6 @@ import net.klnetwork.playerrolechecker.api.discord.CommandManager;
 public interface APIHookCustom extends APIHook {
     CommandManager getCommandManager();
 
-    JoinManager getJoinManager();
-
     JDA getJDA();
 
     PlayerDataTable getPlayerData();

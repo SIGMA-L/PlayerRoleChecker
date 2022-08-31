@@ -71,19 +71,19 @@ public abstract class SQLInterface {
 
         switch (type) {
             case SQLITE: {
-                format = getPlugin().getConfig().getString(getPath() + ".Location");
+                format = getPlugin().getConfig().getString(getPath() + ".location");
                 break;
             }
             case MYSQL: {
                 format = String.format("%s:%s/%s%s"
-                        , getPlugin().getConfig().getString(getPath() + ".Server")
-                        , getPlugin().getConfig().getString(getPath() + ".Port")
-                        , getPlugin().getConfig().getString(getPath() + ".Database")
-                        , getPlugin().getConfig().getString(getPath() + ".Option"));
+                        , getPlugin().getConfig().getString(getPath() + ".server")
+                        , getPlugin().getConfig().getString(getPath() + ".port")
+                        , getPlugin().getConfig().getString(getPath() + ".database")
+                        , getPlugin().getConfig().getString(getPath() + ".option"));
                 break;
             }
             case CUSTOM: {
-                format = getPlugin().getConfig().getString(getPath() + ".Format");
+                format = getPlugin().getConfig().getString(getPath() + ".format");
                 break;
             }
         }
@@ -96,7 +96,7 @@ public abstract class SQLInterface {
             return null;
         }
 
-        return getPlugin().getConfig().getString(getPath() + ".User");
+        return getPlugin().getConfig().getString(getPath() + ".user");
     }
 
     public @Nullable String getPassword() {
@@ -104,7 +104,7 @@ public abstract class SQLInterface {
             return null;
         }
 
-        return getPlugin().getConfig().getString(getPath() + ".Password");
+        return getPlugin().getConfig().getString(getPath() + ".password");
     }
 
     protected @NotNull SQLType getType0() {

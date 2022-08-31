@@ -9,5 +9,7 @@ public interface APIHook {
 
     Metrics getMetrics();
 
+    JoinManager getJoinManager();
+
     HookedAPIType getType();
 }

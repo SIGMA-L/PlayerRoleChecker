@@ -1,14 +1,14 @@
 DataBase:
   TemporaryTable:
-    Location: 'data.db'
+    location: 'data.db'
     type: SQLITE
   PlayerDataTable:
-    Server: 'localhost'
-    Port: 3306
-    Database: 'playerrolechecker'
-    Username: 'playerrolecheckeruser'
-    Password: 'playerrolecheckerpass'
-    Option: '?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=latin1&autoReconnect=true'
+    server: 'localhost'
+    port: 3306
+    database: 'playerrolechecker'
+    username: 'playerrolecheckeruser'
+    password: 'playerrolecheckerpass'
+    option: '?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=latin1&autoReconnect=true'
     type: MYSQL
 
 ## DiscordToken: DiscordBotのトークン
@@ -26,6 +26,8 @@ CodeLimit:
   max: 9999
 ## Message: 色々なメッセージをカスタマイズできます
 ## JoinEvent: マインクラフトユーザーがコードを発行したときのメッセージ
+## - verifiedPlayerIgnore: 登録されているプレイヤーを無視します
+## - deleteSecond: 削除する時間 (秒)
 ## - already-code: すでに発行されている場合のkickメッセージ
 ## - code: 発行された場合のkickメッセージ
 JoinEvent:

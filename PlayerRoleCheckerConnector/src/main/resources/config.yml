@@ -1,15 +1,15 @@
 DataBase:
   BypassTable:
-    Location: 'bypass.db'
+    location: 'bypass.db'
     useBypassCommand: true
     type: SQLITE
   PlayerDataTable:
-    Server: 'localhost'
-    Port: 3306
-    Database: 'playerrolechecker'
-    Username: 'playerrolecheckeruser'
-    Password: 'playerrolecheckerpass'
-    Option: '?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=latin1&autoReconnect=true'
+    server: 'localhost'
+    port: 3306
+    database: 'playerrolechecker'
+    username: 'playerrolecheckeruser'
+    password: 'playerrolecheckerpass'
+    option: '?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=latin1&autoReconnect=true'
     type: MYSQL
 
 ## JoinCommand: プレイヤーが参加したときにコマンドを打ちます
