@@ -1,7 +1,7 @@
 package net.klnetwork.codeapi.event;
 
 import net.klnetwork.codeapi.CodeAPI;
-import net.klnetwork.codeapi.api.CodeUtil;
+import net.klnetwork.codeapi.util.CodeUtil;
 import net.klnetwork.codeapi.table.LocalSQL;
 import net.klnetwork.playerrolechecker.api.data.common.JoinHandler;
 import net.klnetwork.playerrolechecker.api.data.common.TemporaryData;

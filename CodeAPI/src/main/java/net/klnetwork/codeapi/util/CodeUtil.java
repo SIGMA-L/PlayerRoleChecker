@@ -1,5 +1,4 @@
-package net.klnetwork.codeapi.api;
-
+package net.klnetwork.codeapi.util;
 
 import net.klnetwork.codeapi.CodeAPI;
 import net.klnetwork.codeapi.table.LocalSQL;

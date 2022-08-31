@@ -95,7 +95,10 @@ APIを実装して使えるイベント:
 
 ```
 値 UUID が返ってきます
+http://localhost:8080/v2/post/1212
+- {"type":"error","uuid":null,"code":null,"bedrock":null}
+- {"type":"success","uuid":"069a79f4-44e9-4726-a5be-fca90e38aaf5","code":1212,"bedrock":false}
 
-http://localhost:8080/api/get/?code=codehere
-http://localhost:8080/api/post/?code=codehere
+- http://localhost:8080/v2/post/code
+- http://localhost:8080/v2/post/code
 ```

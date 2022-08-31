@@ -74,12 +74,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.xerial</groupId>
-            <artifactId>sqlite-jdbc</artifactId>
-            <version>3.36.0.2</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-grizzly2-http</artifactId>
             <version>3.0.6</version>
