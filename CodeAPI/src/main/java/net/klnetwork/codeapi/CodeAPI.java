@@ -1,7 +1,7 @@
 package net.klnetwork.codeapi;
 
 import net.klnetwork.codeapi.api.ConfigValue;
-import net.klnetwork.codeapi.api.StartAPI;
+import net.klnetwork.codeapi.api.Listener;
 import net.klnetwork.codeapi.event.JoinEvent;
 import net.klnetwork.codeapi.table.LocalSQL;
 import net.klnetwork.playerrolechecker.api.data.JoinManager;
@@ -17,7 +17,7 @@ public final class CodeAPI extends JavaPlugin implements CodeAPIHook {
 
     public static CodeAPI INSTANCE;
 
-    private static HttpServer server;
+    private final HttpServer server = Listener.startServer(this);
 
     private final JoinManager joinManager = new JoinManager(this);
     private final ConfigValue configManger = new ConfigValue(this);
@@ -30,9 +30,9 @@ public final class CodeAPI extends JavaPlugin implements CodeAPIHook {
         saveDefaultConfig();
 
         LocalSQL.getInstance().create();
-        server = StartAPI.startServer();
 
         joinManager.init();
+        joinManager.register(new JoinEvent());
 
         //TODO: REMOVE
         getServer().getPluginManager().registerEvents(new JoinEvent(),this);

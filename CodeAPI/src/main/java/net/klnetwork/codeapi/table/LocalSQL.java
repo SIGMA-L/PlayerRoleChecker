@@ -203,6 +203,6 @@ public class LocalSQL extends TemporaryTable {
 
     @Override
     public String getPath() {
-        return "DataBase.TemporaryTable";
+        return "SQL";
     }
 }
