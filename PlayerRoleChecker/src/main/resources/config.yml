@@ -190,6 +190,7 @@ UpdateAlert:
   enabled: true
   op-player-alert: true
   console-alert: true
+  checkTicks: 1728000
   version: '%hook_version%'
   messages:
     - '&a&l--------------------------------------'

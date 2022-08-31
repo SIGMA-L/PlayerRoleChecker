@@ -8,6 +8,8 @@ import net.klnetwork.playerrolechecker.api.data.connector.ConnectorCustomDataBas
 import net.klnetwork.playerrolechecker.api.discord.CommandManager;
 import net.klnetwork.playerrolechecker.api.enums.HookedAPIType;
 import net.klnetwork.playerrolechecker.api.utils.Metrics;
+import net.klnetwork.playerrolechecker.api.utils.updater.UpdateBuilder;
+import net.klnetwork.playerrolechecker.api.utils.updater.UpdateAlert;
 import net.klnetwork.playerrolecheckerconnector.api.ConfigValue;
 import net.klnetwork.playerrolecheckerconnector.api.CustomDataBaseImpl;
 import net.klnetwork.playerrolecheckerconnector.command.AddBypassCommand;
@@ -29,6 +31,18 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
     private final ConfigValue configManager = new ConfigValue(this);
     private final Metrics metrics = new Metrics(this,	16282);
 
+    private final UpdateAlert updateAlert = new UpdateBuilder()
+            .plugin(this)
+            .messages(this.getConfig().getStringList("UpdateAlert.messages"))
+            .checkTicks(this.getConfig().getLong("UpdateAlert.checkTicks"))
+            .version(this.getConfig().getString("UpdateAlert.version").replaceAll("%hook_version%", this.getDescription().getVersion()))
+            .consoleAlert(this.getConfig().getBoolean("UpdateAlert.console-alert"))
+            .opPlayerAlert(this.getConfig().getBoolean("UpdateAlert.op-player-alert"))
+            .opPlayerAlert(this.getConfig().getBoolean("UpdateAlert.enabled"))
+            .defaultCheck(true)
+            .smartVersionCheck(true)
+            .start();
+
     @Override
     public void onEnable() {
         INSTANCE = this;
@@ -36,6 +50,8 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
         saveDefaultConfig();
 
         PlayerDataSQL.getInstance().create();
+
+        updateAlert.registerTask();
 
         joinManager.init();
         joinManager.register(new JoinEvent());
@@ -58,6 +74,8 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
         if (JDA.INSTANCE != null) {
             JDA.INSTANCE.shutdown();
         }
+
+        updateAlert.stop();
     }
 
     @Override

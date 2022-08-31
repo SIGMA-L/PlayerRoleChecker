@@ -9,6 +9,8 @@ import net.klnetwork.playerrolechecker.api.data.codeapi.CodeAPIHook;
 import net.klnetwork.playerrolechecker.api.data.common.TemporaryTable;
 import net.klnetwork.playerrolechecker.api.enums.HookedAPIType;
 import net.klnetwork.playerrolechecker.api.utils.Metrics;
+import net.klnetwork.playerrolechecker.api.utils.updater.UpdateBuilder;
+import net.klnetwork.playerrolechecker.api.utils.updater.UpdateAlert;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.glassfish.grizzly.http.server.HttpServer;
@@ -23,6 +25,18 @@ public final class CodeAPI extends JavaPlugin implements CodeAPIHook {
     private final ConfigValue configManger = new ConfigValue(this);
     private final Metrics metrics = new Metrics(this, 16320);
 
+    private final UpdateAlert updateAlert = new UpdateBuilder()
+            .plugin(this)
+            .messages(this.getConfig().getStringList("UpdateAlert.messages"))
+            .checkTicks(this.getConfig().getLong("UpdateAlert.checkTicks"))
+            .version(this.getConfig().getString("UpdateAlert.version").replaceAll("%hook_version%", this.getDescription().getVersion()))
+            .consoleAlert(this.getConfig().getBoolean("UpdateAlert.console-alert"))
+            .opPlayerAlert(this.getConfig().getBoolean("UpdateAlert.op-player-alert"))
+            .opPlayerAlert(this.getConfig().getBoolean("UpdateAlert.enabled"))
+            .defaultCheck(true)
+            .smartVersionCheck(true)
+            .start();
+
     @Override
     public void onEnable() {
         INSTANCE = this;
@@ -30,6 +44,8 @@ public final class CodeAPI extends JavaPlugin implements CodeAPIHook {
         saveDefaultConfig();
 
         LocalSQL.getInstance().create();
+
+        updateAlert.registerTask();
 
         joinManager.init();
         joinManager.register(new JoinEvent());
@@ -43,6 +59,8 @@ public final class CodeAPI extends JavaPlugin implements CodeAPIHook {
         if (server.isStarted()) {
             server.shutdown();
         }
+
+        updateAlert.stop();
 
         LocalSQL.getInstance().drop();
     }

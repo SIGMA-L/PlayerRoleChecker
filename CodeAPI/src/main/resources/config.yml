@@ -24,3 +24,18 @@ Server:
   v2:
     get: true
     post: true
+
+UpdateAlert:
+  enabled: true
+  op-player-alert: true
+  console-alert: true
+  checkTicks: 1728000
+  version: '%hook_version%'
+  messages:
+    - '&a&l--------------------------------------'
+    - '&e- [PRC] 新しいバージョンが見つかりました！'
+    - '&e- Plugin Version: %version%'
+    - '&e- Github Version: %release_version%'
+    - ''
+    - '&e- link: https://github.com/SIGMA-L/PlayerRoleChecker/releases/latest/'
+    - '&a&l--------------------------------------'

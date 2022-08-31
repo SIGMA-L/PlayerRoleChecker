@@ -2,6 +2,7 @@ package net.klnetwork.playerrolechecker.api;
 
 import net.klnetwork.playerrolechecker.api.data.APIHook;
 import net.klnetwork.playerrolechecker.api.data.checker.CheckerAPIHook;
+import net.klnetwork.playerrolechecker.api.data.codeapi.CodeAPIHook;
 import net.klnetwork.playerrolechecker.api.data.connector.ConnectorAPIHook;
 import net.klnetwork.playerrolechecker.api.enums.HookedAPIType;
 import org.bukkit.Bukkit;
@@ -47,6 +48,14 @@ public class PlayerRoleCheckerAPI {
 
     public static boolean isHookedCodeAPI() {
         return getHookedAPIType().contains(HookedAPIType.CODEAPI);
+    }
+
+    public static CodeAPIHook getCodeAPI() {
+        if (!pairs.containsKey(HookedAPIType.CHECKER) && !isHookedCodeAPI()) {
+            init();
+        }
+
+        return (CodeAPIHook) pairs.get(HookedAPIType.CODEAPI);
     }
 
     public static List<HookedAPIType> getHookedAPIType() {
