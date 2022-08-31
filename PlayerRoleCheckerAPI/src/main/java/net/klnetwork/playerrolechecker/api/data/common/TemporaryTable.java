@@ -1,11 +1,10 @@
-package net.klnetwork.playerrolechecker.api.data.checker;
+package net.klnetwork.playerrolechecker.api.data.common;
 
 import net.klnetwork.playerrolechecker.api.data.SQLInterface;
-import net.klnetwork.playerrolechecker.api.data.common.TemporaryData;
 
 import java.util.UUID;
 
-public abstract class CheckerTemporaryTable extends SQLInterface {
+public abstract class TemporaryTable extends SQLInterface {
     public abstract boolean hasUUID(Integer code);
 
     public abstract TemporaryData getUUID(Integer code);

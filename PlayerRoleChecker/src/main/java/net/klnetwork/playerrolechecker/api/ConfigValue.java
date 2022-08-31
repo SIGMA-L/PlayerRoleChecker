@@ -12,9 +12,9 @@ public class ConfigValue extends ConfigManager implements CheckerConfigManager {
 
     @ConfigKey(key = "JoinEvent.deleteSecond")
     private int deleteSeconds = 30;
-    @ConfigKey(key = "CodeLimit.min")
+    @ConfigKey(key = "JoinEvent.limit.min")
     private int min;
-    @ConfigKey(key = "CodeLimit.max")
+    @ConfigKey(key = "JoinEvent.limit.max")
     private int max;
     @ConfigKey(key = "JoinEvent.verifiedPlayerIgnore")
     private boolean verifiedPlayerIgnore = false;

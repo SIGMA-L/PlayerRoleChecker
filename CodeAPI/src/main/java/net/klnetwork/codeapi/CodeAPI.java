@@ -1,9 +1,12 @@
 package net.klnetwork.codeapi;
 
+import net.klnetwork.codeapi.api.ConfigValue;
 import net.klnetwork.codeapi.api.StartAPI;
-import net.klnetwork.codeapi.Events.JoinEvent;
+import net.klnetwork.codeapi.event.JoinEvent;
+import net.klnetwork.codeapi.table.LocalSQL;
 import net.klnetwork.playerrolechecker.api.data.JoinManager;
 import net.klnetwork.playerrolechecker.api.data.codeapi.CodeAPIHook;
+import net.klnetwork.playerrolechecker.api.data.common.TemporaryTable;
 import net.klnetwork.playerrolechecker.api.enums.HookedAPIType;
 import net.klnetwork.playerrolechecker.api.utils.Metrics;
 import org.bukkit.plugin.Plugin;
@@ -11,17 +14,22 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.glassfish.grizzly.http.server.HttpServer;
 
 public final class CodeAPI extends JavaPlugin implements CodeAPIHook {
-    public static Plugin plugin;
+
+    public static CodeAPI INSTANCE;
+
     private static HttpServer server;
 
     private final JoinManager joinManager = new JoinManager(this);
+    private final ConfigValue configManger = new ConfigValue(this);
     private final Metrics metrics = new Metrics(this, 16320);
 
     @Override
     public void onEnable() {
+        INSTANCE = this;
+
         saveDefaultConfig();
-        plugin = this;
-        SQL.init();
+
+        LocalSQL.getInstance().create();
         server = StartAPI.startServer();
 
         joinManager.init();
@@ -35,11 +43,28 @@ public final class CodeAPI extends JavaPlugin implements CodeAPIHook {
         if (server.isStarted()) {
             server.shutdown();
         }
+
+        LocalSQL.getInstance().drop();
     }
 
     @Override
     public HttpServer getHttpServer() {
         return server;
+    }
+
+    @Override
+    public TemporaryTable getTemporary() {
+        return LocalSQL.getInstance();
+    }
+
+    @Override
+    public void setTemporary(TemporaryTable table) {
+        LocalSQL.setInstance(table);
+    }
+
+    @Override
+    public ConfigValue getConfigManager() {
+        return configManger;
     }
 
     @Override

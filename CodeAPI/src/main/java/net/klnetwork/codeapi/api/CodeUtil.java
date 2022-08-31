@@ -1,25 +1,21 @@
 package net.klnetwork.codeapi.api;
 
 
-
-import net.klnetwork.codeapi.Util.SQLiteUtil;
-
-import java.util.UUID;
-
-import static net.klnetwork.codeapi.Util.SQLiteUtil.CheckCode;
+import net.klnetwork.codeapi.CodeAPI;
+import net.klnetwork.codeapi.table.LocalSQL;
+import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 
 public class CodeUtil {
+    public static int generateCode() {
+        int max = CodeAPI.INSTANCE.getConfigManager().getMax();
+        int min = CodeAPI.INSTANCE.getConfigManager().getMin();
 
-    public static int getRandom(int min, int max) {
-        return (int) (Math.random() * (max - min + 1)) + min;
-    }
+        int result = CommonUtils.random(min, max);
 
-    public static int CodeIssue(UUID uuid) {
-        int result = getRandom(1000, 9999);
-        while (CheckCode(result)) {
-            result = getRandom(1000, 9999);
+        while (LocalSQL.getInstance().hasUUID(result)) {
+            result = CommonUtils.random(min, max);
         }
-        SQLiteUtil.putSQLite(uuid.toString(), Integer.toString(result));
+
         return result;
     }
 }

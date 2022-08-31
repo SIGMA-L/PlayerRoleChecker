@@ -21,9 +21,6 @@ Discord:
   AdminChannel:
   ChannelID:
   addToRole:
-CodeLimit:
-  min: 1000
-  max: 9999
 ## Message: 色々なメッセージをカスタマイズできます
 ## JoinEvent: マインクラフトユーザーがコードを発行したときのメッセージ
 ## - verifiedPlayerIgnore: 登録されているプレイヤーを無視します
@@ -31,6 +28,9 @@ CodeLimit:
 ## - already-code: すでに発行されている場合のkickメッセージ
 ## - code: 発行された場合のkickメッセージ
 JoinEvent:
+  limit:
+    min: 1000
+    max: 9999
   verifiedPlayerIgnore: false
   deleteSecond: 300
   already-code:

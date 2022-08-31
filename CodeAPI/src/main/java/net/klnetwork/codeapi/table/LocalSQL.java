@@ -1,6 +1,6 @@
-package net.klnetwork.playerrolechecker.table;
+package net.klnetwork.codeapi.table;
 
-import net.klnetwork.playerrolechecker.PlayerRoleChecker;
+import net.klnetwork.codeapi.CodeAPI;
 import net.klnetwork.playerrolechecker.api.data.common.TemporaryTable;
 import net.klnetwork.playerrolechecker.api.data.common.TemporaryData;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
@@ -198,7 +198,7 @@ public class LocalSQL extends TemporaryTable {
 
     @Override
     public Plugin getPlugin() {
-        return PlayerRoleChecker.INSTANCE;
+        return CodeAPI.INSTANCE;
     }
 
     @Override

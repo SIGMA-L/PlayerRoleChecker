@@ -6,7 +6,7 @@ import net.klnetwork.playerrolechecker.api.data.JoinManager;
 import net.klnetwork.playerrolechecker.api.data.PlayerDataTable;
 import net.klnetwork.playerrolechecker.api.data.checker.CheckerAPIHook;
 import net.klnetwork.playerrolechecker.api.data.checker.CheckerCustomDataBase;
-import net.klnetwork.playerrolechecker.api.data.checker.CheckerTemporaryTable;
+import net.klnetwork.playerrolechecker.api.data.common.TemporaryTable;
 import net.klnetwork.playerrolechecker.api.discord.CommandManager;
 import net.klnetwork.playerrolechecker.api.enums.HookedAPIType;
 import net.klnetwork.playerrolechecker.api.utils.Metrics;
@@ -54,6 +54,8 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
         if (JDA.INSTANCE != null) {
             JDA.INSTANCE.shutdown();
         }
+
+        LocalSQL.getInstance().drop();
     }
 
     @Override
@@ -97,12 +99,12 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
     }
 
     @Override
-    public CheckerTemporaryTable getTemporary() {
+    public TemporaryTable getTemporary() {
         return LocalSQL.getInstance();
     }
 
     @Override
-    public void setTemporary(CheckerTemporaryTable table) {
+    public void setTemporary(TemporaryTable table) {
         LocalSQL.setInstance(table);
     }
 

@@ -1,4 +1,25 @@
-SQLite:
-  SQLiteLocate: codeapi.db
-RemoveSecond: 500
-URL: 'http://localhost:8080/'
+SQL:
+  location: codeapi.db
+  type: SQLITE
+## JoinEvent: マインクラフトユーザーがコードを発行したときのメッセージ
+## - deleteSecond: 削除する時間 (秒)
+## - already-code: すでに発行されている場合のkickメッセージ
+## - code: 発行された場合のkickメッセージ
+JoinEvent:
+  limit:
+    min: 1000
+    max: 9999
+  deleteSecond: 300
+  already-code:
+    - '&c(発行済み) あなたのコードは'
+    - '「%code%」 です (発行されてから) 5分以内に認証してください'
+  code:
+    - '&cあなたのコードは'
+    - '「%code%」 です 5分以内に認証してください'
+Server:
+  url: 'http://localhost:8080/'
+  api:
+    v1:
+      get: true
+      post: true
+    v2:
