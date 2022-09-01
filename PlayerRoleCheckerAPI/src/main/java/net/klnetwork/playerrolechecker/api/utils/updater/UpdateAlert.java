@@ -50,7 +50,7 @@ public class UpdateAlert implements Listener {
 
     @EventHandler
     public void onJoinEvent(PlayerJoinEvent event) {
-        if (isOpPlayerAlert() && event.getPlayer().isOp()) {
+        if (isOpPlayerAlert() && event.getPlayer().isOp() && releasedNewVersion) {
             getMessage().forEach(message -> {
                 event.getPlayer().sendMessage(replace(message));
             });
