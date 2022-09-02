@@ -32,7 +32,8 @@ public class AsyncPostUUID implements CodeAPICanRegister {
             try {
                 response.resume(Response.ok(createJson(body).toString()).build());
             } catch (Exception ex) {
-                response.resume(Response.status(400, JsonFactory.getErrorJson().toString()).build());
+                response.resume(Response.status(Response.Status.BAD_REQUEST)
+                        .entity(JsonFactory.getErrorJson().toString()).build());
             }
         }).start();
     }

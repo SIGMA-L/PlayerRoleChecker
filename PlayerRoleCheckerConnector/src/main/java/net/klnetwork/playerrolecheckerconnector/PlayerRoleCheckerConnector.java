@@ -84,6 +84,11 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
     }
 
     @Override
+    public UpdateAlert getUpdateAlert() {
+        return updateAlert;
+    }
+
+    @Override
     public net.dv8tion.jda.api.JDA getJDA() {
         return JDA.INSTANCE;
     }

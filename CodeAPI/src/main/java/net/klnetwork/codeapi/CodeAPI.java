@@ -49,9 +49,6 @@ public final class CodeAPI extends JavaPlugin implements CodeAPIHook {
 
         joinManager.init();
         joinManager.register(new JoinEvent());
-
-        //TODO: REMOVE
-        getServer().getPluginManager().registerEvents(new JoinEvent(),this);
     }
 
     @Override
@@ -83,6 +80,11 @@ public final class CodeAPI extends JavaPlugin implements CodeAPIHook {
     @Override
     public ConfigValue getConfigManager() {
         return configManger;
+    }
+
+    @Override
+    public UpdateAlert getUpdateAlert() {
+        return updateAlert;
     }
 
     @Override

@@ -75,8 +75,8 @@ public class LocalSQL extends TemporaryTable {
             if (resultSet.next()) {
                 result = new String[]{resultSet.getString(1), resultSet.getString(2), String.valueOf(resultSet.getBoolean(3))};
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return result;
     }
@@ -130,8 +130,8 @@ public class LocalSQL extends TemporaryTable {
             statement.setInt(2, code);
             statement.setBoolean(3, bedrock);
             statement.execute();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
             CommonUtils.close(statement);
         }

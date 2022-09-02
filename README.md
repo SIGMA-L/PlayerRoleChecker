@@ -48,11 +48,6 @@
 | !remove {マインクラフトID}                | データベースから強制削除 | Permission.ADMINISTRATOR |
 | !forcejoin {マインクラフトID} {DiscordID} | データベースに強制登録  | Permission.ADMINISTRATOR |
 
-## LICENSE
-
-[Apache License 2.0](https://github.com/SIGMA-L/PlayerRoleChecker/blob/main/LICENSE)
-
-
 ## API
 
 APIの導入方法:
@@ -79,12 +74,6 @@ APIの導入方法:
         implementation 'com.github.SIGMA-L.PlayerRoleChecker:PlayerRoleCheckerAPI:v3.0'
 	}
 
-APIを実装して使えるイベント:
-    
-    JoinEvent
-    RemoveEvent
-    ForceJoinEvent
-
 ## CodeAPI
 
 **開発者だけの特別なプラグイン**
@@ -102,3 +91,7 @@ http://localhost:8080/v2/get/1212
 - http://localhost:8080/v2/get/code
 - http://localhost:8080/v2/post/code
 ```
+
+## LICENSE
+
+[Apache License 2.0](https://github.com/SIGMA-L/PlayerRoleChecker/blob/main/LICENSE)

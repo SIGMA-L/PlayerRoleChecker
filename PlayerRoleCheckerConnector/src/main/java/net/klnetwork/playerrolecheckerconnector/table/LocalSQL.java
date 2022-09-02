@@ -14,10 +14,6 @@ public class LocalSQL extends ConnectorBypassTable {
 
     private boolean created;
 
-    public LocalSQL() {
-        type = CommonUtils.getSQLType(PlayerRoleCheckerConnector.INSTANCE.getPlugin().getConfig().getString("DataBase.BypassTable.type"));
-    }
-
     public static ConnectorBypassTable getInstance() {
         if (table == null) {
             table = new LocalSQL();

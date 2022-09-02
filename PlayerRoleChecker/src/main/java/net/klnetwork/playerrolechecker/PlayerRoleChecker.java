@@ -87,6 +87,11 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
     }
 
     @Override
+    public UpdateAlert getUpdateAlert() {
+        return updateAlert;
+    }
+
+    @Override
     public Metrics getMetrics() {
         return metrics;
     }
