@@ -64,7 +64,7 @@ public class CommonUtils {
     }
 
     public static String getSkinId(UUID uuid) {
-        return getSkinId(getFloodgateUserUUID(uuid).toString());
+        return getSkinId(((Long) getXUID(uuid)).toString());
     }
 
     public static String getSkinId(String xuid) {
