@@ -4,7 +4,6 @@ import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -16,7 +15,7 @@ public class SkinCache {
             if (steve == null) {
                 steve = ImageIO.read(Objects.requireNonNull(SkinCache.class.getResourceAsStream("/steve.png")));
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             /* if caught error, please open to issues */
             e.printStackTrace();
         }

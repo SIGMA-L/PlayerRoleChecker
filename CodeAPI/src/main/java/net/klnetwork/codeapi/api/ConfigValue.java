@@ -8,6 +8,8 @@ import org.bukkit.plugin.Plugin;
 public class ConfigValue extends ConfigManager implements CodeAPIConfigManager {
     public ConfigValue(Plugin plugin) {
         super(plugin);
+
+        init();
     }
 
     @ConfigKey(key = "JoinEvent.limit.min")

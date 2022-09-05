@@ -11,6 +11,10 @@ public class ConfigManager {
     private final Plugin plugin;
 
     public ConfigManager(Plugin plugin) {
+        this.plugin = plugin;
+    }
+
+    public void init() {
         try {
             for (Field field : getClass().getDeclaredFields()) {
                 field.setAccessible(true);
@@ -42,8 +46,6 @@ public class ConfigManager {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-
-        this.plugin = plugin;
     }
 
     public Plugin getPlugin() {

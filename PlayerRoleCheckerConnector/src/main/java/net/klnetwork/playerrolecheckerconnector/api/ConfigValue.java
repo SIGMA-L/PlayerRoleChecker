@@ -11,6 +11,8 @@ import java.util.List;
 public class ConfigValue extends ConfigManager implements ConnectorConfigManager {
     public ConfigValue(Plugin plugin) {
         super(plugin);
+
+        init();
     }
 
     @ConfigKey(key = "Minecraft.defaultJoinMode")
