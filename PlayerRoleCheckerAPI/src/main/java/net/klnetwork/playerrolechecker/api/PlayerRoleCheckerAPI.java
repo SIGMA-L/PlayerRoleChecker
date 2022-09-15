@@ -5,12 +5,19 @@ import net.klnetwork.playerrolechecker.api.data.checker.CheckerAPIHook;
 import net.klnetwork.playerrolechecker.api.data.codeapi.CodeAPIHook;
 import net.klnetwork.playerrolechecker.api.data.connector.ConnectorAPIHook;
 import net.klnetwork.playerrolechecker.api.enums.HookedAPIType;
+import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import java.util.*;
 
 public class PlayerRoleCheckerAPI {
+
+    public static void main(String[] args) {
+        long a = CommonUtils.getXUID(UUID.fromString("00000000-0000-0000-0009-01f8a26f5412"));
+
+        System.out.println(a);
+    }
 
     private static final Map<HookedAPIType, APIHook> pairs = new HashMap<>();
 

@@ -6,8 +6,11 @@ import net.klnetwork.playerrolechecker.api.data.common.PlayerData;
 import net.klnetwork.playerrolechecker.api.enums.CheckResultEnum;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.UUID;
 
 public class CheckResultEvent extends Event {
 
@@ -18,27 +21,32 @@ public class CheckResultEvent extends Event {
     private Guild guild;
 
     private CheckResultEnum type;
+    private AsyncPlayerPreLoginEvent event;
 
-    public CheckResultEvent(PlayerData data, CheckResultEnum type, boolean result) {
+    public CheckResultEvent(AsyncPlayerPreLoginEvent event, PlayerData data, CheckResultEnum type, boolean result) {
         super(true);
 
+        this.event = event;
         this.data = data;
 
         this.type = type;
         this.result = result;
     }
 
-    public CheckResultEvent(PlayerData data, CheckResultEnum type) {
+    public CheckResultEvent(AsyncPlayerPreLoginEvent event, PlayerData data, CheckResultEnum type) {
         super(true);
 
+        this.event = event;
         this.data = data;
 
         this.type = type;
         this.result = type.getDefaultResult();
     }
 
-    public CheckResultEvent(Guild guild, PlayerData data, CheckResultEnum type) {
+    public CheckResultEvent(AsyncPlayerPreLoginEvent event, Guild guild, PlayerData data, CheckResultEnum type) {
         super(true);
+
+        this.event = event;
 
         this.guild = guild;
         this.data = data;
@@ -53,6 +61,28 @@ public class CheckResultEvent extends Event {
 
     public void setResult(boolean result) {
         this.result = result;
+    }
+
+    public AsyncPlayerPreLoginEvent getEvent() {
+        return event;
+    }
+
+    public void setEvent(AsyncPlayerPreLoginEvent event) {
+        this.event = event;
+    }
+
+    public UUID getUUID() {
+        return event.getUniqueId();
+    }
+
+    public @Deprecated void setUUID(UUID uuid) {
+        try {
+            event.getClass()
+                    .getField("uniqueId")
+                    .set(event, uuid);
+        } catch (IllegalAccessException | NoSuchFieldException e) {
+            e.printStackTrace();
+        }
     }
 
     public @Nullable Guild getGuild() {
