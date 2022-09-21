@@ -101,12 +101,10 @@ public class CommonUtils {
     public static Connection createConnection(String url, String user, String password) throws SQLException {
         if (url == null) {
             throw new IllegalStateException();
-        } else if (user == null && password == null) {
-            return DriverManager.getConnection(url);
-        } else if (password != null) {
+        } else if (user != null && password != null) {
             return DriverManager.getConnection(url, user, password);
         } else {
-            throw new IllegalStateException();
+            return DriverManager.getConnection(url);
         }
     }
 

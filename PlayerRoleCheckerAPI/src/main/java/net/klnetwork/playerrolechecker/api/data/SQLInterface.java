@@ -96,7 +96,7 @@ public abstract class SQLInterface {
             return null;
         }
 
-        return getPlugin().getConfig().getString(getPath() + ".user");
+        return getPlugin().getConfig().getString(getPath() + ".username");
     }
 
     public @Nullable String getPassword() {
