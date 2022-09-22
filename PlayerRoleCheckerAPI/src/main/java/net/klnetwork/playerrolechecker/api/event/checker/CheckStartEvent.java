@@ -18,6 +18,8 @@ public class CheckStartEvent extends Event implements Cancellable {
     private AsyncPlayerPreLoginEvent event;
 
     public CheckStartEvent(AsyncPlayerPreLoginEvent event, PlayerData data) {
+        super(true);
+
         this.event = event;
         this.data = data;
     }

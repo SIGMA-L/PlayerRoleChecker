@@ -39,7 +39,7 @@ public class JoinEvent extends JoinHandler {
 
         PlayerData data = PlayerDataSQL.getInstance().getDiscordId(event.getUniqueId(), CommonUtils.isFloodgateUser(event.getUniqueId()));
 
-        if (!callEvent(new CheckStartEvent(event, data)).isCancelled() && isJoin(event, data)) {
+        if (!callEvent(new CheckStartEvent(event, data)).isCancelled() && !isJoin(event, data)) {
             disallow(event, PlayerRoleCheckerConnector.INSTANCE.getConfig().getStringList("Minecraft.kickMessage"));
         }
     }
