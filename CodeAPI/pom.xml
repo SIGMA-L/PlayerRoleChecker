@@ -6,7 +6,7 @@
 
     <groupId>net.klnetwork.CodeAPI</groupId>
     <artifactId>CodeAPI</artifactId>
-    <version>4.1</version>
+    <version>4.2</version>
     <packaging>jar</packaging>
 
     <name>CodeAPI</name>
@@ -86,7 +86,7 @@
         <dependency>
             <groupId>net.klnetwork.playerrolechecker</groupId>
             <artifactId>PlayerRoleCheckerAPI</artifactId>
-            <version>4.1</version>
+            <version>4.2</version>
         </dependency>
     </dependencies>
 </project>

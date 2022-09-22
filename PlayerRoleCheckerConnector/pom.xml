@@ -6,7 +6,7 @@
 
     <groupId>net.klnetwork.playerrolecheckerconnector</groupId>
     <artifactId>PlayerRoleCheckerConnector</artifactId>
-    <version>4.1</version>
+    <version>4.2</version>
     <packaging>jar</packaging>
 
     <name>PlayerRoleCheckerConnector</name>
@@ -75,7 +75,7 @@
         <dependency>
             <groupId>net.klnetwork.playerrolechecker</groupId>
             <artifactId>PlayerRoleCheckerAPI</artifactId>
-            <version>4.1</version>
+            <version>4.2</version>
         </dependency>
         <dependency>
             <groupId>net.dv8tion</groupId>
