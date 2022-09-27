@@ -156,6 +156,8 @@ public class CommonUtils {
                     .getField(color.toUpperCase())
                     .get(null);
         } catch (Exception e) {
+            Bukkit.getLogger().warning("not founded Color (" + color + ")");
+
             e.printStackTrace();
         }
 
@@ -200,7 +202,7 @@ public class CommonUtils {
 
             return ImageIO.read(stream);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            /* ignored */
         } finally {
             close(stream);
         }
@@ -214,7 +216,7 @@ public class CommonUtils {
 
             return scanner.nextLine();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            /* ignored */
         } finally {
             close(scanner);
         }

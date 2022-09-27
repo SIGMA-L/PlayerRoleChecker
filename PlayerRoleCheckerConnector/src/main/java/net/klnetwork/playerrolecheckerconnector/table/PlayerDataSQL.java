@@ -208,7 +208,13 @@ public class PlayerDataSQL extends PlayerDataTable {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                return Pair.of(resultSet.getInt(0), new PlayerData(resultSet.getString(1), discordId, resultSet.getBoolean(2)));
+                final int size = resultSet.getInt(1);
+
+                if (size != 0) {
+                    return Pair.of(size, new PlayerData(resultSet.getString(2), discordId, resultSet.getBoolean(3)));
+                } else {
+                    return pair;
+                }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

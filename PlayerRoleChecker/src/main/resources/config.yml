@@ -73,8 +73,8 @@ JoinCommand:
   max-account:
     color: 'RED'
     title: 'リクエストに失敗しました'
-    description: '理由: 上限に達しました (max: %max%)'
-    image:
+    description: '理由: 上限に達しました'
+    image: 'https://crafatar.com/avatars/%uuid%'
     timestamp: true
     message:
       - 'UUID: | %uuid% | false'
@@ -82,8 +82,8 @@ JoinCommand:
   max-account-bedrock:
     color: 'RED'
     title: 'リクエストに失敗しました'
-    description: '理由: 上限に達しました (max: %max%)'
-    image:
+    description: '理由: 上限に達しました'
+    image: 'attachment://user.png'
     timestamp: true
     message:
       - 'XUID: | %xuid% | false'

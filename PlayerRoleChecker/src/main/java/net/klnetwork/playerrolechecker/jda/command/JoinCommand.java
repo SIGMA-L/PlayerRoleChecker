@@ -48,7 +48,7 @@ public class JoinCommand extends CommandMessage {
             Pair<Integer, PlayerData> pair = PlayerRoleChecker.INSTANCE.getConfigManager()
                     .canRegisterUnlimitedAccount() ? null : PlayerDataSQL.getInstance().getSize(event.getMember().getId());
 
-            if (pair != null && pair.getLeft() > PlayerRoleChecker.INSTANCE.getConfigManager().getAccountPerDiscord()) {
+            if (pair != null && pair.getLeft() >= PlayerRoleChecker.INSTANCE.getConfigManager().getAccountPerDiscord()) {
                 JoinEvent call = callEvent(new JoinEvent(pair.getRight().getUUID(), pair.getRight().getDiscordId(), temp.getCode(), pair.getRight().isBedrock(), event.getMessage(), JoinEventType.MAX_ACCOUNT_REGISTER));
 
                 if (!call.isCancelled()) {
