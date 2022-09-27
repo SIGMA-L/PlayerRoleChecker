@@ -6,7 +6,7 @@
 
     <groupId>net.klnetwork.playerrolechecker</groupId>
     <artifactId>PlayerRoleChecker</artifactId>
-    <version>4.2</version>
+    <version>4.21</version>
     <packaging>jar</packaging>
 
     <name>PlayerRoleChecker</name>
@@ -86,7 +86,7 @@
         <dependency>
             <groupId>net.klnetwork.playerrolechecker</groupId>
             <artifactId>PlayerRoleCheckerAPI</artifactId>
-            <version>4.2</version>
+            <version>4.21</version>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
