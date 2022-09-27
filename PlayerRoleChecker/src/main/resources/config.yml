@@ -86,7 +86,7 @@ JoinCommand:
     image:
     timestamp: true
     message:
-      - 'UUID: | %uuid% | false'
+      - 'XUID: | %xuid% | false'
       - 'DiscordID: | %discordid% | false'
   already-registered:
     color: 'RED'

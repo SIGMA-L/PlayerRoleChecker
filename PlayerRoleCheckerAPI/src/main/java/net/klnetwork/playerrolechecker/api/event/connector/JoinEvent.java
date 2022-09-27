@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
+import net.klnetwork.playerrolechecker.api.data.common.PlayerData;
 import net.klnetwork.playerrolechecker.api.enums.JoinEventType;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -25,6 +26,19 @@ public class JoinEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
     private boolean isCancelled, bedrock;
+
+    public JoinEvent(PlayerData data, int code, Message message, JoinEventType type) {
+        super(true);
+
+        this.discordId = data.getDiscordId();
+        this.member = message.getMember();
+        this.uuid = data.getUUID();
+        this.code = code;
+        this.bedrock = data.isBedrock();
+
+        this.message = message;
+        this.type = type;
+    }
 
     public JoinEvent(UUID uuid, String discordId, int code, boolean bedrock, Message message, JoinEventType type) {
         super(true);

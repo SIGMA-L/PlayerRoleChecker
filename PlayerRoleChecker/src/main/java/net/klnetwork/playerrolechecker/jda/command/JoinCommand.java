@@ -8,7 +8,6 @@ import net.klnetwork.playerrolechecker.api.discord.data.CommandData;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandMessage;
 import net.klnetwork.playerrolechecker.api.enums.JoinEventType;
 import net.klnetwork.playerrolechecker.api.event.connector.JoinEvent;
-import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import net.klnetwork.playerrolechecker.table.LocalSQL;
 import net.klnetwork.playerrolechecker.table.PlayerDataSQL;
 import net.klnetwork.playerrolechecker.util.DiscordUtil;
@@ -46,7 +45,49 @@ public class JoinCommand extends CommandMessage {
                 event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.invalid-number", event.getMessage().getTimeCreated(), null, null).build()).queue();
             }
         } else {
-            Pair<Integer, PlayerData> pair = PlayerRoleChecker.INSTANCE.getConfigManager().canRegisterUnlimitedAccount()
+            Pair<Integer, PlayerData> pair = PlayerRoleChecker.INSTANCE.getConfigManager()
+                    .canRegisterUnlimitedAccount() ? null : PlayerDataSQL.getInstance().getSize(event.getMember().getId());
+
+            if (pair != null && pair.getLeft() > PlayerRoleChecker.INSTANCE.getConfigManager().getAccountPerDiscord()) {
+                JoinEvent call = callEvent(new JoinEvent(pair.getRight().getUUID(), pair.getRight().getDiscordId(), temp.getCode(), pair.getRight().isBedrock(), event.getMessage(), JoinEventType.MAX_ACCOUNT_REGISTER));
+
+                if (!call.isCancelled()) {
+                    event.reply(DiscordUtil.createEmbedMessage("JoinCommand.max-account", call.getUUID(), call.getMemberId(), call.isBedrock()),
+                            event.getSkin(call.getUUID(), call.isBedrock() && PlayerRoleChecker.INSTANCE.getConfig().getBoolean("JoinCommand.requestBedrockSkin")));
+                }
+            } else {
+                PlayerData data = PlayerDataSQL.getInstance().getDiscordId(temp.getUUID(), temp.isBedrock());
+
+                //データが存在している場合は、すでに登録されています
+                if (data != null) {
+                    JoinEvent call = callEvent(new JoinEvent(data, temp.getCode(), event.getMessage(), JoinEventType.ALREADY_REGISTERED));
+
+                    if (!call.isCancelled()) {
+                        event.reply(DiscordUtil.createEmbedMessage("JoinCommand.already-registered", call.getUUID(), call.getMemberId(), call.isBedrock()),
+                                event.getSkin(call.getUUID(), call.isBedrock() && PlayerRoleChecker.INSTANCE.getConfig().getBoolean("JoinCommand.requestBedrockSkin")));
+                    }
+                } else {
+                    JoinEvent call = callEvent(new JoinEvent(temp.getUUID(), temp.getCode(), temp.isBedrock(), event.getMessage(), JoinEventType.SUCCESS));
+
+                    if (!call.isCancelled()) {
+                        PlayerDataSQL.getInstance().put(call.getUUID(), call.getMember().getId(), call.isBedrock());
+
+                        //too big length>>>
+                        event.reply(DiscordUtil.createEmbedMessage("JoinCommand.success-register", call.getUUID(), call.getMember().getId(), call.isBedrock()),
+                                event.getSkin(call.getUUID(), call.isBedrock() && PlayerRoleChecker.INSTANCE.getConfig().getBoolean("JoinCommand.requestBedrockSkin")));
+
+                        DiscordUtil.sendMessage(DiscordUtil.createEmbedMessage("JoinCommand.sendmessage", call.getUUID(), call.getMember().getId(), call.isBedrock()),
+                                event.getSkin(call.getUUID(), call.isBedrock() && PlayerRoleChecker.INSTANCE.getConfig().getBoolean("JoinCommand.requestBedrockSkin")));
+
+                        DiscordUtil.addRole(event.getMember());
+                    }
+                }
+            }
+
+            //最後に必ず'削除'します
+            LocalSQL.getInstance().remove(temp.getUUID(), temp.getCode());
+
+            /*Pair<Integer, PlayerData> pair = PlayerRoleChecker.INSTANCE.getConfigManager().canRegisterUnlimitedAccount()
                     ? PlayerDataSQL.getInstance().getSize(event.getMember().getId()) : null;
 
             if (pair != null && pair.getLeft() > PlayerRoleChecker.INSTANCE.getConfigManager().getAccountPerDiscord()) {
@@ -89,7 +130,7 @@ public class JoinCommand extends CommandMessage {
                         DiscordUtil.addRole(event.getMember());
                     }
                 }
-            }
+            }*/
         }
     }
 
