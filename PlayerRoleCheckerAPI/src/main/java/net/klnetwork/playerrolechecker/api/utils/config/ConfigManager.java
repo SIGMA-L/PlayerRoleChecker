@@ -1,10 +1,13 @@
 package net.klnetwork.playerrolechecker.api.utils.config;
 
 
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.plugin.Plugin;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.List;
 
 public class ConfigManager {
@@ -24,9 +27,40 @@ public class ConfigManager {
                 ConfigKey config = field.getAnnotation(ConfigKey.class);
 
                 if (type.isAssignableFrom(List.class)) {
-                    //only support StringList
-                    //todo: support booleanList, shortList and more
-                    field.set(this, plugin.getConfig().getStringList(config.key()));
+                    Type genericType = field.getGenericType();
+
+                    if (genericType instanceof ParameterizedType) {
+                        Class<?> actualClass = (Class<?>) ((ParameterizedType) genericType).getActualTypeArguments()[0];
+
+                        //TODO: way better programming
+                        if (actualClass.isAssignableFrom(Boolean.class)) {
+                            field.set(this, plugin.getConfig().getBooleanList(config.key()));
+                        } else if (actualClass.isAssignableFrom(Short.class)) {
+                            field.set(this, plugin.getConfig().getShortList(config.key()));
+                        } else if (actualClass.isAssignableFrom(Byte.class)) {
+                            field.set(this, plugin.getConfig().getByteList(config.key()));
+                        } else if (actualClass.isAssignableFrom(Float.class)) {
+                            field.set(this, plugin.getConfig().getFloatList(config.key()));
+                        } else if (actualClass.isAssignableFrom(Character.class)) {
+                            field.set(this, plugin.getConfig().getCharacterList(config.key()));
+                        } else if (actualClass.isAssignableFrom(Double.class)) {
+                            field.set(this, plugin.getConfig().getDoubleList(config.key()));
+                        } else if (actualClass.isAssignableFrom(Integer.class)) {
+                            field.set(this, plugin.getConfig().getIntegerList(config.key()));
+                        } else if (actualClass.isAssignableFrom(String.class)) {
+                            field.set(this, plugin.getConfig().getStringList(config.key()));
+                        } else if (actualClass.isAssignableFrom(Long.class)) {
+                            field.set(this, plugin.getConfig().getLongList(config.key()));
+                        } else {
+                            //not stable...
+                            field.set(this, plugin.getConfig().getMapList(config.key()));
+                        }
+                    } else {
+                        //What Happened?
+                        field.set(this, plugin.getConfig().getStringList(config.key()));
+
+                        Bukkit.getLogger().warning("Illegal state detected! (" + config.key() + ") genericType:" + genericType);
+                    }
                 } else if (type.isAssignableFrom(String.class)) {
                     field.set(this, plugin.getConfig().getString(config.key()));
                 } else if (type.isAssignableFrom(Integer.class) || type.isAssignableFrom(int.class)) {
