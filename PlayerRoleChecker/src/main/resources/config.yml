@@ -16,6 +16,11 @@ DataBase:
 ## ChannelID: チャンネルID(必要ないがほぼ必須)
 ## addToRole: 登録が完了したらつけるロール (1個のみ）
 Discord:
+  limits:
+    ## canRegisterUnlimitedAccount: 1アカウントごとの登録可能数を無限にします (SQLの通信が減ります)
+    canRegisterUnlimitedAccount: true
+    ## maxDiscordPerAccount: １アカウントごとにマインクラフトのアカウントを何個登録できるか (SQLの通信が増えます)
+    maxAccountPerDiscord: 1
   DiscordToken: TokenHere
   AdminChannel:
   ChannelID:
@@ -41,6 +46,7 @@ JoinEvent:
 ## JoinCommand: !join コマンド
 ## - not-number: 数字ではないエラーメッセージ (%uuid% %discordid% をサポートしていません)
 ## - invalid-number: 不明な数字のエラーメッセージ (%uuid% %discordid% をサポートしていません)
+## - max-account: 上限に達したときのエラーメッセージ (%uuid% %discordid% をサポートしています)
 ## - already-registered: すでに登録されていますのエラーメッセージ (%uuid% %discordid% をサポートしています)
 ## - success-register: 登録が完了されたメッセージ (%uuid %discordid% をサポートしています)
 JoinCommand:
@@ -64,6 +70,24 @@ JoinCommand:
     image:
     timestamp: true
     message:
+  max-account:
+    color: 'RED'
+    title: 'リクエストに失敗しました'
+    description: '理由: 上限に達しました (max: %max%)'
+    image:
+    timestamp: true
+    message:
+      - 'UUID: | %uuid% | false'
+      - 'DiscordID: | %discordid% | false'
+  max-account-bedrock:
+    color: 'RED'
+    title: 'リクエストに失敗しました'
+    description: '理由: 上限に達しました (max: %max%)'
+    image:
+    timestamp: true
+    message:
+      - 'UUID: | %uuid% | false'
+      - 'DiscordID: | %discordid% | false'
   already-registered:
     color: 'RED'
     title: 'リクエストに失敗しました'

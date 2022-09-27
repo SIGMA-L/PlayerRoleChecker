@@ -11,13 +11,13 @@ public class SkinCache {
     private static BufferedImage steve;
 
     public BufferedImage getSteveImage() {
-        try {
-            if (steve == null) {
+        if (steve == null) {
+            try {
                 steve = ImageIO.read(Objects.requireNonNull(SkinCache.class.getResourceAsStream("/steve.png")));
+            } catch (Exception e) {
+                /* if caught error, please open to issues */
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            /* if caught error, please open to issues */
-            e.printStackTrace();
         }
 
         return steve;

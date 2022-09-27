@@ -1,5 +1,6 @@
 package net.klnetwork.playerrolecheckerconnector.table;
 
+import net.dv8tion.jda.internal.utils.tuple.Pair;
 import net.klnetwork.playerrolechecker.api.data.PlayerDataTable;
 import net.klnetwork.playerrolechecker.api.data.common.PlayerData;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
@@ -194,6 +195,28 @@ public class PlayerDataSQL extends PlayerDataTable {
                 CommonUtils.close(statement);
             }
         });
+    }
+
+    @Override
+    public Pair<Integer, PlayerData> getSize(String discordId) {
+        PreparedStatement statement = null;
+
+        try {
+            statement = getConnection().prepareStatement("SELECT count(*), uuid, bedrock from verifyplayer where discord = ?");
+            statement.setString(1, discordId);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return Pair.of(resultSet.getInt(0), new PlayerData(resultSet.getString(1), discordId, resultSet.getBoolean(2)));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            CommonUtils.close(statement);
+        }
+
+        return pair;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package net.klnetwork.playerrolechecker.jda.command;
 
+import net.dv8tion.jda.internal.utils.tuple.Pair;
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
 import net.klnetwork.playerrolechecker.api.data.common.PlayerData;
 import net.klnetwork.playerrolechecker.api.data.common.TemporaryData;
@@ -41,37 +42,52 @@ public class JoinCommand extends CommandMessage {
         TemporaryData temp = LocalSQL.getInstance().getUUID(code);
 
         if (temp == null) {
-            if (!callEvent(new JoinEvent(null, code, false, event.getMessage(),  JoinEventType.UNKNOWN_NUMBER)).isCancelled()) {
+            if (!callEvent(new JoinEvent(null, code, false, event.getMessage(), JoinEventType.UNKNOWN_NUMBER)).isCancelled()) {
                 event.getMessage().replyEmbeds(DiscordUtil.embedBuilder("JoinCommand.invalid-number", event.getMessage().getTimeCreated(), null, null).build()).queue();
             }
         } else {
-            PlayerData data = PlayerDataSQL.getInstance().getDiscordId(temp.getUUID());
+            Pair<Integer, PlayerData> pair = PlayerRoleChecker.INSTANCE.getConfigManager().canRegisterUnlimitedAccount()
+                    ? PlayerDataSQL.getInstance().getSize(event.getMember().getId()) : null;
 
-            if (data != null) {
-                JoinEvent call = callEvent(new JoinEvent(data.getUUID(), data.getDiscordId(), temp.getCode(), CommonUtils.isFloodgateUser(data.getUUID()), event.getMessage(), JoinEventType.ALREADY_REGISTERED));
+            if (pair != null && pair.getLeft() > PlayerRoleChecker.INSTANCE.getConfigManager().getAccountPerDiscord()) {
+                JoinEvent call = callEvent(new JoinEvent(pair.getRight().getUUID(), pair.getRight().getDiscordId(), temp.getCode(), pair.getRight().isBedrock(), event.getMessage(), JoinEventType.MAX_ACCOUNT_REGISTER));
 
                 if (!call.isCancelled()) {
-                    event.reply(DiscordUtil.createEmbedMessage("JoinCommand.already-registered", call.getUUID(), call.getMemberId(), call.isBedrock()),
+                    event.reply(DiscordUtil.createEmbedMessage("JoinCommand.max-account", call.getUUID(), call.getMemberId(), call.isBedrock()),
                             event.getSkin(call.getUUID(), call.isBedrock() && PlayerRoleChecker.INSTANCE.getConfig().getBoolean("JoinCommand.requestBedrockSkin")));
 
                     //セキュリティー上の問題
                     LocalSQL.getInstance().remove(temp.getUUID(), temp.getCode());
                 }
             } else {
-                JoinEvent call = callEvent(new JoinEvent(temp.getUUID(), temp.getCode(), temp.isBedrock(), event.getMessage(), JoinEventType.SUCCESS));
+                PlayerData data = PlayerDataSQL.getInstance().getDiscordId(temp.getUUID());
 
-                if (!call.isCancelled()) {
-                    LocalSQL.getInstance().remove(call.getUUID(), call.getCode());
-                    PlayerDataSQL.getInstance().put(call.getUUID(), call.getMember().getId(), call.isBedrock());
+                if (data != null) {
+                    JoinEvent call = callEvent(new JoinEvent(data.getUUID(), data.getDiscordId(), temp.getCode(), CommonUtils.isFloodgateUser(data.getUUID()), event.getMessage(), JoinEventType.ALREADY_REGISTERED));
 
-                    //too big length>>>
-                    event.reply(DiscordUtil.createEmbedMessage("JoinCommand.success-register", call.getUUID(), call.getMember().getId(), call.isBedrock()),
-                            event.getSkin(call.getUUID(), call.isBedrock() && PlayerRoleChecker.INSTANCE.getConfig().getBoolean("JoinCommand.requestBedrockSkin")));
+                    if (!call.isCancelled()) {
+                        event.reply(DiscordUtil.createEmbedMessage("JoinCommand.already-registered", call.getUUID(), call.getMemberId(), call.isBedrock()),
+                                event.getSkin(call.getUUID(), call.isBedrock() && PlayerRoleChecker.INSTANCE.getConfig().getBoolean("JoinCommand.requestBedrockSkin")));
 
-                    DiscordUtil.sendMessage(DiscordUtil.createEmbedMessage("JoinCommand.sendmessage", call.getUUID(), call.getMember().getId(), call.isBedrock()),
-                            event.getSkin(call.getUUID(), call.isBedrock() && PlayerRoleChecker.INSTANCE.getConfig().getBoolean("JoinCommand.requestBedrockSkin")));
+                        //セキュリティー上の問題
+                        LocalSQL.getInstance().remove(temp.getUUID(), temp.getCode());
+                    }
+                } else {
+                    JoinEvent call = callEvent(new JoinEvent(temp.getUUID(), temp.getCode(), temp.isBedrock(), event.getMessage(), JoinEventType.SUCCESS));
 
-                    DiscordUtil.addRole(event.getMember());
+                    if (!call.isCancelled()) {
+                        LocalSQL.getInstance().remove(call.getUUID(), call.getCode());
+                        PlayerDataSQL.getInstance().put(call.getUUID(), call.getMember().getId(), call.isBedrock());
+
+                        //too big length>>>
+                        event.reply(DiscordUtil.createEmbedMessage("JoinCommand.success-register", call.getUUID(), call.getMember().getId(), call.isBedrock()),
+                                event.getSkin(call.getUUID(), call.isBedrock() && PlayerRoleChecker.INSTANCE.getConfig().getBoolean("JoinCommand.requestBedrockSkin")));
+
+                        DiscordUtil.sendMessage(DiscordUtil.createEmbedMessage("JoinCommand.sendmessage", call.getUUID(), call.getMember().getId(), call.isBedrock()),
+                                event.getSkin(call.getUUID(), call.isBedrock() && PlayerRoleChecker.INSTANCE.getConfig().getBoolean("JoinCommand.requestBedrockSkin")));
+
+                        DiscordUtil.addRole(event.getMember());
+                    }
                 }
             }
         }

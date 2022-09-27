@@ -20,6 +20,10 @@ public class ConfigValue extends ConfigManager implements CheckerConfigManager {
     private int max;
     @ConfigKey(key = "JoinEvent.verifiedPlayerIgnore")
     private boolean verifiedPlayerIgnore = false;
+    @ConfigKey(key = "Discord.limits.canRegisterUnlimitedAccount")
+    private boolean canRegisterUnlimitedAccount = true;
+    @ConfigKey(key = "Discord.limits.maxAccountPerDiscord")
+    private int accountPerDiscord;
 
     @Override
     public int getDeleteSecond() {
@@ -59,5 +63,21 @@ public class ConfigValue extends ConfigManager implements CheckerConfigManager {
     @Override
     public void setVerifiedPlayerIgnore(boolean verifiedPlayerIgnore) {
         this.verifiedPlayerIgnore = verifiedPlayerIgnore;
+    }
+
+    public boolean canRegisterUnlimitedAccount() {
+        return canRegisterUnlimitedAccount;
+    }
+
+    public void setCanRegisterUnlimitedAccount(boolean canRegisterUnlimitedAccount) {
+        this.canRegisterUnlimitedAccount = canRegisterUnlimitedAccount;
+    }
+
+    public int getAccountPerDiscord() {
+        return accountPerDiscord;
+    }
+
+    public void setAccountPerDiscord(int accountPerDiscord) {
+        this.accountPerDiscord = accountPerDiscord;
     }
 }

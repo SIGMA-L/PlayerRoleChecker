@@ -1,5 +1,6 @@
 package net.klnetwork.playerrolechecker.api.data;
 
+import net.dv8tion.jda.internal.utils.tuple.Pair;
 import net.klnetwork.playerrolechecker.api.data.common.PlayerData;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 
@@ -9,6 +10,8 @@ import java.util.UUID;
 import java.util.function.Consumer;
 
 public abstract class PlayerDataTable extends SQLInterface {
+    protected Pair<Integer, PlayerData> pair = Pair.of(0, null);
+
     public abstract void asyncDiscordId(UUID uuid, Consumer<PlayerData> discordId);
 
     public abstract void asyncDiscordId(String uuid, Consumer<PlayerData> discordId);
@@ -40,6 +43,8 @@ public abstract class PlayerDataTable extends SQLInterface {
     public abstract void remove(UUID uuid, String discordId);
 
     public abstract void remove(String uuid, String discordId);
+
+    public abstract Pair<Integer, PlayerData> getSize(String discordId);
 
     public void alter() {
         Statement statement = null;
