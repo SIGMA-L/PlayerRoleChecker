@@ -10,7 +10,7 @@ import java.util.UUID;
 public class SkinCache {
     private static BufferedImage steve;
 
-    public BufferedImage getSteveImage() {
+    public static BufferedImage getSteveImage() {
         if (steve == null) {
             try {
                 steve = ImageIO.read(Objects.requireNonNull(SkinCache.class.getResourceAsStream("/steve.png")));

@@ -54,7 +54,11 @@ public abstract class SQLInterface {
         if (type == SQLType.SQLITE) {
             CommonUtils.checkClass("org.sqlite.JDBC");
         } else if (type == SQLType.MYSQL) {
-            CommonUtils.checkClass("com.mysql.jdbc.Driver");
+            try {
+                CommonUtils.checkClass("com.mysql.jdbc.cj.Driver");
+            } catch (Exception ex) {
+                CommonUtils.checkClass("com.mysql.jdbc.Driver");
+            }
         } else if (getPlugin() != null && getPath() != null) {
             CommonUtils.checkClass(getPlugin().getConfig().getString(getPath() + ".checkClass"));
         }
