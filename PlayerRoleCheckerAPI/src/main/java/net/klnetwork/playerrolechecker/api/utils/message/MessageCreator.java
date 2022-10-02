@@ -13,9 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.time.OffsetDateTime;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class MessageCreator {
     protected Plugin plugin;
@@ -45,20 +43,37 @@ public class MessageCreator {
         return new CustomMessage[]{new PlayerProvider(player), new ColorCodeProvider(), new HexCodeProvider()};
     }
 
-    public Map<CustomMessageType, CustomMessage> getProvider(Player player) {
-        return new HashMap<CustomMessageType, CustomMessage>() {{
-            put(CustomMessageType.ALL, new PlayerProvider(player));
+    public Map<CustomMessageType, List<CustomMessage>> getProvider(Player player) {
+        return new HashMap<CustomMessageType, List<CustomMessage>>() {{
+            put(CustomMessageType.ALL, Arrays.asList(new PlayerProvider(player)));
         }};
     }
 
+    private Map<CustomMessageType, List<CustomMessage>> provided;
+
+    public Map<CustomMessageType, List<CustomMessage>> get() {
+        return provided;
+    }
+
+    public MessageCreator set(Map<CustomMessageType, List<CustomMessage>> messages) {
+        this.provided = messages;
+
+        return this;
+    }
+
+    public MessageCreator put(CustomMessageType type, CustomMessage message) {
+        if (provided == null) {
+            getProvider(null);
+        }
+
+        //VERY WILD
+        provided.getOrDefault(type, (List<CustomMessage>) new ArrayList<CustomMessage>()).add(message);
+
+        return this;
+    }
 
     public static void main(String[] args) {
-        new MessageCreator(null).getEmbedMessage("bb", new CustomMessage() {
-            @Override
-            public CustomMessageType key() {
-                return null;
-            }
-        });
+        new MessageCreator(null).getEmbedMessage("bb", new MessageCreator(null).getProvider(null));
     }
 
     /**
@@ -66,54 +81,72 @@ public class MessageCreator {
      * @param messages CustomMessageProvider (Example: {@link PlayerProvider#execute(String)})
      * @return {@link MessageEmbed} using to discord Embeds
      */
-    public MessageEmbed getEmbedMessage(String key, CustomMessage... messages) {
-        if (messages == null) {
+    public MessageEmbed getEmbedMessage(String key, Map<CustomMessageType, List<CustomMessage>> messages) {
+        if (messages == null || messages.isEmpty()) {
             return getEmbedMessage(key);
         } else {
-            System.out.println(Optional.ofNullable(run(CustomMessageType.MONITOR,  "sure #10005f", new HexCodeProvider())));
+            return getEmbedMessage(key, messages);
         }
-
-        return null;
     }
 
-    public String getAsString(CustomMessageType type, String message, CustomMessage... provider) {
-        for (CustomMessage provided : provider) {
-            message = run(type, message, provided);
+    public MessageEmbed getEmbedMessage(String path) {
+        EmbedBuilder as = new EmbedBuilder()
+                .setColor(CommonUtils.getColor(getString(path + ".color")))
+                .setTitle(getString(path + ".title"))
+                .setDescription(getString(path + ".description"))
+                .setThumbnail(getString(path + ".image"))
+                .setTimestamp(getBoolean(path + ".timestamp") ? OffsetDateTime.now() : null);
+
+        return split(as, path).build();
+    }
+
+    public String getAsString(CustomMessageType type, String message, Map<CustomMessageType, List<CustomMessage>> provider) {
+        if (provider == null) {
+            return message;
+        }
+
+        for (CustomMessage customMessage : provider.get(type)) {
+            message = getAsString(message, customMessage);
+        }
+
+        for (CustomMessage customMessage : provider.get(CustomMessageType.MONITOR)) {
+            return get(customMessage);
         }
 
         return message;
     }
 
     /**
-     * @return <T> Provider Type (String, Time)
+     * @return Provided String Message
+     * @throws Exception throws on not String
      */
-    private <T> T run(CustomMessageType type, String message, CustomMessage provider) {
+    private String getAsString(String message, CustomMessage customMessage) {
         try {
-            return (T) provider.getClass()
+            return (String) customMessage.getClass()
                     .getMethod("execute", String.class)
-                    .invoke(provider, message);
+                    .invoke(customMessage, message);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
         return null;
-        //throw new IllegalStateException("Invalid CustomMessage Detected: " + message.getClass().getName() + "!");
     }
 
-    public MessageEmbed getEmbedMessage(String path) {
-        EmbedBuilder as = new EmbedBuilder()
-                .setColor(CommonUtils.getColor(plugin.getConfig().getString(path + ".color")))
-                .setTitle(plugin.getConfig().getString(path + ".title"))
-                .setDescription(plugin.getConfig().getString(path + ".description"))
-                .setThumbnail(plugin.getConfig().getString(path + ".image"))
-                .setTimestamp(plugin.getConfig().getBoolean(path + ".timestamp") ? OffsetDateTime.now() : null);
+    public <T> T get(CustomMessage message) {
+        try {
+            return (T) message.getClass()
+                    .getMethod("execute", String.class)
+                    .invoke(message, null);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
-        return split(as, path).build();
+        return null;
     }
 
-    private EmbedBuilder split(EmbedBuilder embedBuilder, String path, CustomMessage... messages) {
+    private EmbedBuilder split(EmbedBuilder embedBuilder, String path) {
         for (String message : plugin.getConfig().getStringList(path)) {
-            String[] strings = getAsString(CustomMessageType.FIELD, message, messages).split("\\|", 3);
+            String[] strings = getAsString(CustomMessageType.FIELD, message, provided).split("\\|", 3);
 
             Preconditions.checkArgument(strings.length == 3);
 
@@ -122,9 +155,16 @@ public class MessageCreator {
         return embedBuilder;
     }
 
+    public String getString(CustomMessageType type, String key) {
+        return getAsString(type, getString(key), provided);
+    }
 
     public String getString(String key) {
         return plugin.getConfig().getString(key);
+    }
+
+    public boolean getBoolean(String key) {
+        return plugin.getConfig().getBoolean(key);
     }
 
     public Plugin getPlugin() {
