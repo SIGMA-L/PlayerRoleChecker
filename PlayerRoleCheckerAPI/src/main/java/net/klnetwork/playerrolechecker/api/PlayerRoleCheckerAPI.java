@@ -17,6 +17,12 @@ public class PlayerRoleCheckerAPI {
         return getHookedAPIType().contains(HookedAPIType.CONNECTOR);
     }
 
+    /**
+     * @implNote
+     * <br><strong>注意:</strong>
+     * <br>※1 このメソッドは他のプラグインが返される可能性があります
+     * <br>※2 複数のAPIに接続できた場合は最後に見つかったAPIが返されます
+     */
     public static ConnectorAPIHook getConnectorAPI() {
         if (!pairs.containsKey(HookedAPIType.CONNECTOR) && !isHookedConnector()) {
             init();
@@ -33,6 +39,12 @@ public class PlayerRoleCheckerAPI {
         return getHookedAPIType().contains(HookedAPIType.CHECKER);
     }
 
+    /**
+     * @implNote
+     * <br><strong>注意:</strong>
+     * <br>※1 このメソッドは他のプラグインが返される可能性があります
+     * <br>※2 複数のAPIに接続できた場合は最後に見つかったAPIが返されます
+     */
     public static CheckerAPIHook getCheckerAPI() {
         if (!pairs.containsKey(HookedAPIType.CHECKER) && !isHookedChecker()) {
             init();
@@ -45,10 +57,32 @@ public class PlayerRoleCheckerAPI {
         return (CheckerAPIHook) Bukkit.getPluginManager().getPlugin("PlayerRoleChecker");
     }
 
+    /**
+     * @return CodeAPIのAPIに接続されているか
+     *
+     * @implNote
+     * <br><strong>注意:</strong>
+     * <br>※1 このメソッドは他のプラグインが返される可能性があります
+     * <br>※2 複数のAPIに接続できた場合は最後に見つかったAPIが返されます
+     *
+     * @see #getHookedAPIType()
+     */
     public static boolean isHookedCodeAPI() {
         return getHookedAPIType().contains(HookedAPIType.CODEAPI);
     }
 
+    /**
+     * @return {@link CodeAPIHook}
+     *
+     * @implNote
+     * <br><strong>注意:</strong>
+     * <br>※1 このメソッドは他のプラグインが返される可能性があります
+     * <br>※2 複数のAPIに接続できた場合は最後に見つかったAPIが返されます
+     *
+     * @see CodeAPIHook
+     * @see #isHookedCodeAPI()
+     * @see #getHookedAPIType()
+     */
     public static CodeAPIHook getCodeAPI() {
         if (!pairs.containsKey(HookedAPIType.CHECKER) && !isHookedCodeAPI()) {
             init();
@@ -83,6 +117,12 @@ public class PlayerRoleCheckerAPI {
         });
     }
 
+    /**
+     * @return APIのバージョン
+     *
+     * @implNote
+     * プレイヤーロールチェッカーのバージョンを確認したい場合は {@link Plugin#getDescription()#getVersion()} を使用してください
+     */
     public static String getVersion() {
         return "v4.21";
     }

@@ -78,9 +78,10 @@ public class MessageCreator {
     }
 
     /**
-     * @param key Yaml config key
-     * @param messages CustomMessageProvider (Example: {@link PlayerProvider#execute(String)})
-     * @return {@link MessageEmbed} using to discord Embeds
+     * @param key Yamlのキー
+     * @param messages カスタムメッセージ (例: {@link HexCodeProvider#execute(String)})
+     *
+     * @return <a href="https://github.com/DV8FromTheWorld/JDA">Java Discord API</a> で使える {@link MessageEmbed} を返します
      */
     public MessageEmbed getEmbedMessage(String key, Map<CustomMessageType, List<CustomMessage>> messages) {
         if (messages != null) {
