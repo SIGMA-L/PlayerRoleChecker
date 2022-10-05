@@ -118,10 +118,9 @@ public class PlayerRoleCheckerAPI {
     }
 
     /**
-     * @return APIのバージョン
+     * @return APIのバージョンを返します
      *
-     * @implNote
-     * プレイヤーロールチェッカーのバージョンを確認したい場合は {@link Plugin#getDescription()#getVersion()} を使用してください
+     * @see APIHook
      */
     public static String getVersion() {
         return "v4.21";

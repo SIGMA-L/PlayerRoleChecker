@@ -137,6 +137,11 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
     }
 
     @Override
+    public String getVersion() {
+        return getDescription().getVersion();
+    }
+
+    @Override
     public HookedAPIType getType() {
         return HookedAPIType.CHECKER;
     }

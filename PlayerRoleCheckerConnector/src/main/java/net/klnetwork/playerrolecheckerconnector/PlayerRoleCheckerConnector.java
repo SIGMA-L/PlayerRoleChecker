@@ -139,6 +139,11 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
     }
 
     @Override
+    public String getVersion() {
+        return getDescription().getVersion();
+    }
+
+    @Override
     public HookedAPIType getType() {
         return HookedAPIType.CONNECTOR;
     }

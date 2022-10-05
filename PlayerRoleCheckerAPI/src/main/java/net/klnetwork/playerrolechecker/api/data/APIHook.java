@@ -8,11 +8,26 @@ import org.bukkit.plugin.Plugin;
 public interface APIHook {
     Plugin getPlugin();
 
+    /**
+     * @return bStatsのMetricsを返します
+     *
+     * @see Metrics
+     * @see <a href="https://bstats.org/">bStats</a>
+     */
     Metrics getMetrics();
 
     JoinManager getJoinManager();
 
     UpdateAlert getUpdateAlert();
 
+    /**
+     * @return プラグインのバージョンを返します
+     */
+    String getVersion();
+
+    /**
+     *
+     * @see HookedAPIType
+     */
     HookedAPIType getType();
 }

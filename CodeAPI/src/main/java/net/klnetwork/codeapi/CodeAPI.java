@@ -103,6 +103,11 @@ public final class CodeAPI extends JavaPlugin implements CodeAPIHook {
     }
 
     @Override
+    public String getVersion() {
+        return getDescription().getVersion();
+    }
+
+    @Override
     public HookedAPIType getType() {
         return HookedAPIType.CODEAPI;
     }
