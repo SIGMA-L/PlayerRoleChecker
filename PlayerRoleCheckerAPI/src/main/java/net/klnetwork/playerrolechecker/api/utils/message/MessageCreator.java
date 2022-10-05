@@ -63,7 +63,7 @@ public class MessageCreator {
 
     public MessageCreator put(CustomMessageType type, CustomMessage message) {
         if (provided == null) {
-            getProvider(null);
+            provided = new HashMap<>();
         }
 
         //VERY WILD
@@ -73,7 +73,8 @@ public class MessageCreator {
     }
 
     public static void main(String[] args) {
-        new MessageCreator(null).getEmbedMessage("bb", new MessageCreator(null).getProvider(null));
+        new MessageCreator(null).getEmbedMessage("bb", new MessageCreator(null).getProvider(null))
+                .getFields();
     }
 
     /**
@@ -82,22 +83,22 @@ public class MessageCreator {
      * @return {@link MessageEmbed} using to discord Embeds
      */
     public MessageEmbed getEmbedMessage(String key, Map<CustomMessageType, List<CustomMessage>> messages) {
-        if (messages == null || messages.isEmpty()) {
-            return getEmbedMessage(key);
-        } else {
-            return getEmbedMessage(key, messages);
+        if (messages != null) {
+            set(messages);
         }
+
+        return getEmbedMessage(key);
     }
 
-    public MessageEmbed getEmbedMessage(String path) {
+    public MessageEmbed getEmbedMessage(String key) {
         EmbedBuilder as = new EmbedBuilder()
-                .setColor(CommonUtils.getColor(getString(path + ".color")))
-                .setTitle(getString(path + ".title"))
-                .setDescription(getString(path + ".description"))
-                .setThumbnail(getString(path + ".image"))
-                .setTimestamp(getBoolean(path + ".timestamp") ? OffsetDateTime.now() : null);
+                .setColor(CommonUtils.getColor(getString(key + ".color")))
+                .setTitle(getString(CustomMessageType.DISCORD_TITLE, key + ".title"))
+                .setDescription(getString(CustomMessageType.DISCORD_DESCRIPTION, key + ".description"))
+                .setThumbnail(getString(CustomMessageType.DISCORD_IMAGE, key + ".image"))
+                .setTimestamp(getBoolean(key + ".timestamp") ? OffsetDateTime.now() : null);
 
-        return split(as, path).build();
+        return split(as, key).build();
     }
 
     public String getAsString(CustomMessageType type, String message, Map<CustomMessageType, List<CustomMessage>> provider) {
@@ -105,12 +106,12 @@ public class MessageCreator {
             return message;
         }
 
-        for (CustomMessage customMessage : provider.get(type)) {
+        for (CustomMessage customMessage : getList(type, provider)) {
             message = getAsString(message, customMessage);
         }
 
         for (CustomMessage customMessage : provider.get(CustomMessageType.MONITOR)) {
-            return get(customMessage);
+            get(message, customMessage);
         }
 
         return message;
@@ -121,8 +122,12 @@ public class MessageCreator {
      * @throws Exception throws on not String
      */
     private String getAsString(String message, CustomMessage customMessage) {
+        return get(message, customMessage);
+    }
+
+    public <T> T get(String message, CustomMessage customMessage) {
         try {
-            return (String) customMessage.getClass()
+            return (T) customMessage.getClass()
                     .getMethod("execute", String.class)
                     .invoke(customMessage, message);
         } catch (Exception ex) {
@@ -132,21 +137,19 @@ public class MessageCreator {
         return null;
     }
 
-    public <T> T get(CustomMessage message) {
-        try {
-            return (T) message.getClass()
-                    .getMethod("execute", String.class)
-                    .invoke(message, null);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+    private List<CustomMessage> getList(CustomMessageType type, Map<CustomMessageType, List<CustomMessage>> provided) {
+        return type.isDiscord() ? addAll(provided.getOrDefault(type, Collections.emptyList()), provided.getOrDefault(CustomMessageType.DISCORD, Collections.emptyList()))
+                : provided.getOrDefault(type, Collections.emptyList());
+     }
 
-        return null;
+    private List<CustomMessage> addAll(List<CustomMessage> t1, List<CustomMessage> t2) {
+        t1.addAll(t2);
+        return t1;
     }
 
-    private EmbedBuilder split(EmbedBuilder embedBuilder, String path) {
+    private EmbedBuilder split(EmbedBuilder embedBuilder, String path, Map<CustomMessageType, List<CustomMessage>> provider) {
         for (String message : plugin.getConfig().getStringList(path)) {
-            String[] strings = getAsString(CustomMessageType.FIELD, message, provided).split("\\|", 3);
+            String[] strings = getAsString(CustomMessageType.DISCORD_FIELD, message, provider).split("\\|", 3);
 
             Preconditions.checkArgument(strings.length == 3);
 
@@ -155,7 +158,15 @@ public class MessageCreator {
         return embedBuilder;
     }
 
+    private EmbedBuilder split(EmbedBuilder embedBuilder, String path) {
+        return split(embedBuilder, path, provided);
+    }
+
     public String getString(CustomMessageType type, String key) {
+        return getAsString(type, getString(key), provided);
+    }
+
+    public String getString(CustomMessageType type, String key, Map<CustomMessageType, List<CustomMessage>> provided) {
         return getAsString(type, getString(key), provided);
     }
 
