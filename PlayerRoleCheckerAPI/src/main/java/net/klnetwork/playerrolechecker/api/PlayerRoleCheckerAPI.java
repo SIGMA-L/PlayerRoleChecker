@@ -18,6 +18,8 @@ public class PlayerRoleCheckerAPI {
     }
 
     /**
+     * @return {@link ConnectorAPIHook}
+     *
      * @implNote
      * <br><strong>注意:</strong>
      * <br>※1 このメソッドは他のプラグインが返される可能性があります
@@ -31,6 +33,15 @@ public class PlayerRoleCheckerAPI {
         return (ConnectorAPIHook) pairs.get(HookedAPIType.CONNECTOR);
     }
 
+    /**
+     * @return {@link ConnectorAPIHook}
+     *
+     * @implNote
+     * <br> コネクターのAPIを返します
+     *
+     * @see ConnectorAPIHook
+     * @see org.bukkit.plugin.PluginManager#getPlugin(String)
+     */
     public static ConnectorAPIHook getConnector() {
         return (ConnectorAPIHook) Bukkit.getPluginManager().getPlugin("PlayerRoleCheckerConnector");
     }
