@@ -10,12 +10,16 @@ public interface ConnectorAPIHook extends APIHookCustom {
 
     /**
      * @implNote
-     * <br>特に何もわからない場合は使用しないでください
+     * <br>わからない場合は使用しないでください
      *
      * @deprecated {@link #setPlayerData(PlayerDataTable)} などを使用してください
      */
     @Deprecated
     ConnectorCustomDataBase getCustomDataBase();
 
+    /**
+     *
+     * @return
+     */
     ConnectorConfigManager getConfigManager();
 }

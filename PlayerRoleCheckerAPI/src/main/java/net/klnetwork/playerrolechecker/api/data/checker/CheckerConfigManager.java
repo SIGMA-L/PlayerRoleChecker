@@ -16,4 +16,12 @@ public interface CheckerConfigManager {
     boolean isVerifiedPlayerIgnore();
 
     void setVerifiedPlayerIgnore(boolean verifiedPlayerIgnore);
+
+    boolean canRegisterUnlimitedAccount();
+
+    void setCanRegisterUnlimitedAccount(boolean canRegisterUnlimitedAccount);
+
+    int getAccountPerDiscord();
+
+    void setAccountPerDiscord(int accountPerDiscord);
 }
