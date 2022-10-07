@@ -11,5 +11,6 @@ public interface CodeAPIHook extends APIHook {
 
     void setTemporary(TemporaryTable table);
 
+
     CodeAPIConfigManager getConfigManager();
 }

@@ -20,7 +20,6 @@ public class ForceJoinCommand extends CommandMessage {
 
     @Override
     public String getCommandName() {
-        //todo: customizable!
         return "!forcejoin";
     }
 

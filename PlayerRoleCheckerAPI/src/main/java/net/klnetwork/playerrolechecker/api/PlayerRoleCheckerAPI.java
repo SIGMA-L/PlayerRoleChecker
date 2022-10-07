@@ -110,10 +110,19 @@ public class PlayerRoleCheckerAPI {
         return new ArrayList<>(getAPIType());
     }
 
-    private static Set<HookedAPIType> getAPIType() {
+    public static Set<HookedAPIType> getAPIType() {
         return pairs.keySet();
     }
 
+    public static Map<HookedAPIType, APIHook> getPairs() {
+        return pairs;
+    }
+
+    /**
+     * @implNote
+     * <br>使用できるAPIを取得します
+     * <br>このメソッドが使われた場合 {@link #getPairs()} にキャッシュされます
+     */
     public static void init() {
         pairs.clear();
 

@@ -35,7 +35,7 @@ public class PlayerDataSQL extends PlayerDataTable {
 
     @Override
     public void asyncDiscordId(String uuid, Consumer<PlayerData> discordId) {
-        Bukkit.getScheduler().runTaskAsynchronously(PlayerRoleCheckerConnector.INSTANCE, () -> discordId.accept(getDiscordId(uuid)));
+        Bukkit.getScheduler().runTaskAsynchronously(getPlugin(), () -> discordId.accept(getDiscordId(uuid)));
     }
 
     @Override
@@ -45,12 +45,12 @@ public class PlayerDataSQL extends PlayerDataTable {
 
     @Override
     public void asyncDiscordId(String uuid, boolean bedrock, Consumer<PlayerData> discordId) {
-        Bukkit.getScheduler().runTaskAsynchronously(PlayerRoleCheckerConnector.INSTANCE, () -> discordId.accept(getDiscordId(uuid, bedrock)));
+        Bukkit.getScheduler().runTaskAsynchronously(getPlugin(), () -> discordId.accept(getDiscordId(uuid, bedrock)));
     }
 
     @Override
     public void asyncUUID(String discordId, Consumer<PlayerData> uuid) {
-        Bukkit.getScheduler().runTaskAsynchronously(PlayerRoleCheckerConnector.INSTANCE, () -> uuid.accept(getUUID(discordId)));
+        Bukkit.getScheduler().runTaskAsynchronously(getPlugin(), () -> uuid.accept(getUUID(discordId)));
     }
 
     @Override
