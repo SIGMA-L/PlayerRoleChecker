@@ -114,6 +114,9 @@ public class PlayerRoleCheckerAPI {
         return pairs.keySet();
     }
 
+    /**
+     * @return キャッシュされた使用可能なAPI
+     */
     public static Map<HookedAPIType, APIHook> getPairs() {
         return pairs;
     }

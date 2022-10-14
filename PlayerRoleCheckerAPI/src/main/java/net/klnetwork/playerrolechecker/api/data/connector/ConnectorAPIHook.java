@@ -12,7 +12,9 @@ public interface ConnectorAPIHook extends APIHookCustom {
      * @implNote
      * <br>わからない場合は使用しないでください
      *
-     * @deprecated {@link #setPlayerData(PlayerDataTable)} などを使用してください
+     * @deprecated
+     * <br>@uses {@link #setPlayerData(PlayerDataTable)}
+     * <br>@uses {@link #setBypass(ConnectorBypassTable)}
      */
     @Deprecated
     ConnectorCustomDataBase getCustomDataBase();
