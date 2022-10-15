@@ -16,8 +16,14 @@ public interface APIHook {
      */
     Metrics getMetrics();
 
+    /**
+     *
+     */
     JoinManager getJoinManager();
 
+    /**
+     * @return
+     */
     UpdateAlert getUpdateAlert();
 
     /**

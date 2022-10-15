@@ -33,10 +33,7 @@ public class PlayerRoleCheckerAPI {
     }
 
     /**
-     * @return {@link ConnectorAPIHook}
-     *
-     * @implNote
-     * <br> コネクターのAPIを返します
+     * @return {@link ConnectorAPIHook} コネクターのAPIを返します
      *
      * @see ConnectorAPIHook
      * @see org.bukkit.plugin.PluginManager#getPlugin(String)
@@ -61,7 +58,7 @@ public class PlayerRoleCheckerAPI {
     /**
      * @implNote
      * <li> このメソッドは他のプラグインが返される可能性があります
-     * <li> 複数のAPIに接続できた場合は最後に見つかったAPIが返されま
+     * <li> 複数のAPIに接続できた場合は最後に見つかったAPIが返されます
      */
     public static CheckerAPIHook getCheckerAPI() {
         if (!pairs.containsKey(HookedAPIType.CHECKER) && !isHookedChecker()) {
@@ -72,10 +69,9 @@ public class PlayerRoleCheckerAPI {
     }
 
     /**
-     * @return {@link CheckerAPIHook}
+     * @return {@link CheckerAPIHook} チェッカーのAPIを返します
      *
      * @implNote
-     * <br> チェッカーのAPIを返します
      *
      * @see ConnectorAPIHook
      * @see org.bukkit.plugin.PluginManager#getPlugin(String)
@@ -116,6 +112,12 @@ public class PlayerRoleCheckerAPI {
         return (CodeAPIHook) pairs.get(HookedAPIType.CODEAPI);
     }
 
+    /**
+     * @return 現在接続可能なAPIを {@link List} で提供します
+     *
+     * @implNote
+     * <li> キャッシュがされていない場合 {@link #init()} を実行します
+     */
     public static List<HookedAPIType> getHookedAPIType() {
         if (pairs.isEmpty()) {
             init();
@@ -124,6 +126,12 @@ public class PlayerRoleCheckerAPI {
         return new ArrayList<>(getAPIType());
     }
 
+    /**
+     * @return 現在接続可能なAPIを {@link Set} で提供します
+     *
+     * @implNote
+     * <li> このメソッドは {@link #init()} を実行していない場合必ず空の {@link Set} で返されます
+     */
     public static Set<HookedAPIType> getAPIType() {
         return pairs.keySet();
     }
@@ -139,8 +147,9 @@ public class PlayerRoleCheckerAPI {
     }
 
     /**
+     * 使用できるAPIを取得します
+     *
      * @implNote
-     * <br> 使用できるAPIを取得します
      * <li> このメソッドが使われた場合 {@link #getPairs()} にキャッシュされます
      */
     public static void init() {
