@@ -21,9 +21,8 @@ public class PlayerRoleCheckerAPI {
      * @return {@link ConnectorAPIHook}
      *
      * @implNote
-     * <br><strong>注意:</strong>
-     * <br>※1 このメソッドは他のプラグインが返される可能性があります
-     * <br>※2 複数のAPIに接続できた場合は最後に見つかったAPIが返されます
+     * <li> このメソッドは他のプラグインが返される可能性があります
+     * <li> 複数のAPIに接続できた場合は最後に見つかったAPIが返されま
      */
     public static ConnectorAPIHook getConnectorAPI() {
         if (!pairs.containsKey(HookedAPIType.CONNECTOR) && !isHookedConnector()) {
@@ -46,15 +45,23 @@ public class PlayerRoleCheckerAPI {
         return (ConnectorAPIHook) Bukkit.getPluginManager().getPlugin("PlayerRoleCheckerConnector");
     }
 
+    /**
+     * @return CheckerのAPIに接続されているか
+     *
+     * @implNote
+     * <li> このメソッドは他のプラグインが返される可能性があります
+     * <li> 複数のAPIに接続できた場合は最後に見つかったAPIが返されます
+     *
+     * @see #getHookedAPIType()
+     */
     public static boolean isHookedChecker() {
         return getHookedAPIType().contains(HookedAPIType.CHECKER);
     }
 
     /**
      * @implNote
-     * <br><strong>注意:</strong>
-     * <br>※1 このメソッドは他のプラグインが返される可能性があります
-     * <br>※2 複数のAPIに接続できた場合は最後に見つかったAPIが返されます
+     * <li> このメソッドは他のプラグインが返される可能性があります
+     * <li> 複数のAPIに接続できた場合は最後に見つかったAPIが返されま
      */
     public static CheckerAPIHook getCheckerAPI() {
         if (!pairs.containsKey(HookedAPIType.CHECKER) && !isHookedChecker()) {
@@ -64,6 +71,15 @@ public class PlayerRoleCheckerAPI {
         return (CheckerAPIHook) pairs.get(HookedAPIType.CHECKER);
     }
 
+    /**
+     * @return {@link CheckerAPIHook}
+     *
+     * @implNote
+     * <br> チェッカーのAPIを返します
+     *
+     * @see ConnectorAPIHook
+     * @see org.bukkit.plugin.PluginManager#getPlugin(String)
+     */
     public static CheckerAPIHook getChecker() {
         return (CheckerAPIHook) Bukkit.getPluginManager().getPlugin("PlayerRoleChecker");
     }
@@ -72,9 +88,8 @@ public class PlayerRoleCheckerAPI {
      * @return CodeAPIのAPIに接続されているか
      *
      * @implNote
-     * <br><strong>注意:</strong>
-     * <br>※1 このメソッドは他のプラグインが返される可能性があります
-     * <br>※2 複数のAPIに接続できた場合は最後に見つかったAPIが返されます
+     * <li> このメソッドは他のプラグインが返される可能性があります
+     * <li> 複数のAPIに接続できた場合は最後に見つかったAPIが返されます
      *
      * @see #getHookedAPIType()
      */
@@ -86,9 +101,8 @@ public class PlayerRoleCheckerAPI {
      * @return {@link CodeAPIHook}
      *
      * @implNote
-     * <br><strong>注意:</strong>
-     * <br>※1 このメソッドは他のプラグインが返される可能性があります
-     * <br>※2 複数のAPIに接続できた場合は最後に見つかったAPIが返されます
+     * <li> このメソッドは他のプラグインが返される可能性があります
+     * <li> 複数のAPIに接続できた場合は最後に見つかったAPIが返されま
      *
      * @see CodeAPIHook
      * @see #isHookedCodeAPI()
@@ -115,7 +129,10 @@ public class PlayerRoleCheckerAPI {
     }
 
     /**
-     * @return キャッシュされた使用可能なAPI
+     * @return 使用可能なAPIを返します
+     *
+     * @implNote
+     * <li> このメソッドは {@link #init()} を実行していない場合必ず空の {@link HashMap} が返されます
      */
     public static Map<HookedAPIType, APIHook> getPairs() {
         return pairs;
@@ -123,8 +140,8 @@ public class PlayerRoleCheckerAPI {
 
     /**
      * @implNote
-     * <br>使用できるAPIを取得します
-     * <br>このメソッドが使われた場合 {@link #getPairs()} にキャッシュされます
+     * <br> 使用できるAPIを取得します
+     * <li> このメソッドが使われた場合 {@link #getPairs()} にキャッシュされます
      */
     public static void init() {
         pairs.clear();
