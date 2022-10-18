@@ -45,9 +45,12 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
             .start();
 
     @Override
-    public void onEnable() {
+    public void onLoad() {
         INSTANCE = this;
+    }
 
+    @Override
+    public void onEnable() {
         saveDefaultConfig();
 
         PlayerDataSQL.getInstance().create();
@@ -70,7 +73,6 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
         if (JDA.INSTANCE != null) {
             JDA.INSTANCE.shutdown();
         }
-
         updateAlert.stop();
 
         LocalSQL.getInstance().drop();

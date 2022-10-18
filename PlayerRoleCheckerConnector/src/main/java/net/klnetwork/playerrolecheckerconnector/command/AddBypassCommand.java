@@ -7,6 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+//TODO: 書き直し
 public class AddBypassCommand implements CommandExecutor {
 
     @Override
