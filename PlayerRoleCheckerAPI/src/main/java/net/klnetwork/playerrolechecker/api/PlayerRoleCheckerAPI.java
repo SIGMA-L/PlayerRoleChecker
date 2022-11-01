@@ -7,12 +7,31 @@ import net.klnetwork.playerrolechecker.api.data.connector.ConnectorAPIHook;
 import net.klnetwork.playerrolechecker.api.enums.HookedAPIType;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 
 import java.util.*;
 
+/**
+ * プレイヤーロールチェッカーのインスタンス的な存在です
+ * @implNote
+ * <li>APIに侵入したい場合は {@link PluginManager#getPlugin(String)}でプラグインを取得し、{@link CodeAPIHook} にキャストしてください
+ * <li>APIを上書きしたい場合は {@link CodeAPIHook} を拡張してください
+ *
+ * @see CodeAPIHook
+ * @since 4.0
+ */
 public class PlayerRoleCheckerAPI {
     private static final Map<HookedAPIType, APIHook> pairs = new HashMap<>();
 
+    /**
+     * @return ConnectorのAPIに接続できているか
+     *
+     * @implNote
+     * <li> このメソッドは他のプラグインが返される可能性があります
+     * <li> 複数のAPIに接続できた場合は最後に見つかったAPIが返されます
+     *
+     * @see #getHookedAPIType()
+     */
     public static boolean isHookedConnector() {
         return getHookedAPIType().contains(HookedAPIType.CONNECTOR);
     }
@@ -22,7 +41,7 @@ public class PlayerRoleCheckerAPI {
      *
      * @implNote
      * <li> このメソッドは他のプラグインが返される可能性があります
-     * <li> 複数のAPIに接続できた場合は最後に見つかったAPIが返されま
+     * <li> 複数のAPIに接続できた場合は最後に見つかったAPIが返されます
      */
     public static ConnectorAPIHook getConnectorAPI() {
         if (!pairs.containsKey(HookedAPIType.CONNECTOR) && !isHookedConnector()) {
