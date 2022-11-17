@@ -94,4 +94,4 @@ http://localhost:8080/v2/get/1212
 
 ## LICENSE
 
-[Apache License 2.0](https://github.com/SIGMA-L/PlayerRoleChecker/blob/main/LICENSE)
+[GPL-3.0 license](https://github.com/SIGMA-L/PlayerRoleChecker/blob/main/LICENSE)
