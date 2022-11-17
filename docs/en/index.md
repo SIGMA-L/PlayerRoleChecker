@@ -46,7 +46,7 @@ For more details see (https://github.com/SIGMA-L/PlayerRoleChecker/).
 
 ## LICENSE
 
-[Apache License 2.0](https://github.com/SIGMA-L/PlayerRoleChecker/blob/main/LICENSE)
+[GPL-3.0 license](https://github.com/SIGMA-L/PlayerRoleChecker/blob/main/LICENSE)
 
 ## API
 
