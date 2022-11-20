@@ -7,6 +7,9 @@ public interface ConnectorConfigManager {
 
     void setJoinMode(boolean joinMode);
 
+    /**
+     * @return ホワイトリストに入っているプレイヤーはスキップ可能か
+     */
     boolean isWhitelistSkipped();
 
     void setWhitelistSkipped(boolean skipped);
@@ -15,6 +18,9 @@ public interface ConnectorConfigManager {
 
     void setRoleList(List<String> roleList);
 
+    /**
+     * @return 参加したときに実行するコマンドを返します
+     */
     List<String> getJoinCommand();
 
     void setJoinCommand(List<String> joinCommand);

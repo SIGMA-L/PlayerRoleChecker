@@ -65,18 +65,22 @@ public class ConfigValue extends ConfigManager implements CheckerConfigManager {
         this.verifiedPlayerIgnore = verifiedPlayerIgnore;
     }
 
+    @Override
     public boolean canRegisterUnlimitedAccount() {
         return canRegisterUnlimitedAccount;
     }
 
+    @Override
     public void setCanRegisterUnlimitedAccount(boolean canRegisterUnlimitedAccount) {
         this.canRegisterUnlimitedAccount = canRegisterUnlimitedAccount;
     }
 
+    @Override
     public int getAccountPerDiscord() {
         return accountPerDiscord;
     }
 
+    @Override
     public void setAccountPerDiscord(int accountPerDiscord) {
         this.accountPerDiscord = accountPerDiscord;
     }

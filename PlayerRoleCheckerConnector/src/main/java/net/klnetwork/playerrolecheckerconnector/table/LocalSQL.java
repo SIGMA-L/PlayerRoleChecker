@@ -9,7 +9,6 @@ import java.sql.*;
 import java.util.UUID;
 
 public class LocalSQL extends ConnectorBypassTable {
-
     private static ConnectorBypassTable table;
 
     private boolean created;

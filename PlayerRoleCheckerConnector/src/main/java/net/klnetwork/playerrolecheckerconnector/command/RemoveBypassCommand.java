@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 
 import java.util.UUID;
 
+//TODO: 書き直し
 public class RemoveBypassCommand implements CommandExecutor {
 
     @Override

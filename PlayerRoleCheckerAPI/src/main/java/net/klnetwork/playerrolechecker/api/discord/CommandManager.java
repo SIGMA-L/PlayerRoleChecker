@@ -52,7 +52,6 @@ public class CommandManager extends ListenerAdapter {
                                 && name.hasPermission(data.getMember())
                                 && (name.isGlobalCommand() || name.isWorkCommand(data))
                                 && name.isWork(data))
-                        .collect(Collectors.toList())
                         .forEach(message -> {
                             try {
                                 message.onMessageReceiveEvent(data);

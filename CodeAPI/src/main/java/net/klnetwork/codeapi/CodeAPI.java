@@ -38,9 +38,12 @@ public final class CodeAPI extends JavaPlugin implements CodeAPIHook {
             .start();
 
     @Override
-    public void onEnable() {
+    public void onLoad() {
         INSTANCE = this;
+    }
 
+    @Override
+    public void onEnable() {
         saveDefaultConfig();
 
         LocalSQL.getInstance().create();
@@ -56,7 +59,6 @@ public final class CodeAPI extends JavaPlugin implements CodeAPIHook {
         if (server.isStarted()) {
             server.shutdown();
         }
-
         updateAlert.stop();
 
         LocalSQL.getInstance().drop();

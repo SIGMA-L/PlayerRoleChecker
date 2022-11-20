@@ -23,7 +23,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class PlayerRoleCheckerConnector extends JavaPlugin implements ConnectorAPIHook {
-
     public static PlayerRoleCheckerConnector INSTANCE;
 
     private final JoinManager joinManager = new JoinManager(this);
@@ -44,9 +43,12 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
             .start();
 
     @Override
-    public void onEnable() {
+    public void onLoad() {
         INSTANCE = this;
+    }
 
+    @Override
+    public void onEnable() {
         saveDefaultConfig();
 
         PlayerDataSQL.getInstance().create();
@@ -74,7 +76,6 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
         if (JDA.INSTANCE != null) {
             JDA.INSTANCE.shutdown();
         }
-
         updateAlert.stop();
     }
 

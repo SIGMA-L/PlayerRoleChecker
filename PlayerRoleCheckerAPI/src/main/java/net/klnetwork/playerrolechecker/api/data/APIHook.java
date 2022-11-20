@@ -16,8 +16,19 @@ public interface APIHook {
      */
     Metrics getMetrics();
 
+    /**
+     * @return プレイヤーが参加したときに実行される
+     *
+     * <br> 詳細については -> <a href="https://">w</a>
+     */
     JoinManager getJoinManager();
 
+    /**
+     * @return プレイヤーロールチェッカーに搭載されているアップデートアラート
+     *
+     * @implNote
+     * <li>現在はプレイヤーロールチェッカー内のプラグインしか機能しません
+     */
     UpdateAlert getUpdateAlert();
 
     /**
