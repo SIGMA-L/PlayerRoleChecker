@@ -6,7 +6,7 @@
 
     <groupId>net.klnetwork.playerrolecheckerconnector</groupId>
     <artifactId>PlayerRoleCheckerConnector</artifactId>
-    <version>4.21</version>
+    <version>4.22</version>
     <packaging>jar</packaging>
 
     <name>PlayerRoleCheckerConnector</name>
