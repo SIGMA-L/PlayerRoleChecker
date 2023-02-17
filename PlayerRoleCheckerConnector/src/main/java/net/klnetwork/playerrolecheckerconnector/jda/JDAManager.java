@@ -8,7 +8,7 @@ import net.klnetwork.playerrolecheckerconnector.PlayerRoleCheckerConnector;
 
 import javax.security.auth.login.LoginException;
 
-public class JDA {
+public class JDAManager {
     public static net.dv8tion.jda.api.JDA INSTANCE;
 
     public static void init() {

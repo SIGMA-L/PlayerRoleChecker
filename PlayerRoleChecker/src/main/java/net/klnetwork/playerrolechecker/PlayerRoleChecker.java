@@ -13,7 +13,7 @@ import net.klnetwork.playerrolechecker.api.utils.Metrics;
 import net.klnetwork.playerrolechecker.api.utils.updater.UpdateBuilder;
 import net.klnetwork.playerrolechecker.api.utils.updater.UpdateAlert;
 import net.klnetwork.playerrolechecker.event.JoinEvent;
-import net.klnetwork.playerrolechecker.jda.JDA;
+import net.klnetwork.playerrolechecker.jda.JDAManager;
 import net.klnetwork.playerrolechecker.jda.command.ForceJoinCommand;
 import net.klnetwork.playerrolechecker.jda.command.JoinCommand;
 import net.klnetwork.playerrolechecker.jda.command.RemoveCommand;
@@ -58,7 +58,7 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
         joinManager.init();
         joinManager.register(new JoinEvent());
 
-        JDA.init();
+        JDAManager.init();
         commandManager.setJDA(getJDA());
         commandManager.register(new ForceJoinCommand(this));
         commandManager.register(new JoinCommand(this));
@@ -67,8 +67,8 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
 
     @Override
     public void onDisable() {
-        if (JDA.INSTANCE != null) {
-            JDA.INSTANCE.shutdown();
+        if (JDAManager.INSTANCE != null) {
+            JDAManager.INSTANCE.shutdown();
         }
 
         updateAlert.stop();
@@ -83,7 +83,7 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
 
     @Override
     public net.dv8tion.jda.api.JDA getJDA() {
-        return JDA.INSTANCE;
+        return JDAManager.INSTANCE;
     }
 
     @Override

@@ -52,18 +52,18 @@ public class JoinEvent extends JoinHandler {
 
             if (guild == null) {
                 //new method
-                if (CommonUtils.hasRole(PlayerRoleCheckerConnector.INSTANCE.getJDA().getRoleById(PlayerRoleCheckerConnector.INSTANCE.getConfigManager().getRoleList().get(0))
+                /*if (CommonUtils.hasRole(PlayerRoleCheckerConnector.INSTANCE.getJDA().getRoleById(PlayerRoleCheckerConnector.INSTANCE.getConfigManager().getRoleList().get(0))
                         .getGuild().retrieveMemberById(data.getDiscordId())
                         .complete().getRoles(), PlayerRoleCheckerConnector.INSTANCE.getConfigManager().getRoleList())) {
                     return callEvent(new CheckResultEvent(event, data, CheckResultEnum.SUCCESS)).getResult();
-                }
+                }*/
 
                 //deprecated! don't use!
-                /*for (Guild g : PlayerRoleCheckerConnector.INSTANCE.getJDA().getGuilds()) {
+                for (Guild g : PlayerRoleCheckerConnector.INSTANCE.getJDA().getGuilds()) {
                     if (CommonUtils.hasRole(g.retrieveMemberById(data.getDiscordId()).complete().getRoles(), PlayerRoleCheckerConnector.INSTANCE.getConfigManager().getRoleList())) {
-                        return callEvent(new CheckResultEvent(data, CheckResultEnum.SUCCESS)).getResult();
+                        return callEvent(new CheckResultEvent(event, data, CheckResultEnum.SUCCESS)).getResult();
                     }
-                }*/
+                }
 
                 return callEvent(new CheckResultEvent(event, data, CheckResultEnum.GUILD_IS_INVALID)).getResult();
             } else {

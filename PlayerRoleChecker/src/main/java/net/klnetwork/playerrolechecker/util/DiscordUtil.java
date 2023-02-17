@@ -1,5 +1,6 @@
 package net.klnetwork.playerrolechecker.util;
 
+import com.google.common.base.Preconditions;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -11,12 +12,10 @@ import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 
 import java.awt.image.BufferedImage;
 import java.time.OffsetDateTime;
-import java.util.Arrays;
 import java.util.UUID;
 
 //todo: recode!
 public class DiscordUtil {
-
     public static void sendMessage(MessageEmbed embed, BufferedImage image) {
         String textChannel = PlayerRoleChecker.INSTANCE.getConfig().getString("Discord.AdminChannel");
 
@@ -99,9 +98,7 @@ public class DiscordUtil {
         for (String c : PlayerRoleChecker.INSTANCE.getConfig().getStringList(configPath)) {
             String[] strings = addString(c, uuid, discordId).split("\\|", 3);
 
-            if (strings.length != 3) {
-                throw new IllegalStateException("Illegal format=" + Arrays.toString(strings));
-            }
+            Preconditions.checkArgument(strings.length == 3);
             embedBuilder.addField(strings[0], strings[1], Boolean.parseBoolean(strings[2]));
         }
         return embedBuilder;
