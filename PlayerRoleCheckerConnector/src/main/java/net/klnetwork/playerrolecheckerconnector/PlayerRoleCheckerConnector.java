@@ -16,7 +16,7 @@ import net.klnetwork.playerrolecheckerconnector.command.AddBypassCommand;
 import net.klnetwork.playerrolecheckerconnector.command.JoinModeCommand;
 import net.klnetwork.playerrolecheckerconnector.command.RemoveBypassCommand;
 import net.klnetwork.playerrolecheckerconnector.event.JoinEvent;
-import net.klnetwork.playerrolecheckerconnector.jda.JDA;
+import net.klnetwork.playerrolecheckerconnector.jda.JDAManager;
 import net.klnetwork.playerrolecheckerconnector.table.LocalSQL;
 import net.klnetwork.playerrolecheckerconnector.table.PlayerDataSQL;
 import org.bukkit.plugin.Plugin;
@@ -56,7 +56,7 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
         joinManager.init();
         joinManager.register(new JoinEvent());
 
-        JDA.init();
+        JDAManager.init();
 
         commandManager.setJDA(getJDA());
 
@@ -71,8 +71,8 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
 
     @Override
     public void onDisable() {
-        if (JDA.INSTANCE != null) {
-            JDA.INSTANCE.shutdown();
+        if (JDAManager.INSTANCE != null) {
+            JDAManager.INSTANCE.shutdown();
         }
 
         updateAlert.stop();
@@ -90,7 +90,7 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
 
     @Override
     public net.dv8tion.jda.api.JDA getJDA() {
-        return JDA.INSTANCE;
+        return JDAManager.INSTANCE;
     }
 
     @Override

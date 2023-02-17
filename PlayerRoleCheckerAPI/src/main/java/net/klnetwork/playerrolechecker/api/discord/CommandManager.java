@@ -1,6 +1,7 @@
 package net.klnetwork.playerrolechecker.api.discord;
 
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -33,7 +34,7 @@ public class CommandManager extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        if (!messageType.isEmpty() && event.isFromGuild() && !event.getAuthor().isBot() && !event.getAuthor().isSystem() && !event.isWebhookMessage()) {
+        if (!messageType.isEmpty() && event.isFromGuild() && !event.getAuthor().isBot() && !event.getAuthor().isSystem() && !event.isWebhookMessage() && event.isFromType(ChannelType.TEXT)) {
             new Thread(() -> {
                 String[] args = event.getMessage()
                         .getContentRaw()

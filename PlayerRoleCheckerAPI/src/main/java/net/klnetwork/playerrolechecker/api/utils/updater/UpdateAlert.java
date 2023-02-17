@@ -15,7 +15,7 @@ public class UpdateAlert implements Listener {
     private final UpdateBuilder builder;
 
     private boolean releasedNewVersion;
-    private int id = -1;
+    private BukkitTask task;
 
     private String version;
     private String current;
@@ -32,7 +32,7 @@ public class UpdateAlert implements Listener {
         if (isEnabled()) {
             stop();
 
-            BukkitTask task = Bukkit.getScheduler().runTaskTimerAsynchronously(builder.plugin(), () -> {
+            task = Bukkit.getScheduler().runTaskTimerAsynchronously(builder.plugin(), () -> {
                 final boolean hasNewVersion = !isNewerVersion();
 
                 if (isConsoleAlert() && !releasedNewVersion && hasNewVersion) {
@@ -41,9 +41,6 @@ public class UpdateAlert implements Listener {
 
                 this.releasedNewVersion = hasNewVersion;
             }, 0, builder.checkTicks());
-
-            id = task.getTaskId();
-
             Bukkit.getPluginManager().registerEvents(this, getPlugin());
         }
     }
@@ -81,10 +78,9 @@ public class UpdateAlert implements Listener {
     }
 
     public void stop() {
-        if (id != -1) {
-            Bukkit.getScheduler().cancelTask(id);
-
-            id = -1;
+        if (task != null && !task.isCancelled()) {
+            task.cancel();
+            task = null;
         }
     }
 
