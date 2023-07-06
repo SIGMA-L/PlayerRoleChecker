@@ -12,6 +12,7 @@ import net.klnetwork.playerrolechecker.api.enums.HookedAPIType;
 import net.klnetwork.playerrolechecker.api.utils.Metrics;
 import net.klnetwork.playerrolechecker.api.utils.updater.UpdateBuilder;
 import net.klnetwork.playerrolechecker.api.utils.updater.UpdateAlert;
+import net.klnetwork.playerrolechecker.code.CodeHolder;
 import net.klnetwork.playerrolechecker.event.JoinEvent;
 import net.klnetwork.playerrolechecker.jda.JDAManager;
 import net.klnetwork.playerrolechecker.jda.command.ForceJoinCommand;
@@ -29,6 +30,7 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
     private final JoinManager joinManager = new JoinManager(this);
     private CommandManager commandManager;
     private final ConfigValue configManger = new ConfigValue(this);
+    private final CodeHolder codeHolder = new CodeHolder(this);
 
     private final Metrics metrics = new Metrics(this, 16281);
 
@@ -56,7 +58,7 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
         saveDefaultConfig();
 
         PlayerDataSQL.getInstance().create();
-        LocalSQL.getInstance().create();
+        //LocalSQL.getInstance().create();
 
         updateAlert.registerTask();
 
@@ -119,6 +121,10 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
     @Override
     public CommandManager getCommandManager() {
         return commandManager;
+    }
+
+    public CodeHolder getCodeHolder() {
+        return codeHolder;
     }
 
     @Override

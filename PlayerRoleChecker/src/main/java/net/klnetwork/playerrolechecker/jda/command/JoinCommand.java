@@ -3,12 +3,11 @@ package net.klnetwork.playerrolechecker.jda.command;
 import net.dv8tion.jda.internal.utils.tuple.Pair;
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
 import net.klnetwork.playerrolechecker.api.data.common.PlayerData;
-import net.klnetwork.playerrolechecker.api.data.common.TemporaryData;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandData;
 import net.klnetwork.playerrolechecker.api.discord.data.CommandMessage;
 import net.klnetwork.playerrolechecker.api.enums.JoinEventType;
 import net.klnetwork.playerrolechecker.api.event.connector.JoinEvent;
-import net.klnetwork.playerrolechecker.table.LocalSQL;
+import net.klnetwork.playerrolechecker.code.CodeData;
 import net.klnetwork.playerrolechecker.table.PlayerDataSQL;
 import net.klnetwork.playerrolechecker.util.DiscordUtil;
 import org.bukkit.plugin.Plugin;
@@ -38,7 +37,7 @@ public class JoinCommand extends CommandMessage {
         String commandName = selectCommandName();
 
         final int code = Integer.parseInt(commandName == null || commandName.isEmpty() ? event.getCommandName() : event.getArgs().get(0));
-        TemporaryData temp = LocalSQL.getInstance().getUUID(code);
+        CodeData temp = PlayerRoleChecker.INSTANCE.getCodeHolder().get(code);
 
         if (temp == null) {
             if (!callEvent(new JoinEvent(null, code, false, event.getMessage(), JoinEventType.UNKNOWN_NUMBER)).isCancelled()) {
@@ -85,7 +84,7 @@ public class JoinCommand extends CommandMessage {
             }
 
             //最後に必ず'削除'します
-            LocalSQL.getInstance().remove(temp.getUUID(), temp.getCode());
+            PlayerRoleChecker.INSTANCE.getCodeHolder().remove(temp.getUUID(), temp.getCode());
         }
     }
 
