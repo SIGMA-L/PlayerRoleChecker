@@ -13,19 +13,14 @@ import java.util.UUID;
 import java.util.function.Consumer;
 
 public class PlayerDataSQL extends PlayerDataTable {
-
-    private static PlayerDataTable table;
+    public static PlayerDataTable INSTANCE = new PlayerDataSQL();
 
     public static PlayerDataTable getInstance() {
-        if (table == null) {
-            table = new PlayerDataSQL();
-        }
-
-        return table;
+        return INSTANCE;
     }
 
     public static void setInstance(PlayerDataTable data) {
-        table = data;
+        INSTANCE = data;
     }
 
     @Override

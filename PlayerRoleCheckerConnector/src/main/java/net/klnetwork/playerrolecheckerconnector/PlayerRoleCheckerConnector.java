@@ -27,7 +27,6 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
     public static PlayerRoleCheckerConnector INSTANCE;
 
     private final JoinManager joinManager = new JoinManager(this);
-    private final CommandManager commandManager = new CommandManager(null);
     private final ConfigValue configManager = new ConfigValue(this);
     private final Metrics metrics = new Metrics(this,	16282);
 
@@ -44,21 +43,21 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
             .start();
 
     @Override
-    public void onEnable() {
+    public void onLoad() {
         INSTANCE = this;
+    }
 
+    @Override
+    public void onEnable() {
         saveDefaultConfig();
 
         PlayerDataSQL.getInstance().create();
 
         updateAlert.registerTask();
-
         joinManager.init();
         joinManager.register(new JoinEvent());
 
         JDAManager.init();
-
-        commandManager.setJDA(getJDA());
 
         getCommand("joinmode").setExecutor(new JoinModeCommand());
         if (getConfig().getBoolean("DataBase.BypassTable.useBypassCommand")) {
@@ -74,7 +73,6 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
         if (JDAManager.INSTANCE != null) {
             JDAManager.INSTANCE.shutdown();
         }
-
         updateAlert.stop();
     }
 
@@ -115,7 +113,7 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
 
     @Override
     public CommandManager getCommandManager() {
-        return commandManager;
+        return null;
     }
 
     @Override

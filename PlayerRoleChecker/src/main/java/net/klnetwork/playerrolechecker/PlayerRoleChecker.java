@@ -27,7 +27,7 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
     public static PlayerRoleChecker INSTANCE;
 
     private final JoinManager joinManager = new JoinManager(this);
-    private final CommandManager commandManager = new CommandManager(null);
+    private CommandManager commandManager;
     private final ConfigValue configManger = new ConfigValue(this);
 
     private final Metrics metrics = new Metrics(this, 16281);
@@ -45,6 +45,11 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
             .start();
 
     @Override
+    public void onLoad() {
+        INSTANCE = this;
+    }
+
+    @Override
     public void onEnable() {
         INSTANCE = this;
 
@@ -59,7 +64,7 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
         joinManager.register(new JoinEvent());
 
         JDAManager.init();
-        commandManager.setJDA(getJDA());
+        this.commandManager = new CommandManager(this.getJDA());
         commandManager.register(new ForceJoinCommand(this));
         commandManager.register(new JoinCommand(this));
         commandManager.register(new RemoveCommand(this));

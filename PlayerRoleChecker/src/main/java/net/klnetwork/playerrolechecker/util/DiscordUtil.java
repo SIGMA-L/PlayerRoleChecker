@@ -22,9 +22,7 @@ public class DiscordUtil {
         if (textChannel == null) {
             return;
         }
-
         MessageCreateAction action = PlayerRoleChecker.INSTANCE.getJDA().getTextChannelById(textChannel).sendMessageEmbeds(embed);
-
         if (image != null) {
             action.addFiles(FileUpload.fromData(CommonUtils.toByteArray(image), "user.png"));
         }
