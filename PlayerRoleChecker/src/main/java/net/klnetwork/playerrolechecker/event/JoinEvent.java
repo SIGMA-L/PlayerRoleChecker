@@ -1,9 +1,9 @@
 package net.klnetwork.playerrolechecker.event;
 
 import net.klnetwork.playerrolechecker.PlayerRoleChecker;
+import net.klnetwork.playerrolechecker.api.data.checker.CheckerCodeData;
 import net.klnetwork.playerrolechecker.api.data.common.JoinHandler;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
-import net.klnetwork.playerrolechecker.code.CodeData;
 import net.klnetwork.playerrolechecker.table.PlayerDataSQL;
 import net.klnetwork.playerrolechecker.util.CodeUtil;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
@@ -16,7 +16,7 @@ public class JoinEvent extends JoinHandler {
             && PlayerDataSQL.getInstance().hasData(event.getUniqueId(), CommonUtils.isFloodgateUser(event.getUniqueId()))) {
             return;
         }
-        CodeData data = PlayerRoleChecker.INSTANCE.getCodeHolder().get(event.getUniqueId());
+        CheckerCodeData data = PlayerRoleChecker.INSTANCE.getCodeHolder().get(event.getUniqueId());
         if (data != null) {
             disallow(event, String.join("\n", PlayerRoleChecker.INSTANCE.getConfig().getStringList("JoinEvent.already-code")).replaceAll("%code%", String.valueOf(data.getCode())));
         } else {

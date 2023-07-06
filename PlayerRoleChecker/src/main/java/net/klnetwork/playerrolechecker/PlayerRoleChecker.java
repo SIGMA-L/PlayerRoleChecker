@@ -6,25 +6,22 @@ import net.klnetwork.playerrolechecker.api.data.JoinManager;
 import net.klnetwork.playerrolechecker.api.data.PlayerDataTable;
 import net.klnetwork.playerrolechecker.api.data.checker.CheckerAPIHook;
 import net.klnetwork.playerrolechecker.api.data.checker.CheckerCustomDataBase;
-import net.klnetwork.playerrolechecker.api.data.common.TemporaryTable;
 import net.klnetwork.playerrolechecker.api.discord.CommandManager;
 import net.klnetwork.playerrolechecker.api.enums.HookedAPIType;
 import net.klnetwork.playerrolechecker.api.utils.Metrics;
-import net.klnetwork.playerrolechecker.api.utils.updater.UpdateBuilder;
 import net.klnetwork.playerrolechecker.api.utils.updater.UpdateAlert;
+import net.klnetwork.playerrolechecker.api.utils.updater.UpdateBuilder;
 import net.klnetwork.playerrolechecker.code.CodeHolder;
 import net.klnetwork.playerrolechecker.event.JoinEvent;
 import net.klnetwork.playerrolechecker.jda.JDAManager;
 import net.klnetwork.playerrolechecker.jda.command.ForceJoinCommand;
 import net.klnetwork.playerrolechecker.jda.command.JoinCommand;
 import net.klnetwork.playerrolechecker.jda.command.RemoveCommand;
-import net.klnetwork.playerrolechecker.table.LocalSQL;
 import net.klnetwork.playerrolechecker.table.PlayerDataSQL;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHook {
-
     public static PlayerRoleChecker INSTANCE;
 
     private final JoinManager joinManager = new JoinManager(this);
@@ -77,10 +74,7 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
         if (JDAManager.INSTANCE != null) {
             JDAManager.INSTANCE.shutdown();
         }
-
         updateAlert.stop();
-
-        LocalSQL.getInstance().drop();
     }
 
     @Override
@@ -123,6 +117,7 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
         return commandManager;
     }
 
+    @Override
     public CodeHolder getCodeHolder() {
         return codeHolder;
     }
@@ -130,16 +125,6 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
     @Override
     public ConfigValue getConfigManager() {
         return configManger;
-    }
-
-    @Override
-    public TemporaryTable getTemporary() {
-        return LocalSQL.getInstance();
-    }
-
-    @Override
-    public void setTemporary(TemporaryTable table) {
-        LocalSQL.setInstance(table);
     }
 
     @Override
