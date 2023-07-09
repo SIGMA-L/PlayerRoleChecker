@@ -49,7 +49,7 @@ public class CodeData implements CheckerCodeData {
 
     @Override
     public CheckerCodeData startTask(CheckerCodeHolder holder, int ticks) {
-        Bukkit.getScheduler().runTaskLaterAsynchronously(holder.getPlugin(), () -> holder.remove(this), ticks);
+        this.task = Bukkit.getScheduler().runTaskLaterAsynchronously(holder.getPlugin(), () -> holder.remove(this), ticks);
         return this;
     }
 

@@ -1,7 +1,4 @@
 DataBase:
-  TemporaryTable:
-    location: 'data.db'
-    type: SQLITE
   PlayerDataTable:
     server: 'localhost'
     port: 3306
