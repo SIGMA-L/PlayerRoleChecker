@@ -61,8 +61,9 @@ public class CodeHolder implements CheckerCodeHolder {
 
     @Override
     public void remove(CheckerCodeData data) {
-        list.remove(data);
-        data.cancelTask();
+        if (list.remove(data)) {
+            data.cancelTask();
+        }
     }
 
     @Override
