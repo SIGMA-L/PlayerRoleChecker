@@ -18,6 +18,7 @@ import net.klnetwork.playerrolechecker.jda.command.ForceJoinCommand;
 import net.klnetwork.playerrolechecker.jda.command.JoinCommand;
 import net.klnetwork.playerrolechecker.jda.command.RemoveCommand;
 import net.klnetwork.playerrolechecker.table.PlayerDataSQL;
+import org.bukkit.event.EventPriority;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -59,7 +60,7 @@ public final class PlayerRoleChecker extends JavaPlugin implements CheckerAPIHoo
 
         updateAlert.registerTask();
 
-        joinManager.init();
+        joinManager.init(EventPriority.HIGHEST);
         joinManager.register(new JoinEvent());
 
         JDAManager.init();

@@ -19,6 +19,7 @@ import net.klnetwork.playerrolecheckerconnector.event.JoinEvent;
 import net.klnetwork.playerrolecheckerconnector.jda.JDAManager;
 import net.klnetwork.playerrolecheckerconnector.table.LocalSQL;
 import net.klnetwork.playerrolecheckerconnector.table.PlayerDataSQL;
+import org.bukkit.event.EventPriority;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -54,7 +55,7 @@ public final class PlayerRoleCheckerConnector extends JavaPlugin implements Conn
         PlayerDataSQL.getInstance().create();
 
         updateAlert.registerTask();
-        joinManager.init();
+        joinManager.init(EventPriority.HIGHEST);
         joinManager.register(new JoinEvent());
 
         JDAManager.init();
