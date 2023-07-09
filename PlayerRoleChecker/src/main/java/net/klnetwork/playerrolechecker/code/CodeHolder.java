@@ -4,9 +4,8 @@ import net.klnetwork.playerrolechecker.api.data.checker.CheckerCodeData;
 import net.klnetwork.playerrolechecker.api.data.checker.CheckerCodeHolder;
 import org.bukkit.plugin.Plugin;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.function.Predicate;
 
 public class CodeHolder implements CheckerCodeHolder {
     private final List<CheckerCodeData> list = new ArrayList<>();
@@ -47,26 +46,38 @@ public class CodeHolder implements CheckerCodeHolder {
 
     @Override
     public void remove(UUID uuid) {
-        list.removeIf(data -> data.getUUID().equals(uuid));
+        catchRemoveIf(list, data -> data.getUUID().equals(uuid));
     }
 
     @Override
     public void remove(UUID uuid, int code) {
-        list.removeIf(data -> data.getUUID().equals(uuid) && data.getCode() == code);
+        catchRemoveIf(list, data -> data.getUUID().equals(uuid) && data.getCode() == code);
     }
 
     @Override
     public void remove(int code) {
-        list.removeIf(data -> data.getCode() == code);
+        catchRemoveIf(list, data -> data.getCode() == code);
     }
 
     @Override
     public void remove(CheckerCodeData data) {
         list.remove(data);
+        data.cancelTask();
     }
 
     @Override
     public Plugin getPlugin() {
         return plugin;
+    }
+
+    public <E extends CheckerCodeData> void catchRemoveIf(List<E> list, Predicate<? super E> filter) {
+        final Iterator<E> each = list.iterator();
+        while (each.hasNext()) {
+            E value = each.next();
+            if (filter.test(value)) {
+                each.remove();
+                value.cancelTask();
+            }
+        }
     }
 }
