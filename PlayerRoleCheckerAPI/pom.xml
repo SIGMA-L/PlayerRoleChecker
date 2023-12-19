@@ -6,7 +6,7 @@
 
     <groupId>net.klnetwork.playerrolechecker</groupId>
     <artifactId>PlayerRoleCheckerAPI</artifactId>
-    <version>4.22</version>
+    <version>4.3</version>
     <packaging>jar</packaging>
 
     <name>PlayerRoleCheckerAPI</name>
@@ -96,7 +96,7 @@
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-grizzly2-http</artifactId>
-            <version>3.0.8</version>
+            <version>3.1.1</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

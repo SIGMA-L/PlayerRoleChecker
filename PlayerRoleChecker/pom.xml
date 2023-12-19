@@ -6,7 +6,7 @@
 
     <groupId>net.klnetwork.playerrolechecker</groupId>
     <artifactId>PlayerRoleChecker</artifactId>
-    <version>4.22</version>
+    <version>4.3</version>
     <packaging>jar</packaging>
 
     <name>PlayerRoleChecker</name>
@@ -77,7 +77,7 @@
         <dependency>
             <groupId>net.klnetwork.playerrolechecker</groupId>
             <artifactId>PlayerRoleCheckerAPI</artifactId>
-            <version>4.22</version>
+            <version>4.3</version>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
@@ -88,7 +88,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.30</version>
+            <version>8.0.33</version>
         </dependency>
     </dependencies>
 </project>

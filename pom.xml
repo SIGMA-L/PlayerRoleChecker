@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.klnetwork.playerrolechecker</groupId>
-    <artifactId>Compiler</artifactId>
+    <artifactId>Builder</artifactId>
     <version>v1.0</version>
     <packaging>pom</packaging>
 
-    <name>Compiler</name>
+    <name>Builder of PlayerRoleChecker</name>
 
 
     <modules>
